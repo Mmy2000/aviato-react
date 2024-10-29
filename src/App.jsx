@@ -9,6 +9,7 @@ import { Layout } from './components/Layout'
 import { Products } from './components/Products'
 import { Login } from '@mui/icons-material'
 import Register from './components/Register'
+import  { Toaster } from "react-hot-toast";
 
 
 let router = createBrowserRouter([
@@ -42,6 +43,37 @@ function App() {
   return (
     <>
       <RouterProvider router={router}></RouterProvider>
+      <Toaster
+        toastOptions={{
+          className: "",
+          duration: 4000,
+          style: {
+            padding: "12px 16px",
+            color: "#2d3748",
+            backgroundColor: "#fff",
+            borderRadius: "8px",
+            boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
+          },
+          success: {
+            icon: "✅",
+            style: {
+              color: "#2f855a",
+            },
+          },
+          error: {
+            icon: "❌",
+            style: {
+              color: "#c53030",
+            },
+          },
+          info: {
+            icon: "ℹ️",
+            style: {
+              color: "#2b6cb0",
+            },
+          },
+        }}
+      />
     </>
   );
 }
