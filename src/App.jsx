@@ -7,9 +7,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Home } from './components/Home'
 import { Layout } from './components/Layout'
 import { Products } from './components/Products'
-import { Login } from '@mui/icons-material'
 import Register from './components/Register'
 import  { Toaster } from "react-hot-toast";
+import Login from './components/Login'
+
 
 
 let router = createBrowserRouter([

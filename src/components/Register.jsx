@@ -85,6 +85,7 @@ export default function Register() {
 
     // Final validation check before submission
     if (Object.keys(formErrors).length > 0) {
+      toast.info("Please fix the errors in the form!");
       setError("Please fix the errors in the form!");
       return;
     }
@@ -103,6 +104,7 @@ export default function Register() {
           phone_number: formData.phone_number,
         }
       );
+      console.log(response.data.data.tokens.access_token);
 
       toast.success("Registered Successfully");
       setFormData({
