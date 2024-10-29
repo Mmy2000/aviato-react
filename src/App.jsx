@@ -8,7 +8,7 @@ import { Home } from './components/Home'
 import { Layout } from './components/Layout'
 import { Products } from './components/Products'
 import { Login } from '@mui/icons-material'
-import { Register } from './components/Register'
+import Register from './components/Register'
 
 
 let router = createBrowserRouter([

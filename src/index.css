@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-gradient-to-br  dark:from-gray-900 dark:via-gray-800 dark:to-gray-700;
+}
