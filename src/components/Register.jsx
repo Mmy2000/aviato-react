@@ -130,8 +130,8 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center dark:from-gray-800 px-4">
-      <div className="w-full max-w-xl p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg space-y-8">
+    <div className=" flex items-center justify-center dark:from-gray-800 ">
+      <div className="w-full max-w-xl p-8 bg-white dark:bg-gray-800 rounded-lg mt-14 shadow-lg space-y-8">
         <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white text-center">
           Create Your Account
         </h2>

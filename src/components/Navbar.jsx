@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Switch, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -7,7 +7,6 @@ import {
   SunIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
-import { Fragment } from "react";
 
 const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -21,7 +20,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white dark:bg-gray-900 shadow fixed w-full z-30 top-0 left-0 transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+        <div className="flex justify-between py-3 items-center">
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center">
@@ -37,9 +36,10 @@ const Navbar = () => {
               <a
                 key={page}
                 href={`/${page.toLowerCase()}`}
-                className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 ease-out font-medium"
+                className="relative text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 ease-out transform hover:scale-105 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500"
               >
                 {page}
+                <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
               </a>
             ))}
           </div>
@@ -52,9 +52,9 @@ const Navbar = () => {
               onChange={toggleDarkMode}
               className={`${
                 isDarkMode
-                  ? "bg-gradient-to-r from-blue-500 to-indigo-500"
+                  ? "bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg shadow-blue-500/50"
                   : "bg-gray-300"
-              } relative inline-flex items-center h-6 rounded-full w-12 transition-colors duration-300 ease-in-out`}
+              } relative inline-flex items-center h-6 rounded-full w-12 transition-all duration-300 ease-in-out`}
             >
               <span
                 className={`${
@@ -77,14 +77,14 @@ const Navbar = () => {
               </div>
               <Transition
                 as={Fragment}
-                enter="transition ease-out duration-200"
+                enter="transition ease-out duration-300 transform"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave="transition ease-in duration-150"
+                leave="transition ease-in duration-200 transform"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-md py-2 z-10 focus:outline-none">
+                <Menu.Items className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-10 focus:outline-none">
                   {["Profile", "Login", "Register", "Logout"].map((item) => (
                     <Menu.Item key={item}>
                       {({ active }) => (
@@ -92,7 +92,7 @@ const Navbar = () => {
                           href={`/${item.toLowerCase()}`}
                           className={`block px-4 py-2 text-sm ${
                             active
-                              ? "bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                              ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
                               : "text-gray-700 dark:text-gray-200"
                           } transition duration-200 ease-in-out rounded-md`}
                         >
