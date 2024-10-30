@@ -11,6 +11,8 @@ import Register from './components/Register'
 import  { Toaster } from "react-hot-toast";
 import Login from './components/Login'
 import UserContextProvider from './context/UserContext'
+import { ProfileContextProvider } from './context/ProfileContext'
+import Profile from './components/Profile'
 
 let router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ let router = createBrowserRouter([
         path: "register",
         element: <Register />,
       },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
     ],
   },
 ]);
@@ -43,38 +49,40 @@ function App() {
   return (
     <>
       <UserContextProvider>
-        <RouterProvider router={router}></RouterProvider>
-        <Toaster
-          toastOptions={{
-            className: "",
-            duration: 4000,
-            style: {
-              padding: "12px 16px",
-              color: "#2d3748",
-              backgroundColor: "#fff",
-              borderRadius: "8px",
-              boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
-            },
-            success: {
-              icon: "✅",
+        <ProfileContextProvider>
+          <RouterProvider router={router}></RouterProvider>
+          <Toaster
+            toastOptions={{
+              className: "",
+              duration: 4000,
               style: {
-                color: "#2f855a",
+                padding: "12px 16px",
+                color: "#2d3748",
+                backgroundColor: "#fff",
+                borderRadius: "8px",
+                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
               },
-            },
-            error: {
-              icon: "❌",
-              style: {
-                color: "#c53030",
+              success: {
+                icon: "✅",
+                style: {
+                  color: "#2f855a",
+                },
               },
-            },
-            info: {
-              icon: "ℹ️",
-              style: {
-                color: "#2b6cb0",
+              error: {
+                icon: "❌",
+                style: {
+                  color: "#c53030",
+                },
               },
-            },
-          }}
-        />
+              info: {
+                icon: "ℹ️",
+                style: {
+                  color: "#2b6cb0",
+                },
+              },
+            }}
+          />
+        </ProfileContextProvider>
       </UserContextProvider>
     </>
   );

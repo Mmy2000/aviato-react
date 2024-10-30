@@ -90,7 +90,7 @@ export default function Login() {
         email: "",
         password: "",
       });
-      navigate('/')
+      navigate('/profile')
     } catch (error) {
       toast.error(
         error.response?.data?.message ||

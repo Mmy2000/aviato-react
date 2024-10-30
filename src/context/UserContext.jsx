@@ -8,6 +8,8 @@ export default function UserContextProvider(props) {
     if (localStorage.getItem("userTaken") !== null) {
       setUserLogin(localStorage.getItem("userTaken"));
     }
+    console.log(userLogin);
+    
   }, []);
 
   return (

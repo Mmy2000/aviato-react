@@ -9,10 +9,12 @@ import {
 } from "@heroicons/react/24/solid";
 import { UserContext } from "../context/UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import { ProfileContext } from "../context/ProfileContext";
 
 const Navbar = () => {
   let navigate = useNavigate();
   let { userLogin, setUserLogin } = useContext(UserContext);
+  let {profile} = useContext(ProfileContext)
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -82,7 +84,15 @@ const Navbar = () => {
             <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="flex items-center text-sm focus:outline-none">
-                  <UserCircleIcon className="w-8 h-8 text-gray-600 dark:text-gray-300" />
+                  {profile && profile.image && userLogin ? (
+                    <img
+                      src={profile.image} // Use the appropriate image URL property
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <UserCircleIcon className="w-8 h-8 text-gray-600 dark:text-gray-300" />
+                  )}
                 </Menu.Button>
               </div>
               <Transition
