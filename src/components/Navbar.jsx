@@ -121,6 +121,22 @@ const Navbar = () => {
                           </NavLink>
                         )}
                       </Menu.Item>
+                      {profile?.user?.is_superadmin ? (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <NavLink
+                              to={'/dashboard'}
+                              className={`block px-4 py-2 text-sm ${
+                                active
+                                  ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                  : "text-gray-700 dark:text-gray-200"
+                              } transition duration-200 ease-in-out rounded-md cursor-pointer`}
+                            >
+                              Dashboard
+                            </NavLink>
+                          )}
+                        </Menu.Item>
+                      ) : null}
                       <Menu.Item>
                         {({ active }) => (
                           <span
