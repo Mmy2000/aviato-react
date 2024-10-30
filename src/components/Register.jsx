@@ -1,10 +1,14 @@
 // RegisterPage.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Transition } from "@headlessui/react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  let navigate = useNavigate();
+  let { setUserLogin } = useContext(UserContext);
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -19,6 +23,7 @@ export default function Register() {
   const [formErrors, setFormErrors] = useState({});
 
   const handleChange = (e) => {
+    e.preventDefault()
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -105,6 +110,8 @@ export default function Register() {
         }
       );
       console.log(response.data.data.tokens.access_token);
+      localStorage.setItem("userTaken", response?.data?.data?.tokens?.access_token);
+      setUserLogin(response?.data?.data?.tokens?.access_token);
 
       toast.success("Registered Successfully");
       setFormData({
@@ -115,6 +122,7 @@ export default function Register() {
         confirmPassword: "",
         phone_number: "",
       });
+      navigate("/");
     } catch (error) {
       toast.error(
         error.response?.data?.message ||

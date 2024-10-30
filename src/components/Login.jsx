@@ -1,10 +1,14 @@
 // RegisterPage.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Transition } from "@headlessui/react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  let navigate = useNavigate()
+  let { setUserLogin } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -75,13 +79,18 @@ export default function Login() {
         }
       );
       console.log(response.data.data.tokens.access_token);
-      
+      localStorage.setItem(
+        "userTaken",
+        response?.data?.data?.tokens?.access_token
+      );
+      setUserLogin(response?.data?.data?.tokens?.access_token);
 
       toast.success("Logged in Successfully");
       setFormData({
         email: "",
         password: "",
       });
+      navigate('/')
     } catch (error) {
       toast.error(
         error.response?.data?.message ||

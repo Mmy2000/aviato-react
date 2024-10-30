@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useContext } from "react";
 import { Switch, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -7,8 +7,12 @@ import {
   SunIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
+import { UserContext } from "../context/UserContext";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  let navigate = useNavigate();
+  let { userLogin, setUserLogin } = useContext(UserContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -16,6 +20,12 @@ const Navbar = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle("dark", !isDarkMode);
   };
+
+  function LogOut() {
+    localStorage.removeItem("userTaken");
+    setUserLogin(null);
+    navigate("/login");
+  }
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow fixed w-full z-30 top-0 left-0 transition-all duration-300 ease-in-out">
@@ -85,22 +95,69 @@ const Navbar = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-10 focus:outline-none">
-                  {["Profile", "Login", "Register", "Logout"].map((item) => (
-                    <Menu.Item key={item}>
-                      {({ active }) => (
-                        <a
-                          href={`/${item.toLowerCase()}`}
-                          className={`block px-4 py-2 text-sm ${
-                            active
-                              ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
-                              : "text-gray-700 dark:text-gray-200"
-                          } transition duration-200 ease-in-out rounded-md`}
-                        >
-                          {item}
-                        </a>
-                      )}
-                    </Menu.Item>
-                  ))}
+                  {userLogin ? (
+                    <>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            to={"/profile"}
+                            className={`block px-4 py-2 text-sm ${
+                              active
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                : "text-gray-700 dark:text-gray-200"
+                            } transition duration-200 ease-in-out rounded-md`}
+                          >
+                            Profile
+                          </NavLink>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <span
+                            onClick={LogOut}
+                            className={`block px-4 py-2 text-sm ${
+                              active
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                : "text-gray-700 dark:text-gray-200"
+                            } transition duration-200 ease-in-out rounded-md cursor-pointer`}
+                          >
+                            Logout
+                          </span>
+                        )}
+                      </Menu.Item>
+                    </>
+                  ) : (
+                    <>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            to={"/login"}
+                            className={`block px-4 py-2 text-sm ${
+                              active
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                : "text-gray-700 dark:text-gray-200"
+                            } transition duration-200 ease-in-out rounded-md`}
+                          >
+                            Login
+                          </NavLink>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            to={"/register"}
+                            className={`block px-4 py-2 text-sm ${
+                              active
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                : "text-gray-700 dark:text-gray-200"
+                            } transition duration-200 ease-in-out rounded-md`}
+                          >
+                            Register
+                          </NavLink>
+                        )}
+                      </Menu.Item>
+                    </>
+                  )}
                 </Menu.Items>
               </Transition>
             </Menu>
