@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ProfileContext } from "../context/ProfileContext";
 import { motion } from "framer-motion";
+import Spinner from "../ui/Spinner";
 
 const Profile = () => {
   const { profile, loading, error } = useContext(ProfileContext);
@@ -8,9 +9,7 @@ const Profile = () => {
 
   if (loading)
     return (
-      <div className="text-center text-gray-500 dark:text-gray-300">
-        Loading...
-      </div>
+      <Spinner/>
     );
 
   return (

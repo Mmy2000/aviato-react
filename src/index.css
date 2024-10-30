@@ -5,3 +5,14 @@
 body {
   @apply bg-gradient-to-br  dark:from-gray-900 dark:via-gray-800 dark:to-gray-700;
 }
+
+.professional-spinner {
+  width: 64px;
+  height: 64px;
+  border: 6px solid transparent;
+  border-top: 6px solid #020203; /* Change colors as needed */
+  border-bottom: 6px solid #020203; /* Change colors as needed */
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0));
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
