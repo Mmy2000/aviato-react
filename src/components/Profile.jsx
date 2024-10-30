@@ -203,7 +203,7 @@ const Profile = () => {
           {/* Save Button */}
           <motion.button
             type="submit"
-            className="w-full bg-gray-800 transition-colors hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 dark:bg-gray-600"
+            className="w-full bg-gray-800 transition-colors hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 dark:bg-slate-600 dark:hover:bg-slate-500"
             whileTap={{ scale: 0.95 }}
           >
             Save Changes
