@@ -1,16 +1,91 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProfileContext } from "../context/ProfileContext";
 import { motion } from "framer-motion";
 import Spinner from "../ui/Spinner";
+import toast from "react-hot-toast";
+
 
 const Profile = () => {
-  const { profile, loading, error } = useContext(ProfileContext);
+  const { profile, loading, error, setProfile } = useContext(ProfileContext);
   const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    country: "",
+    city: "",
+    phone_number: "",
+    about: "",
+    addressLineOne: "",
+  });
+  const [file, setFile] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        first_name: profile?.user?.first_name || "",
+        last_name: profile?.user?.last_name || "",
+        country: profile?.country || "",
+        city: profile?.city || "",
+        phone_number: profile?.user?.phone_number || "",
+        about: profile?.about || "",
+        addressLineOne: profile?.address_line_1 || "",
+      });
+    }
+  }, [profile]);
 
   if (loading)
     return (
       <Spinner/>
     );
+  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+  console.log(formData);
+  
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+
+    const formDataToSend = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSend.append(key, value);
+    });
+    if (file) formDataToSend.append("image", file);
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/accounts/api/profile/",
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}` },
+          body: formDataToSend,
+        }
+      );
+      const data = await response.json();
+
+      if (response.ok) {
+        setProfile(data?.data); // Update context
+        toast.success("Profile updated Successfully");    
+        console.log(data.data);
+            
+        setEditMode(false);
+      } else {
+        console.error("Failed to update profile:", data);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <motion.div
@@ -52,7 +127,7 @@ const Profile = () => {
             <strong>Full Name:</strong> {profile?.full_name}
           </p>
           <p className="text-gray-800 dark:text-gray-300">
-            <strong>Country:</strong> {profile?.user.country}
+            <strong>Country:</strong> {profile?.country}
           </p>
           <p className="text-gray-800 dark:text-gray-300">
             <strong>Email:</strong> {profile?.user?.email || "N/A"}
@@ -90,7 +165,7 @@ const Profile = () => {
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
           Edit Profile
         </h2>
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Individual Input Fields */}
             <div>
@@ -98,8 +173,10 @@ const Profile = () => {
                 First Name
               </label>
               <motion.input
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleInputChange}
                 type="text"
-                defaultValue={profile?.user?.first_name}
                 className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                 whileHover={{ scale: 1.05 }}
               />
@@ -109,8 +186,10 @@ const Profile = () => {
                 Last Name
               </label>
               <motion.input
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleInputChange}
                 type="text"
-                defaultValue={profile?.user?.last_name}
                 className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                 whileHover={{ scale: 1.05 }}
               />
@@ -121,7 +200,9 @@ const Profile = () => {
               </label>
               <motion.input
                 type="text"
-                defaultValue={profile?.country}
+                name="country"
+                value={formData.country}
+                onChange={handleInputChange}
                 className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                 whileHover={{ scale: 1.05 }}
               />
@@ -132,7 +213,9 @@ const Profile = () => {
               </label>
               <motion.input
                 type="text"
-                defaultValue={profile?.city}
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
                 className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                 whileHover={{ scale: 1.05 }}
               />
@@ -143,7 +226,9 @@ const Profile = () => {
               </label>
               <motion.input
                 type="text"
-                defaultValue={profile?.user?.phone_number}
+                name="phone_number"
+                value={formData.phone_number}
+                onChange={handleInputChange}
                 className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                 whileHover={{ scale: 1.05 }}
               />
@@ -154,7 +239,9 @@ const Profile = () => {
               </label>
               <motion.input
                 type="text"
-                defaultValue={profile?.full_address}
+                name="addressLineOne"
+                value={formData.addressLineOne}
+                onChange={handleInputChange}
                 className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                 whileHover={{ scale: 1.05 }}
               />
@@ -171,7 +258,9 @@ const Profile = () => {
               About You
             </label>
             <textarea
-              defaultValue={profile?.about}
+              name="about"
+              value={formData.about}
+              onChange={handleInputChange}
               className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
               rows="4"
             ></textarea>
@@ -195,6 +284,7 @@ const Profile = () => {
               />
               <input
                 type="file"
+                onChange={handleFileChange}
                 className="text-sm text-gray-500 dark:text-gray-300"
               />
             </div>
@@ -203,10 +293,37 @@ const Profile = () => {
           {/* Save Button */}
           <motion.button
             type="submit"
-            className="w-full bg-gray-800 transition-colors hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 dark:bg-slate-600 dark:hover:bg-slate-500"
+            disabled={saving}
+            className="w-full bg-gray-800 transition-colors hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 dark:bg-slate-600 dark:hover:bg-slate-500 flex items-center justify-center"
             whileTap={{ scale: 0.95 }}
           >
-            Save Changes
+            {saving ? (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+                <span>Saving...</span>
+              </>
+            ) : (
+              "Save Changes"
+            )}
           </motion.button>
         </form>
       </motion.div>
