@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from "react";
+import React, { useState, Fragment, useContext, useEffect } from "react";
 import { Switch, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -10,6 +10,8 @@ import {
 import { UserContext } from "../context/UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ProfileContext } from "../context/ProfileContext";
+import axios from "axios";
+
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -28,6 +30,7 @@ const Navbar = () => {
     setUserLogin(null);
     navigate("/login");
   }
+
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow fixed w-full z-30 top-0 left-0 transition-all duration-300 ease-in-out">

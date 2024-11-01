@@ -1,10 +1,10 @@
-// RegisterPage.jsx
 import { useState, useEffect, useContext } from "react";
 import { Transition } from "@headlessui/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Login() {
   let navigate = useNavigate()
@@ -106,24 +106,48 @@ export default function Login() {
   };
 
   return (
-    <div className=" flex items-center justify-center dark:from-gray-800 px-4">
-      <div className="w-full max-w-xl p-8 bg-white dark:bg-gray-800 rounded-lg mt-14 shadow-lg space-y-8">
+    <motion.div
+      className="flex items-center justify-center dark:from-gray-800 px-4"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="w-full max-w-xl p-8 bg-white dark:bg-gray-800 rounded-lg mt-14 shadow-lg space-y-8"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white text-center">
           Login To Your Account
         </h2>
         {error && (
-          <div className="text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-300 border border-red-500 rounded p-2 text-sm text-center">
+          <motion.div
+            className="text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-300 border border-red-500 rounded p-2 text-sm text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {error}
-          </div>
+          </motion.div>
         )}
         {successMessage && (
-          <div className="text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-300 border border-green-500 rounded p-2 text-sm text-center">
+          <motion.div
+            className="text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-300 border border-green-500 rounded p-2 text-sm text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {successMessage}
-          </div>
+          </motion.div>
         )}
         <form className="space-y-6" onSubmit={handleSubmit}>
-          {/* Email Field */}
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -143,9 +167,13 @@ export default function Login() {
             {formErrors.email && (
               <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>
             )}
-          </div>
-          {/* Password Field */}
-          <div className="relative">
+          </motion.div>
+          <motion.div
+            className="relative"
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -165,14 +193,17 @@ export default function Login() {
             {formErrors.password && (
               <p className="text-red-500 text-xs mt-1">{formErrors.password}</p>
             )}
-          </div>
-
-          <button
+          </motion.div>
+          <motion.button
             type="submit"
             className={`w-full mt-4 py-2 bg-blue-600 text-white rounded-lg focus:outline-none hover:bg-blue-500 transition duration-200 flex items-center justify-center ${
               isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={isLoading}
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
           >
             {isLoading ? (
               <>
@@ -201,9 +232,9 @@ export default function Login() {
             ) : (
               "Login"
             )}
-          </button>
+          </motion.button>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
