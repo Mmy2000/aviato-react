@@ -38,24 +38,24 @@ const Navbar = () => {
         <div className="flex justify-between py-3 items-center">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="flex items-center">
+            <NavLink to={"/"} className="flex items-center">
               <span className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
                 Aviato
               </span>
-            </a>
+            </NavLink>
           </div>
 
           {/* Main Menu */}
           <div className="hidden md:flex space-x-8">
             {["Products", "Pricing", "Blog"].map((page) => (
-              <a
+              <NavLink
                 key={page}
-                href={`/${page.toLowerCase()}`}
+                to={`/${page.toLowerCase()}`}
                 className="relative text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 ease-out transform hover:scale-105 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500"
               >
                 {page}
                 <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
-              </a>
+              </NavLink>
             ))}
           </div>
 
@@ -211,13 +211,13 @@ const Navbar = () => {
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
           <div className="px-4 pt-4 pb-6 space-y-1">
             {["Products", "Pricing", "Blog"].map((page) => (
-              <a
+              <NavLink
                 key={page}
-                href={`/${page.toLowerCase()}`}
+                to={`/${page.toLowerCase()}`}
                 className="block text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium py-2"
               >
                 {page}
-              </a>
+              </NavLink>
             ))}
           </div>
         </div>
