@@ -19,10 +19,11 @@ const Profile = () => {
   });
   const [file, setFile] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [initialData, setInitialData] = useState(null);
 
   useEffect(() => {
     if (profile) {
-      setFormData({
+      const initialProfileData = {
         first_name: profile?.user?.first_name || "",
         last_name: profile?.user?.last_name || "",
         country: profile?.country || "",
@@ -30,9 +31,13 @@ const Profile = () => {
         phone_number: profile?.user?.phone_number || "",
         about: profile?.about || "",
         addressLineOne: profile?.address_line_1 || "",
-      });
+      };
+      setFormData(initialProfileData);
+      setInitialData(initialProfileData); // Save initial data
     }
   }, [profile]);
+
+  const hasChanges = JSON.stringify(formData) !== JSON.stringify(initialData);
 
   if (loading)
     return (
@@ -293,7 +298,7 @@ const Profile = () => {
           {/* Save Button */}
           <motion.button
             type="submit"
-            disabled={saving}
+            disabled={saving || !hasChanges}
             className="w-full bg-gray-800 transition-colors hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 dark:bg-slate-600 dark:hover:bg-slate-500 flex items-center justify-center"
             whileTap={{ scale: 0.95 }}
           >
