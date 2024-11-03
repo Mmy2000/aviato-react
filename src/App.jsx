@@ -13,6 +13,11 @@ import Login from './components/Login'
 import UserContextProvider from './context/UserContext'
 import { ProfileContextProvider } from './context/ProfileContext'
 import Profile from './components/Profile'
+import ProtectedRoute from './components/ProtectedRoute'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 let router = createBrowserRouter([
   {
@@ -37,53 +42,60 @@ let router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
 ]);
 
+const queryClient = new QueryClient();
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <UserContextProvider>
-        <ProfileContextProvider>
-          <RouterProvider router={router}></RouterProvider>
-          <Toaster
-            toastOptions={{
-              className: "",
-              duration: 4000,
-              style: {
-                padding: "12px 16px",
-                color: "#2d3748",
-                backgroundColor: "#fff",
-                borderRadius: "8px",
-                boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
-              },
-              success: {
-                icon: "✅",
+      <QueryClientProvider client={queryClient}>
+        <UserContextProvider>
+          <ProfileContextProvider>
+            <RouterProvider router={router}></RouterProvider>
+            <Toaster
+              toastOptions={{
+                className: "",
+                duration: 4000,
                 style: {
-                  color: "#2f855a",
+                  padding: "12px 16px",
+                  color: "#2d3748",
+                  backgroundColor: "#fff",
+                  borderRadius: "8px",
+                  boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
                 },
-              },
-              error: {
-                icon: "❌",
-                style: {
-                  color: "#c53030",
+                success: {
+                  icon: "✅",
+                  style: {
+                    color: "#2f855a",
+                  },
                 },
-              },
-              info: {
-                icon: "ℹ️",
-                style: {
-                  color: "#2b6cb0",
+                error: {
+                  icon: "❌",
+                  style: {
+                    color: "#c53030",
+                  },
                 },
-              },
-            }}
-          />
-        </ProfileContextProvider>
-      </UserContextProvider>
+                info: {
+                  icon: "ℹ️",
+                  style: {
+                    color: "#2b6cb0",
+                  },
+                },
+              }}
+            />
+          </ProfileContextProvider>
+        </UserContextProvider>
+      </QueryClientProvider>
     </>
   );
 }
