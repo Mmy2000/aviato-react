@@ -4,6 +4,7 @@ import React from "react";
 import Spinner from "../ui/Spinner";
 import { FaShoppingCart } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export const Products = () => {
   const fetchProducts = () => {
@@ -53,9 +54,11 @@ export const Products = () => {
               </div>
             </div>
             <div className="p-5">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 truncate">
-                {product.name}
-              </h2>
+              <Link to={`/products/${product.id}`}>
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 truncate">
+                  {product.name}
+                </h2>
+              </Link>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">
                 {product.description || "No description available."}
               </p>
