@@ -80,7 +80,6 @@ const Profile = () => {
       if (response.ok) {
         setProfile(data?.data); // Update context
         toast.success("Profile updated Successfully");    
-        console.log(data.data);
             
         setEditMode(false);
       } else {

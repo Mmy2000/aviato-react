@@ -15,9 +15,7 @@ export const ProfileContextProvider = (props) => {
 
   let headers = {
     Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
-  };  
-  console.log(headers);
-  
+  };    
 
   // Function to fetch the profile data
   const fetchProfile = async () => {
