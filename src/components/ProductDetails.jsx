@@ -57,9 +57,7 @@ export const ProductDetails = () => {
       </div>
     );
   }
-      console.log(productDetails.color_variations);
-
-  
+      
   return (
     <>
       <button
@@ -111,119 +109,129 @@ export const ProductDetails = () => {
           <p className="text-gray-700 dark:text-gray-300">
             {productDetails?.description}
           </p>
-          <div className="flex space-x-20">
-            <div className="w-1/3">
-              <span className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
-                Color:
-              </span>
-              <Listbox value={selectedColor} onChange={setSelectedColor}>
-                <div className="relative mt-1">
-                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200">
-                    <span className="block truncate">
-                      {selectedColor?.variation_value || "Select a color"}
-                    </span>
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      <ChevronDownIcon
-                        className="w-5 h-5 text-gray-400 dark:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Listbox.Button>
-                  <Listbox.Options className="absolute w-full py-1 mt-1 bg-white dark:bg-gray-800 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
-                    {productDetails?.color_variations.map((variation) => (
-                      <Listbox.Option
-                        key={variation.id}
-                        value={variation}
-                        className={({ active }) =>
-                          `cursor-pointer select-none relative py-2 pl-10 pr-4 ${
-                            active
-                              ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
-                              : "text-gray-700 dark:text-gray-200"
-                          } transition duration-200 ease-in-out rounded-md`
-                        }
-                      >
-                        {({ selected }) => (
-                          <>
-                            <span
-                              className={`block truncate ${
-                                selected ? "font-medium" : "font-normal"
-                              }`}
-                            >
-                              {variation.variation_value}
-                            </span>
-                            {selected ? (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600 dark:text-blue-400">
-                                <CheckIcon
-                                  className="w-5 h-5"
-                                  aria-hidden="true"
-                                />
-                              </span>
-                            ) : null}
-                          </>
-                        )}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
+          {(productDetails?.color_variations?.length > 0 ||
+            productDetails?.size_variations?.length > 0) && (
+            <div className="flex space-x-20">
+              {/* Color Selection */}
+              {productDetails.color_variations?.length > 0 && (
+                <div className="w-1/3">
+                  <span className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                    Color:
+                  </span>
+                  <Listbox value={selectedColor} onChange={setSelectedColor}>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200">
+                        <span className="block truncate">
+                          {selectedColor?.variation_value || "Select a color"}
+                        </span>
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                          <ChevronDownIcon
+                            className="w-5 h-5 text-gray-400 dark:text-gray-500"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Listbox.Button>
+                      <Listbox.Options className="absolute w-full py-1 mt-1 bg-white dark:bg-gray-800 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
+                        {productDetails.color_variations.map((variation) => (
+                          <Listbox.Option
+                            key={variation.id}
+                            value={variation}
+                            className={({ active }) =>
+                              `cursor-pointer select-none relative py-2 pl-10 pr-4 ${
+                                active
+                                  ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                  : "text-gray-700 dark:text-gray-200"
+                              } transition duration-200 ease-in-out rounded-md`
+                            }
+                          >
+                            {({ selected }) => (
+                              <>
+                                <span
+                                  className={`block truncate ${
+                                    selected ? "font-medium" : "font-normal"
+                                  }`}
+                                >
+                                  {variation.variation_value}
+                                </span>
+                                {selected ? (
+                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600 dark:text-blue-400">
+                                    <CheckIcon
+                                      className="w-5 h-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </div>
+                  </Listbox>
                 </div>
-              </Listbox>
-            </div>
+              )}
 
-            <div className="w-1/3">
-              <span className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
-                Size:
-              </span>
-              <Listbox value={selectedSize} onChange={setSelectedSize}>
-                <div className="relative mt-1">
-                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200">
-                    <span className="block truncate">
-                      {selectedSize?.variation_value || "Select a size"}
-                    </span>
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      <ChevronDownIcon
-                        className="w-5 h-5 text-gray-400 dark:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Listbox.Button>
-                  <Listbox.Options className="absolute w-full py-1 mt-1 bg-white dark:bg-gray-800 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
-                    {productDetails?.size_variations.map((size) => (
-                      <Listbox.Option
-                        key={size.id}
-                        value={size}
-                        className={({ active }) =>
-                          `cursor-pointer select-none relative py-2 pl-10 pr-4 ${
-                            active
-                              ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
-                              : "text-gray-700 dark:text-gray-200"
-                          } transition duration-200 ease-in-out rounded-md`
-                        }
-                      >
-                        {({ selected }) => (
-                          <>
-                            <span
-                              className={`block truncate ${
-                                selected ? "font-medium" : "font-normal"
-                              }`}
-                            >
-                              {size.variation_value}
-                            </span>
-                            {selected ? (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600 dark:text-blue-400">
-                                <CheckIcon
-                                  className="w-5 h-5"
-                                  aria-hidden="true"
-                                />
-                              </span>
-                            ) : null}
-                          </>
-                        )}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
+              {/* Size Selection */}
+              {productDetails.size_variations?.length > 0 && (
+                <div className="w-1/3">
+                  <span className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                    Size:
+                  </span>
+                  <Listbox value={selectedSize} onChange={setSelectedSize}>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200">
+                        <span className="block truncate">
+                          {selectedSize?.variation_value || "Select a size"}
+                        </span>
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                          <ChevronDownIcon
+                            className="w-5 h-5 text-gray-400 dark:text-gray-500"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Listbox.Button>
+                      <Listbox.Options className="absolute w-full py-1 mt-1 bg-white dark:bg-gray-800 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
+                        {productDetails.size_variations.map((size) => (
+                          <Listbox.Option
+                            key={size.id}
+                            value={size}
+                            className={({ active }) =>
+                              `cursor-pointer select-none relative py-2 pl-10 pr-4 ${
+                                active
+                                  ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                  : "text-gray-700 dark:text-gray-200"
+                              } transition duration-200 ease-in-out rounded-md`
+                            }
+                          >
+                            {({ selected }) => (
+                              <>
+                                <span
+                                  className={`block truncate ${
+                                    selected ? "font-medium" : "font-normal"
+                                  }`}
+                                >
+                                  {size.variation_value}
+                                </span>
+                                {selected ? (
+                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600 dark:text-blue-400">
+                                    <CheckIcon
+                                      className="w-5 h-5"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </div>
+                  </Listbox>
                 </div>
-              </Listbox>
+              )}
             </div>
-          </div>
+          )}
+
           <div className="flex items-center space-x-2">
             <span className="font-medium dark:text-white">Quantity:</span>
             <button
