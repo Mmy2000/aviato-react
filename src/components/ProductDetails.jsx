@@ -7,6 +7,11 @@ import {
   ListboxButton,
   ListboxOption,
   ListboxOptions,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import Slider from "react-slick";
@@ -293,6 +298,51 @@ export const ProductDetails = () => {
             ADD TO CART
           </button>
         </div>
+      </div>
+      <div>
+        <TabGroup className="mt-5">
+          {/* Tab List with enhanced styling */}
+          <TabList className="flex space-x-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 p-1 dark:from-gray-700 dark:to-gray-800 shadow-lg">
+            <Tab
+              className={({ selected }) =>
+                `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform
+          ${
+            selected
+              ? "bg-white text-blue-600 scale-105 dark:bg-gray-900 dark:text-blue-400"
+              : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600 "
+          }`
+              }
+            >
+              Description
+            </Tab>
+            <Tab
+              className={({ selected }) =>
+                `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform
+          ${
+            selected
+              ? "bg-white text-blue-600 scale-105 dark:bg-gray-900 dark:text-blue-400"
+              : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600 "
+          }`
+              }
+            >
+              Reviews ({productDetails?.count_review} reviews)
+            </Tab>
+          </TabList>
+
+          {/* Tab Panels with enhanced styling */}
+          <TabPanels>
+            <TabPanel className="p-6 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
+              <p className="text-gray-800 dark:text-gray-200 font-medium">
+                {productDetails?.description}
+              </p>
+            </TabPanel>
+            <TabPanel className="p-6 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
+              <p className="text-gray-800 dark:text-gray-200 font-medium">
+                reviews and reveiw for will display her
+              </p>
+            </TabPanel>
+          </TabPanels>
+        </TabGroup>
       </div>
     </>
   );

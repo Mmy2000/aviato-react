@@ -37,26 +37,28 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between py-3 items-center">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <NavLink to={"/"} className="flex items-center">
-              <span className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
-                Aviato
-              </span>
-            </NavLink>
-          </div>
-
-          {/* Main Menu */}
-          <div className="hidden md:flex space-x-8">
-            {["Products", "Categories", "Brands","Blog"].map((page) => (
-              <NavLink
-                key={page}
-                to={`/${page.toLowerCase()}`}
-                className="relative text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 ease-out transform hover:scale-105 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500"
-              >
-                {page}
-                <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
+          <div className="flex justify-center items-center space-x-20">
+            <div className="flex-shrink-0">
+              <NavLink to={"/"} className="flex items-center">
+                <span className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
+                  Aviato
+                </span>
               </NavLink>
-            ))}
+            </div>
+
+            {/* Main Menu */}
+            <div className="hidden md:flex space-x-8">
+              {["Products", "Categories", "Brands", "Blog"].map((page) => (
+                <NavLink
+                  key={page}
+                  to={`/${page.toLowerCase()}`}
+                  className="relative text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 ease-out transform hover:scale-105 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500"
+                >
+                  {page}
+                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
+                </NavLink>
+              ))}
+            </div>
           </div>
 
           {/* Right side controls */}
@@ -128,7 +130,7 @@ const Navbar = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <NavLink
-                              to={'/dashboard'}
+                              to={"/dashboard"}
                               className={`block px-4 py-2 text-sm ${
                                 active
                                   ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"

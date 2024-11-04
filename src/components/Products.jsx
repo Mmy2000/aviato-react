@@ -49,7 +49,7 @@ export const Products = () => {
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
               />
-              <div className="absolute top-3 left-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
+              <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                 {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
               </div>
             </div>
@@ -80,7 +80,7 @@ export const Products = () => {
                 </span>
               </div>
               <motion.button
-                className="mt-5 w-full flex items-center justify-center bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 focus:outline-none transition-all duration-200"
+                className="mt-5 w-full flex items-center justify-center bg-gray-600 text-white py-2 rounded-full hover:bg-slate-700 focus:outline-none transition-all duration-200"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
