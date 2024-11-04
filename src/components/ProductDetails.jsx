@@ -9,7 +9,7 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-
+import Slider from "react-slick";
 
 export const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -57,6 +57,15 @@ export const ProductDetails = () => {
       </div>
     );
   }
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+  console.log(productDetails);
+  
       
   return (
     <>
@@ -81,14 +90,33 @@ export const ProductDetails = () => {
         </svg>
         Go Back
       </button>
-      <div className="flex flex-col md:flex-row p-8 gap-8">
-        <div className="w-full md:w-1/2">
-          <img
-            className="w-full max-h-96 object-contain"
-            src={productDetails?.image}
-            alt={productDetails?.name}
-          />
+      <div className="flex flex-col justify-between md:flex-row p-8 gap-8">
+        <div className="w-full md:w-1/3">
+          <Slider {...settings}>
+            {/* Display the main image first */}
+            {productDetails?.image && (
+              <div key="main-image">
+                <img
+                  className="w-full max-h-96 object-contain"
+                  src={productDetails.image}
+                  alt={`${productDetails.name} - Main Image`}
+                />
+              </div>
+            )}
+
+            {/* Loop through additional images */}
+            {productDetails?.images?.map((image, index) => (
+              <div key={`image-${index}`}>
+                <img
+                  className="w-full max-h-96 object-contain"
+                  src={image.image}
+                  alt={`${productDetails.name} - Image ${index + 1}`}
+                />
+              </div>
+            ))}
+          </Slider>
         </div>
+
         <div className="w-full md:w-1/2 flex flex-col space-y-6">
           <h1 className="text-2xl font-bold dark:text-white">
             {productDetails?.name}

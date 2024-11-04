@@ -47,7 +47,7 @@ const Navbar = () => {
 
           {/* Main Menu */}
           <div className="hidden md:flex space-x-8">
-            {["Products", "Pricing", "Blog"].map((page) => (
+            {["Products", "Categories", "Brands","Blog"].map((page) => (
               <NavLink
                 key={page}
                 to={`/${page.toLowerCase()}`}
