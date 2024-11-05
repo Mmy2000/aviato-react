@@ -447,7 +447,7 @@ export const ProductDetails = () => {
                       rows="4"
                     ></textarea>
 
-                    <button className="w-full mt-4 py-2 bg-black text-white rounded dark:bg-white dark:text-black font-semibold">
+                    <button className="mt-4 w-full py-2 px-4 bg-black text-white rounded hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600">
                       Submit Review
                     </button>
                   </div>
