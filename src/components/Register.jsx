@@ -15,7 +15,7 @@ export default function Register() {
     exit: { opacity: 0, y: -20 }, // Exit with fade out and slight upward motion
   };
   let navigate = useNavigate();
-  let { setUserLogin } = useContext(UserContext);
+  let { setUserLogin, userLogin } = useContext(UserContext);
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -116,10 +116,10 @@ export default function Register() {
           phone_number: formData.phone_number,
         }
       );
-      console.log(response.data.data.tokens.access_token);
       localStorage.setItem("userTaken", response?.data?.data?.tokens?.access_token);
-      setUserLogin(response?.data?.data?.tokens?.access_token);
-
+      setUserLogin(response.data.data.tokens.access_token);
+      console.log(userLogin);
+      
       toast.success("Registered Successfully");
       setFormData({
         first_name: "",

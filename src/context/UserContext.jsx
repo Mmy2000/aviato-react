@@ -4,16 +4,21 @@ export let UserContext = createContext();
 
 export default function UserContextProvider(props) {
   const [userLogin, setUserLogin] = useState(null);
+
   useEffect(() => {
-    if (localStorage.getItem("userTaken") !== null) {
-      setUserLogin(localStorage.getItem("userTaken"));
+    const storedToken = localStorage.getItem("userTaken");
+    if (storedToken) {
+      setUserLogin(storedToken);
     }
-    console.log(userLogin);
-    
   }, []);
 
+  const updateUserLogin = (token) => {
+    localStorage.setItem("userTaken", token);
+    setUserLogin(token);
+  };
+
   return (
-    <UserContext.Provider value={{ userLogin, setUserLogin }}>
+    <UserContext.Provider value={{ userLogin, setUserLogin: updateUserLogin }}>
       {props.children}
     </UserContext.Provider>
   );

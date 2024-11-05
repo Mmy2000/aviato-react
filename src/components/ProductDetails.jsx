@@ -308,7 +308,7 @@ export const ProductDetails = () => {
                 `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform
           ${
             selected
-              ? "bg-white text-blue-600 scale-105 dark:bg-gray-900 dark:text-blue-400"
+              ? "bg-white text-blue-600  dark:bg-gray-900 dark:text-blue-400"
               : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600 "
           }`
               }
@@ -320,7 +320,7 @@ export const ProductDetails = () => {
                 `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform
           ${
             selected
-              ? "bg-white text-blue-600 scale-105 dark:bg-gray-900 dark:text-blue-400"
+              ? "bg-white text-blue-600  dark:bg-gray-900 dark:text-blue-400"
               : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600 "
           }`
               }

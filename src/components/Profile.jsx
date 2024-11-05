@@ -65,17 +65,26 @@ const Profile = () => {
       formDataToSend.append(key, value);
     });
     if (file) formDataToSend.append("image", file);
+    const userToken = localStorage.getItem("userTaken");
+
+    if (!userToken) {
+      console.error("User token not found in localStorage.");
+      toast.error("Unable to update profile. Please log in again.");
+      setSaving(false);
+      return;
+    }
+    
 
     try {
       const response = await fetch(
         "http://127.0.0.1:8000/accounts/api/profile/",
         {
           method: "PUT",
-          headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}` },
+          headers: { Authorization: `Bearer ${userToken}` },
           body: formDataToSend,
         }
       );
-      const data = await response.json();
+      const data = await response.json();      
 
       if (response.ok) {
         setProfile(data?.data); // Update context
@@ -111,7 +120,7 @@ const Profile = () => {
           <motion.img
             src={profile?.image || "default-avatar.png"}
             alt={`${profile?.full_name}'s avatar`}
-            className="w-36 h-36 rounded-full border-4 border-indigo-600 dark:border-indigo-500 shadow-lg"
+            className="w-36 h-36 rounded-full border-4 object-cover border-indigo-600 dark:border-indigo-500 shadow-lg"
             whileHover={{ scale: 1.1 }}
           />
           <h1 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
@@ -285,7 +294,7 @@ const Profile = () => {
               <img
                 src={profile?.image || "default-avatar.png"}
                 alt="Profile"
-                className="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-600 shadow-md"
+                className="w-12 h-12 object-cover rounded-full border border-gray-200 dark:border-gray-600 shadow-md"
               />
               <input
                 type="file"

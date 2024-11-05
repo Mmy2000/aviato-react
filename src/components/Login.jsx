@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 export default function Login() {
   let navigate = useNavigate()
-  let { setUserLogin } = useContext(UserContext);
+  let { setUserLogin,userLogin } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -78,12 +78,13 @@ export default function Login() {
           password: formData.password,
         }
       );
-      console.log(response.data.data.tokens.access_token);
       localStorage.setItem(
         "userTaken",
         response?.data?.data?.tokens?.access_token
       );
-      setUserLogin(response?.data?.data?.tokens?.access_token);
+      const token = response?.data?.data?.tokens?.access_token;
+      setUserLogin(token);
+      
 
       toast.success("Logged in Successfully");
       setFormData({
@@ -104,6 +105,12 @@ export default function Login() {
       setIsLoading(false);
     }
   };
+  useEffect(() => {
+    // Log userLogin whenever it changes
+    if (userLogin) {
+      console.log("userLogin updated:", userLogin);
+    }
+  }, [userLogin]);
 
   return (
     <motion.div
