@@ -337,9 +337,122 @@ export const ProductDetails = () => {
               </p>
             </TabPanel>
             <TabPanel className="p-6 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
-              <p className="text-gray-800 dark:text-gray-200 font-medium">
-                reviews and reveiw for will display her
-              </p>
+              <div className="flex justify-between space-x-8">
+                {/* Reviews List */}
+                <div className="w-full md:w-2/3 mx-auto p-4 md:p-6">
+                  <h3 className="text-2xl font-bold dark:text-white mb-8 text-gray-900 dark:text-gray-100">
+                    Reviews for "{productDetails?.name}"
+                  </h3>
+
+                  <div className="space-y-8">
+                    {productDetails?.reviewrating &&
+                    productDetails.reviewrating.length > 0 ? (
+                      productDetails.reviewrating.map((review, index) => (
+                        <div
+                          key={index}
+                          className="flex items-start p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition duration-300 ease-in-out hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-600 transform "
+                        >
+                          {/* User Avatar */}
+                          <img
+                            src={
+                              review?.user?.profile?.image ||
+                              "default-avatar.jpg"
+                            }
+                            alt={review?.user?.username}
+                            className="w-14 h-14 object-cover rounded-full mr-4 shadow-lg border-2 border-gray-200 dark:border-gray-600"
+                          />
+
+                          <div className="flex-1">
+                            {/* User Name and Date */}
+                            <div className="flex justify-between items-center mb-2">
+                              <h4 className="font-semibold text-lg dark:text-white text-gray-900">
+                                {review.user.full_name || review.user.username}
+                              </h4>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                {new Date(review.updated_at).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    month: "short",
+                                    day: "numeric",
+                                    year: "numeric",
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                  }
+                                )}
+                              </p>
+                            </div>
+
+                            {/* Rating */}
+                            <div className="flex items-center mt-1 mb-3 text-yellow-500">
+                              {Array.from({ length: 5 }, (_, i) => (
+                                <span
+                                  key={i}
+                                  className={`text-xl ${i < review.rating ? "text-yellow-400" : "text-gray-300 dark:text-gray-600"}`}
+                                >
+                                  {i < review.rating ? "★" : "☆"}
+                                </span>
+                              ))}
+                            </div>
+
+                            <h5 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                              {review.subject}
+                            </h5>
+
+                            {/* Comment */}
+                            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                              {review.review}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-gray-600 dark:text-gray-400">
+                        There are no reviews yet for this product. Be the first
+                        to share your thoughts!
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Review Form */}
+                <div className="w-1/3 p-6 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md">
+                  <h4 className="text-xl font-semibold dark:text-white mb-4">
+                    Leave a review
+                  </h4>
+                  <div>
+                    <p className="dark:text-gray-200 mb-2">
+                      How do you rate this product?
+                    </p>
+                    <div className="flex items-center mb-4 text-yellow-500">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <span key={i} className="cursor-pointer">
+                          ★
+                        </span>
+                      ))}
+                    </div>
+
+                    <label className="block dark:text-gray-200 mb-2">
+                      Subject:
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                    />
+
+                    <label className="block dark:text-gray-200 mt-4 mb-2">
+                      Your Review:
+                    </label>
+                    <textarea
+                      className="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                      rows="4"
+                    ></textarea>
+
+                    <button className="w-full mt-4 py-2 bg-black text-white rounded dark:bg-white dark:text-black font-semibold">
+                      Submit Review
+                    </button>
+                  </div>
+                </div>
+              </div>
             </TabPanel>
           </TabPanels>
         </TabGroup>
