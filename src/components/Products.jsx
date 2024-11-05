@@ -5,6 +5,7 @@ import Spinner from "../ui/Spinner";
 import { FaShoppingCart } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Rating from "@mui/material/Rating";
 
 export const Products = () => {
   const fetchProducts = () => {
@@ -63,20 +64,21 @@ export const Products = () => {
                 {product.description || "No description available."}
               </p>
               <div className="flex items-center mt-3">
-                <div className="flex text-yellow-500 text-sm">
-                  {[...Array(5)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className="w-4 h-4 fill-current"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 2.25l2.94 6.23 6.85 1-4.94 4.82 1.17 6.85-6.02-3.16-6.02 3.16L7.15 14.3 2.21 9.48l6.85-1z" />
-                    </svg>
-                  ))}
+                <div className="flex text-sm">
+                  <Rating
+                    value={product.avr_review} // Sets the rating value from `product.avr_review`
+                    precision={0.5} // Allows half-star ratings
+                    readOnly // Makes it non-interactive
+                    sx={{
+                      color: "slategray", // Sets the color of filled stars to gray
+                      "& .MuiRating-iconEmpty": {
+                        color: "#d1d5db", // Sets the color of empty stars to a lighter gray (use any hex or color value)
+                      },
+                    }}
+                  />
                 </div>
                 <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
-                  (123 reviews)
+                  ({product.count_review} reviews)
                 </span>
               </div>
               <motion.button

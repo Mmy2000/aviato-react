@@ -15,6 +15,16 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import Slider from "react-slick";
+import Rating from "@mui/material/Rating";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+} from "@mui/material";
+import toast from "react-hot-toast";
+
 
 export const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -24,7 +34,65 @@ export const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [loadingSubmitBtn, setLoadingSubmitBtn] = useState(false);
   const [error, setError] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [subject, setSubject] = useState("");
+  const [reviewText, setReviewText] = useState("");
+  const [hover, setHover] = useState(-1);
+  const labels = {
+    0.5: "Useless",
+    1: "Useless+",
+    1.5: "Poor",
+    2: "Poor+",
+    2.5: "Ok",
+    3: "Ok+",
+    3.5: "Good",
+    4: "Good+",
+    4.5: "Excellent",
+    5: "Excellent+",
+  };
+
+  const handleSubmit = async () => {
+    if (loadingSubmitBtn) return;
+    setLoadingSubmitBtn(true)
+    try {
+      
+      const response = await axios.post(
+        "http://localhost:8000/products/api/reviews/", // adjust to your endpoint path
+        {
+          product: id,
+          subject,
+          review: reviewText,
+          rating,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userTaken")}`, // use auth token if needed
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        toast.success("Review created successfully!");
+        setRating(null);
+        setSubject("");
+        setReviewText("");
+        await getProductDetails(id); 
+      } else {
+        toast.success("Review updated successfully!");
+        setRating(null);
+        setSubject("");
+        setReviewText("");
+        await getProductDetails(id);
+      }
+    } catch (error) {
+      toast.error("There was an error submitting your review:", error);
+    }
+    finally {
+      setLoadingSubmitBtn(false);
+    }
+  };
 
   const getProductDetails = async (id) => {
     try {
@@ -42,7 +110,6 @@ export const ProductDetails = () => {
   };
   useEffect(() => {
     getProductDetails(id);
-    
   }, [id]);
   const handleQuantityChange = (amount) => {
     setQuantity((prev) => Math.max(1, prev + amount));
@@ -54,6 +121,7 @@ export const ProductDetails = () => {
       </div>
     );
   }
+
 
   if (error) {
     return (
@@ -69,8 +137,10 @@ export const ProductDetails = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  console.log(productDetails);
   
+  const handleRatingChange = (event, newValue) => {
+    setRating(newValue);
+  };
       
   return (
     <>
@@ -130,11 +200,13 @@ export const ProductDetails = () => {
             ${productDetails?.price}
           </p>
           <div className="flex items-center text-yellow-400 text-lg">
-            <span className="text-black dark:text-white mr-2">
-              {productDetails?.avr_review}
-            </span>
-            {"★".repeat(productDetails?.avr_review)}
-            {"☆".repeat(5 - productDetails?.avr_review)}
+            {/* MUI Rating component */}
+            <Rating
+              value={productDetails?.avr_review || 0} // Display the average rating
+              precision={0.5} // Allows half-star ratings if needed
+              readOnly // Makes the rating non-interactive
+            />
+
             <span className="ml-2 text-gray-600 dark:text-gray-400">
               ({productDetails?.count_review} Reviews)
             </span>
@@ -299,10 +371,10 @@ export const ProductDetails = () => {
           </button>
         </div>
       </div>
-      <div>
+      <div className="">
         <TabGroup className="mt-5">
           {/* Tab List with enhanced styling */}
-          <TabList className="flex space-x-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 p-1 dark:from-gray-700 dark:to-gray-800 shadow-lg">
+          <TabList className="flex w-1/3 space-x-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 p-1 dark:from-gray-700 dark:to-gray-800 shadow-lg">
             <Tab
               className={({ selected }) =>
                 `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform
@@ -340,14 +412,14 @@ export const ProductDetails = () => {
               <div className="flex justify-between space-x-8">
                 {/* Reviews List */}
                 <div className="w-full md:w-2/3 mx-auto p-4 md:p-6">
-                  <h3 className="text-2xl font-bold dark:text-white mb-8 text-gray-900 dark:text-gray-100">
+                  <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-gray-100">
                     Reviews for "{productDetails?.name}"
                   </h3>
 
                   <div className="space-y-8">
                     {productDetails?.reviewrating &&
                     productDetails.reviewrating.length > 0 ? (
-                      productDetails.reviewrating.map((review, index) => (
+                      productDetails?.reviewrating.map((review, index) => (
                         <div
                           key={index}
                           className="flex items-start p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition duration-300 ease-in-out hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-600 transform "
@@ -383,15 +455,18 @@ export const ProductDetails = () => {
                             </div>
 
                             {/* Rating */}
-                            <div className="flex items-center mt-1 mb-3 text-yellow-500">
-                              {Array.from({ length: 5 }, (_, i) => (
-                                <span
-                                  key={i}
-                                  className={`text-xl ${i < review.rating ? "text-yellow-400" : "text-gray-300 dark:text-gray-600"}`}
-                                >
-                                  {i < review.rating ? "★" : "☆"}
-                                </span>
-                              ))}
+                            <div className="flex items-center mt-1 mb-3">
+                              <Rating
+                                value={review.rating} // Sets the rating value from `review.rating`
+                                precision={0.5} // Set precision to 1 for whole stars
+                                readOnly // Makes it non-interactive
+                                sx={{
+                                  color: "text-yellow-500", // Adds yellow color to filled stars
+                                  "& .MuiRating-iconEmpty": {
+                                    color: "text-gray-300 dark:text-gray-600", // Adds gray color to empty stars
+                                  },
+                                }}
+                              />
                             </div>
 
                             <h5 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">
@@ -415,43 +490,91 @@ export const ProductDetails = () => {
                 </div>
 
                 {/* Review Form */}
-                <div className="w-1/3 p-6 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md">
-                  <h4 className="text-xl font-semibold dark:text-white mb-4">
+                <Box
+                  sx={{
+                    width: "33%",
+                    p: 3,
+                    backgroundColor: "background.paper",
+                    borderRadius: 2,
+                    boxShadow: 3,
+                  }}
+                >
+                  <Typography variant="h5" component="h4" gutterBottom>
                     Leave a review
-                  </h4>
-                  <div>
-                    <p className="dark:text-gray-200 mb-2">
-                      How do you rate this product?
-                    </p>
-                    <div className="flex items-center mb-4 text-yellow-500">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <span key={i} className="cursor-pointer">
-                          ★
-                        </span>
-                      ))}
-                    </div>
+                  </Typography>
 
-                    <label className="block dark:text-gray-200 mb-2">
-                      Subject:
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                  <Typography variant="body1" sx={{ mb: 2 }}>
+                    How do you rate this product?
+                  </Typography>
+
+                  <Box display="flex" alignItems="center" mb={2}>
+                    <Rating
+                      name="product-rating"
+                      value={rating}
+                      precision={0.5}
+                      onChange={handleRatingChange}
+                      onChangeActive={(event, newHover) => {
+                        setHover(newHover); // Sets hover state
+                      }}
                     />
+                    {rating !== null && (
+                      <Typography sx={{ ml: 2 }}>
+                        {labels[hover !== -1 ? hover : rating]}
+                      </Typography>
+                    )}
+                  </Box>
 
-                    <label className="block dark:text-gray-200 mt-4 mb-2">
-                      Your Review:
-                    </label>
-                    <textarea
-                      className="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                      rows="4"
-                    ></textarea>
+                  <TextField
+                    label="Subject"
+                    variant="outlined"
+                    fullWidth
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    sx={{
+                      mb: 2,
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "background.default",
+                        color: "text.primary",
+                      },
+                    }}
+                  />
 
-                    <button className="mt-4 w-full py-2 px-4 bg-black text-white rounded hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600">
-                      Submit Review
-                    </button>
-                  </div>
-                </div>
+                  <TextField
+                    label="Your Review"
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    fullWidth
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    sx={{
+                      mb: 2,
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "background.default",
+                        color: "text.primary",
+                      },
+                    }}
+                  />
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={handleSubmit}
+                    disabled={loadingSubmitBtn}
+                    sx={{
+                      mt: 2,
+                      backgroundColor: "black",
+                      "&:hover": { backgroundColor: "gray" },
+                    }}
+                  >
+                    {loadingSubmitBtn ? (
+                      <CircularProgress size={24} sx={{ color: "white" }} /> // Loading spinner
+                    ) : (
+                      "Submit Review"
+                    )}
+                  </Button>
+                </Box>
               </div>
             </TabPanel>
           </TabPanels>
