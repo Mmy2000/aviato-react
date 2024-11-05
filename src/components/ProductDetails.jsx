@@ -24,9 +24,11 @@ import {
   CircularProgress,
 } from "@mui/material";
 import toast from "react-hot-toast";
+import { useTheme } from "@mui/material/styles";
 
 
 export const ProductDetails = () => {
+  const theme = useTheme();
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const navigate = useNavigate();
@@ -141,6 +143,9 @@ export const ProductDetails = () => {
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
   };
+
+  console.log(productDetails);
+  
       
   return (
     <>
