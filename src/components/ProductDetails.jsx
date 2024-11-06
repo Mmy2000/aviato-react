@@ -442,12 +442,12 @@ export const ProductDetails = () => {
           </TabList>
 
           <TabPanels>
-            <TabPanel className="p-4 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
+            <TabPanel className="p-4 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-sm transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
               <p className="text-gray-800 dark:text-gray-200 font-medium">
                 {productDetails?.description}
               </p>
             </TabPanel>
-            <TabPanel className="p-4 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
+            <TabPanel className="p-4 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-sm  transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
               <div className="flex flex-col lg:flex-row lg:space-x-8">
                 <div className="w-full lg:w-1/2 p-4">
                   <h3 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-8 text-gray-900 dark:text-gray-100">

@@ -64,8 +64,11 @@ const LatestProducts = () => {
                       value={item.avr_review}
                       precision={0.5}
                       readOnly
+                      sx={{ color: "slategray" }}
                     />
-                    <span className="ms-4 text-gray-900 font-mono dark:text-gray-200 mb-2">({item.count_review})</span>
+                    <span className="ms-4 text-gray-900 font-mono dark:text-gray-200 mb-2">
+                      ({item.count_review})
+                    </span>
                   </div>
                 </div>
               </div>
