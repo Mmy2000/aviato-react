@@ -19,6 +19,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ProductDetails } from './components/ProductDetails'
+import Categories from './components/Categories'
+import Brands from './components/Brands'
 
 
 let router = createBrowserRouter([
@@ -33,6 +35,14 @@ let router = createBrowserRouter([
       {
         path: "products",
         element: <Products />,
+      },
+      {
+        path: "categories",
+        element: <Categories />,
+      },
+      {
+        path: "brands",
+        element: <Brands />,
       },
       {
         path: "products/:id/:category",

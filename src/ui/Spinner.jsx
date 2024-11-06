@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Spinner = () => {
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex justify-center items-center h-screen">
       <motion.div
         className="professional-spinner"
         initial={{ rotate: 0 }}
