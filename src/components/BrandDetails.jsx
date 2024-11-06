@@ -36,6 +36,9 @@ const BrandDetails = () => {
     getRelatedProducts();
   }, [brand]);
 
+  if (loading) return <Spinner />;
+  if (error) return <p>{error}</p>;
+
   return (
     <div className="flex flex-col lg:flex-row ">
       <div className=" space-y-4 p-6">

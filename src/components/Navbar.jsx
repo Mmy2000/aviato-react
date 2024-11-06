@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext, useEffect } from "react";
+import React, { useState, Fragment, useContext } from "react";
 import { Switch, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -12,11 +12,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ProfileContext } from "../context/ProfileContext";
 import axios from "axios";
 
-
 const Navbar = () => {
   let navigate = useNavigate();
   let { userLogin, setUserLogin } = useContext(UserContext);
-  let {profile} = useContext(ProfileContext)
+  let { profile } = useContext(ProfileContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -31,6 +30,17 @@ const Navbar = () => {
     navigate("/login");
   }
 
+  const linkClass = (isActive) =>
+    `relative font-medium transition-all duration-300 ease-in-out transform ${
+      isActive
+        ? "text-slate-800 dark:text-slate-700 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-blue-200 dark:to-blue-500 px-2 py-1 rounded-lg shadow-sm shadow-gray-400 dark:shadow-blue-900"
+        : "text-gray-800 dark:text-gray-200 hover:text-blue-500"
+    } hover:bg-gradient-to-r from-gray-200 to-gray-400 dark:hover:from-blue-900 dark:hover:to-blue-800 px-2 py-1 rounded-lg transition-all`;
+
+  const underlineClass = (isActive) =>
+    `absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 transition-transform duration-300 ${
+      isActive ? "scale-x-100" : "scale-x-0 hover:scale-x-100"
+    } origin-left rounded-full`;
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow fixed w-full z-30 top-0 left-0 transition-all duration-300 ease-in-out">
@@ -52,10 +62,12 @@ const Navbar = () => {
                 <NavLink
                   key={page}
                   to={`/${page.toLowerCase()}`}
-                  className="relative text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 ease-out transform hover:scale-105 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500"
+                  className={({ isActive }) => linkClass(isActive)}
                 >
                   {page}
-                  <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 scale-x-0 origin-left transition-transform duration-300 hover:scale-x-100" />
+                  <span
+                    className={({ isActive }) => underlineClass(isActive)}
+                  />
                 </NavLink>
               ))}
             </div>
@@ -216,9 +228,10 @@ const Navbar = () => {
               <NavLink
                 key={page}
                 to={`/${page.toLowerCase()}`}
-                className="block text-gray-800 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium py-2"
+                className={({ isActive }) => linkClass(isActive)}
               >
                 {page}
+                <span className={({ isActive }) => underlineClass(isActive)} />
               </NavLink>
             ))}
           </div>
