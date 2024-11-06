@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Spinner from "../ui/Spinner";
+import { Link } from "react-router-dom";
 
 const Brands = ({ onBrandSelect }) => {
   const [brands, setBrands] = useState([]);
@@ -57,7 +58,7 @@ const Brands = ({ onBrandSelect }) => {
               )}
               <div>
                 <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-200 mb-2">
-                  {brand.name}
+                  <Link to={`/brands/${brand.id}`}>{brand.name}</Link>
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
                   {brand.description}

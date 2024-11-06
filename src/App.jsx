@@ -21,6 +21,8 @@ import {
 import { ProductDetails } from './components/ProductDetails'
 import Categories from './components/Categories'
 import Brands from './components/Brands'
+import CategoryDetails from './components/CategoryDetails'
+import BrandDetails from './components/BrandDetails'
 
 
 let router = createBrowserRouter([
@@ -41,8 +43,16 @@ let router = createBrowserRouter([
         element: <Categories />,
       },
       {
+        path:"/categories/:category",
+        element: <CategoryDetails />,
+      },
+      {
         path: "brands",
         element: <Brands />,
+      },
+      {
+        path: "brands/:brand",
+        element: <BrandDetails />,
       },
       {
         path: "products/:id/:category",

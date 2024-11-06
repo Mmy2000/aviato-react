@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Spinner from "../ui/Spinner";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -28,6 +29,8 @@ const Categories = () => {
   if (loading) {
     return<Spinner/>
   }
+  console.log(categories);
+  
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">
@@ -56,12 +59,15 @@ const Categories = () => {
               )}
               <div>
                 <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-200 mb-2">
-                  {category.name}
+                  <Link
+                    to={`/categories/${category.id}`}
+                  >
+                    {category.name}
+                  </Link>
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
                   {category.description}
                 </p>
-                
               </div>
             </div>
             <div className="mt-8 ml-6">
@@ -88,7 +94,7 @@ const Categories = () => {
                       />
                     )}
                     <h5 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                      {subcategory.name}
+                        {subcategory.name}
                     </h5>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       {subcategory.description}
