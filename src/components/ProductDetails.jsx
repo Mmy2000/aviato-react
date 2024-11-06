@@ -501,7 +501,6 @@ export const ProductDetails = () => {
                     p: 3,
                     backgroundColor: "background.paper",
                     borderRadius: 2,
-                    boxShadow: 3,
                   }}
                 >
                   <Typography variant="h5" component="h4" gutterBottom>

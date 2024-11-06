@@ -20,6 +20,7 @@ import {
 } from "@tanstack/react-query";
 import { ProductDetails } from './components/ProductDetails'
 
+
 let router = createBrowserRouter([
   {
     path: "",
@@ -63,44 +64,44 @@ function App() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <UserContextProvider>
-          <ProfileContextProvider>
-            <RouterProvider router={router}></RouterProvider>
-            <Toaster
-              toastOptions={{
-                className: "",
-                duration: 4000,
-                style: {
-                  padding: "12px 16px",
-                  color: "#2d3748",
-                  backgroundColor: "#fff",
-                  borderRadius: "8px",
-                  boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
-                },
-                success: {
-                  icon: "✅",
+        <QueryClientProvider client={queryClient}>
+          <UserContextProvider>
+            <ProfileContextProvider>
+              <RouterProvider router={router}></RouterProvider>
+              <Toaster
+                toastOptions={{
+                  className: "",
+                  duration: 4000,
                   style: {
-                    color: "#2f855a",
+                    padding: "12px 16px",
+                    color: "#2d3748",
+                    backgroundColor: "#fff",
+                    borderRadius: "8px",
+                    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
                   },
-                },
-                error: {
-                  icon: "❌",
-                  style: {
-                    color: "#c53030",
+                  success: {
+                    icon: "✅",
+                    style: {
+                      color: "#2f855a",
+                    },
                   },
-                },
-                info: {
-                  icon: "ℹ️",
-                  style: {
-                    color: "#2b6cb0",
+                  error: {
+                    icon: "❌",
+                    style: {
+                      color: "#c53030",
+                    },
                   },
-                },
-              }}
-            />
-          </ProfileContextProvider>
-        </UserContextProvider>
-      </QueryClientProvider>
+                  info: {
+                    icon: "ℹ️",
+                    style: {
+                      color: "#2b6cb0",
+                    },
+                  },
+                }}
+              />
+            </ProfileContextProvider>
+          </UserContextProvider>
+        </QueryClientProvider>
     </>
   );
 }
