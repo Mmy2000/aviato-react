@@ -16,3 +16,13 @@ body {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0));
   box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
 }
+
+.heading-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 80px;
+  height: 2px;
+  background-color:gray;
+}
