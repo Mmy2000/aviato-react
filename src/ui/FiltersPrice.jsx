@@ -20,12 +20,11 @@ export default function FiltersPrice({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <h1 className="text-sm font-bold text-gray-700">Price</h1>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-1 my-4">
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label htmlFor="minPrice" className="text-gray-600">
+            <label htmlFor="minPrice" className="text-gray-600 dark:text-gray-200">
               Min Price
             </label>
             <input
@@ -46,7 +45,7 @@ export default function FiltersPrice({
           </div>
 
           <div>
-            <label htmlFor="maxPrice" className="text-gray-600">
+            <label htmlFor="maxPrice" className="text-gray-600 dark:text-gray-200">
               Max Price
             </label>
             <input
@@ -72,7 +71,7 @@ export default function FiltersPrice({
               id="min-price-input"
               value={minPricePreview}
               readOnly
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 dark:bg-gray-800 p-2.5 text-sm text-gray-900 dark:text-gray-200 focus:border-primary-500 focus:ring-primary-500"
             />
 
             <div className="flex text-sm font-medium text-gray-500">to</div>
@@ -82,7 +81,7 @@ export default function FiltersPrice({
               id="max-price-input"
               value={maxPricePreview}
               readOnly
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 dark:bg-gray-800 dark:text-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
             />
           </div>
         </div>

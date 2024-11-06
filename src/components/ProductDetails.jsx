@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import Spinner from '../ui/Spinner';
+import axios, { all } from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Spinner from "../ui/Spinner";
 import {
   Listbox,
   ListboxButton,
@@ -25,6 +25,8 @@ import {
 } from "@mui/material";
 import toast from "react-hot-toast";
 import { useTheme } from "@mui/material/styles";
+import { motion } from "framer-motion";
+import { FaShoppingCart } from "react-icons/fa";
 
 
 export const ProductDetails = () => {
@@ -32,7 +34,7 @@ export const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const navigate = useNavigate();
-  let { id } = useParams();
+  let { id, category } = useParams();
   const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -54,12 +56,12 @@ export const ProductDetails = () => {
     4.5: "Excellent",
     5: "Excellent+",
   };
+  const [relatedProducts, setRelatedProducts] = useState(null);
 
   const handleSubmit = async () => {
     if (loadingSubmitBtn) return;
-    setLoadingSubmitBtn(true)
+    setLoadingSubmitBtn(true);
     try {
-      
       const response = await axios.post(
         "http://localhost:8000/products/api/reviews/", // adjust to your endpoint path
         {
@@ -80,7 +82,7 @@ export const ProductDetails = () => {
         setRating(null);
         setSubject("");
         setReviewText("");
-        await getProductDetails(id); 
+        await getProductDetails(id);
       } else {
         toast.success("Review updated successfully!");
         setRating(null);
@@ -90,8 +92,7 @@ export const ProductDetails = () => {
       }
     } catch (error) {
       toast.error("There was an error submitting your review:", error);
-    }
-    finally {
+    } finally {
       setLoadingSubmitBtn(false);
     }
   };
@@ -103,16 +104,36 @@ export const ProductDetails = () => {
         `http://127.0.0.1:8000/products/api/product/${id}`
       );
       setProductDetails(data);
-      
     } catch (error) {
       setError("Failed to fetch product details. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
+
+  const getRelatedProducts = async (category) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `http://127.0.0.1:8000/products/api/products`
+      );
+      let allProducts = data?.results;
+      let related = allProducts.filter(
+        (product) => product.category.id == category
+      );
+      setRelatedProducts(related);
+    } catch (error) {
+      setError("Failed to fetch product details. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     getProductDetails(id);
+    getRelatedProducts(category);
   }, [id]);
+
   const handleQuantityChange = (amount) => {
     setQuantity((prev) => Math.max(1, prev + amount));
   };
@@ -124,12 +145,9 @@ export const ProductDetails = () => {
     );
   }
 
-
   if (error) {
     return (
-      <div className="flex items-center w-full justify-center">
-        {error}
-      </div>
+      <div className="flex items-center w-full justify-center">{error}</div>
     );
   }
   var settings = {
@@ -139,14 +157,37 @@ export const ProductDetails = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  
+  const settings2 = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4, // Number of items to show
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
   };
 
   console.log(productDetails);
-  
-      
+  console.log(category);
+
   return (
     <>
       <button
@@ -376,73 +417,64 @@ export const ProductDetails = () => {
           </button>
         </div>
       </div>
-      <div className="">
+      <div className="px-4 sm:px-6 lg:px-8">
         <TabGroup className="mt-5">
-          {/* Tab List with enhanced styling */}
-          <TabList className="flex w-1/3 space-x-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 p-1 dark:from-gray-700 dark:to-gray-800 shadow-lg">
+          <TabList className="flex w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mx-auto space-x-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 p-1 dark:from-gray-700 dark:to-gray-800 shadow-lg">
             <Tab
               className={({ selected }) =>
-                `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform
-          ${
-            selected
-              ? "bg-white text-blue-600  dark:bg-gray-900 dark:text-blue-400"
-              : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600 "
-          }`
+                `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform ${
+                  selected
+                    ? "bg-white text-blue-600 dark:bg-gray-900 dark:text-blue-400"
+                    : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600"
+                }`
               }
             >
               Description
             </Tab>
             <Tab
               className={({ selected }) =>
-                `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform
-          ${
-            selected
-              ? "bg-white text-blue-600  dark:bg-gray-900 dark:text-blue-400"
-              : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600 "
-          }`
+                `w-full py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ease-in-out transform ${
+                  selected
+                    ? "bg-white text-blue-600 dark:bg-gray-900 dark:text-blue-400"
+                    : "text-gray-600 dark:text-gray-300 hover:bg-blue-50/[0.5] dark:hover:bg-gray-600"
+                }`
               }
             >
               Reviews ({productDetails?.count_review} reviews)
             </Tab>
           </TabList>
 
-          {/* Tab Panels with enhanced styling */}
           <TabPanels>
-            <TabPanel className="p-6 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
+            <TabPanel className="p-4 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
               <p className="text-gray-800 dark:text-gray-200 font-medium">
                 {productDetails?.description}
               </p>
             </TabPanel>
-            <TabPanel className="p-6 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
-              <div className="flex justify-between space-x-8">
-                {/* Reviews List */}
-                <div className="w-full md:w-2/3 mx-auto p-4 md:p-6">
-                  <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-gray-100">
+            <TabPanel className="p-4 mt-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-2xl transition-colors duration-500 ease-in-out dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900">
+              <div className="flex flex-col lg:flex-row lg:space-x-8">
+                <div className="w-full lg:w-1/2 p-4">
+                  <h3 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-8 text-gray-900 dark:text-gray-100">
                     Reviews for "{productDetails?.name}"
                   </h3>
-
-                  <div className="space-y-8">
+                  <div className="space-y-4 lg:space-y-8">
                     {productDetails?.reviewrating &&
                     productDetails.reviewrating.length > 0 ? (
                       productDetails?.reviewrating.map((review, index) => (
                         <div
                           key={index}
-                          className="flex items-start p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition duration-300 ease-in-out hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-600 transform "
+                          className="flex items-start p-4 lg:p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition duration-300 ease-in-out hover:shadow-xl hover:border-gray-300 dark:hover:border-gray-600 transform"
                         >
-                          {/* User Avatar */}
                           <img
                             src={
                               review?.user?.profile?.image ||
                               "default-avatar.jpg"
                             }
                             alt={review?.user?.username}
-                            className="w-14 h-14 object-cover rounded-full mr-4 shadow-lg border-2 border-gray-200 dark:border-gray-600"
+                            className="w-10 h-10 lg:w-14 lg:h-14 object-cover rounded-full mr-4 shadow-lg border-2 border-gray-200 dark:border-gray-600"
                           />
-
                           <div className="flex-1">
-                            {/* User Name and Date */}
                             <div className="flex justify-between items-center mb-2">
-                              <h4 className="font-semibold text-lg dark:text-white text-gray-900">
+                              <h4 className="font-semibold text-sm lg:text-lg dark:text-white text-gray-900">
                                 {review.user.full_name || review.user.username}
                               </h4>
                               <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -458,27 +490,22 @@ export const ProductDetails = () => {
                                 )}
                               </p>
                             </div>
-
-                            {/* Rating */}
                             <div className="flex items-center mt-1 mb-3">
                               <Rating
-                                value={review.rating} // Sets the rating value from `review.rating`
-                                precision={0.5} // Set precision to 1 for whole stars
-                                readOnly // Makes it non-interactive
+                                value={review.rating}
+                                precision={0.5}
+                                readOnly
                                 sx={{
-                                  color: "text-yellow-500", // Adds yellow color to filled stars
+                                  color: "text-yellow-500",
                                   "& .MuiRating-iconEmpty": {
-                                    color: "text-gray-300 dark:text-gray-600", // Adds gray color to empty stars
+                                    color: "text-gray-300 dark:text-gray-600",
                                   },
                                 }}
                               />
                             </div>
-
                             <h5 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">
                               {review.subject}
                             </h5>
-
-                            {/* Comment */}
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                               {review.review}
                             </p>
@@ -496,9 +523,8 @@ export const ProductDetails = () => {
 
                 {/* Review Form */}
                 <Box
+                  className="w-full lg:w-1/2 p-3 mt-8 lg:mt-0" // Responsive margin control using Tailwind classes
                   sx={{
-                    width: "33%",
-                    p: 3,
                     backgroundColor: "background.paper",
                     borderRadius: 2,
                   }}
@@ -506,20 +532,16 @@ export const ProductDetails = () => {
                   <Typography variant="h5" component="h4" gutterBottom>
                     Leave a review
                   </Typography>
-
                   <Typography variant="body1" sx={{ mb: 2 }}>
                     How do you rate this product?
                   </Typography>
-
                   <Box display="flex" alignItems="center" mb={2}>
                     <Rating
                       name="product-rating"
                       value={rating}
                       precision={0.5}
                       onChange={handleRatingChange}
-                      onChangeActive={(event, newHover) => {
-                        setHover(newHover); // Sets hover state
-                      }}
+                      onChangeActive={(event, newHover) => setHover(newHover)}
                     />
                     {rating !== null && (
                       <Typography sx={{ ml: 2 }}>
@@ -527,7 +549,6 @@ export const ProductDetails = () => {
                       </Typography>
                     )}
                   </Box>
-
                   <TextField
                     label="Subject"
                     variant="outlined"
@@ -542,7 +563,6 @@ export const ProductDetails = () => {
                       },
                     }}
                   />
-
                   <TextField
                     label="Your Review"
                     variant="outlined"
@@ -559,7 +579,6 @@ export const ProductDetails = () => {
                       },
                     }}
                   />
-
                   <Button
                     variant="contained"
                     color="primary"
@@ -573,7 +592,7 @@ export const ProductDetails = () => {
                     }}
                   >
                     {loadingSubmitBtn ? (
-                      <CircularProgress size={24} sx={{ color: "white" }} /> // Loading spinner
+                      <CircularProgress size={24} sx={{ color: "white" }} />
                     ) : (
                       "Submit Review"
                     )}
@@ -584,6 +603,67 @@ export const ProductDetails = () => {
           </TabPanels>
         </TabGroup>
       </div>
+      <div className="px-5 mt-16 mx-5">
+        <h1 className="text-center mb-6 dark:text-gray-200 text-xl w-full  font-bold ">
+          Related Products
+        </h1>
+        <Slider {...settings2} className="">
+          {relatedProducts?.map((product) => {
+            const price = parseFloat(product.price);
+
+            return (
+              <motion.div
+                key={product.id}
+                className="bg-white max-h-fit dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="relative">
+                  <motion.img
+                    src={product.image || "/placeholder-image.jpg"}
+                    alt={product.name}
+                    className="w-full h-56 object-contain"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
+                    {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
+                  </div>
+                </div>
+                <div className="p-5">
+                  <Link to={`/products/${product.id}/${product.category.id}`}>
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 truncate">
+                      {product.name}
+                    </h2>
+                  </Link>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-2">
+                    {product.description || "No description available."}
+                  </p>
+                  <div className="flex items-center mt-3">
+                    <Rating
+                      value={product.avr_review}
+                      readOnly
+                      precision={0.5}
+                      sx={{ color: "slategray" }}
+                    />
+                    <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
+                      ({product.count_review} reviews)
+                    </span>
+                  </div>
+                  <motion.button
+                    className="mt-5 w-full flex items-center justify-center bg-gray-600 text-white py-2 rounded-full hover:bg-slate-700 focus:outline-none transition-all duration-200"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaShoppingCart className="mr-2" />
+                    Add to Cart
+                  </motion.button>
+                </div>
+              </motion.div>
+            );
+          })}
+        </Slider>
+      </div>
     </>
   );
-}
+};

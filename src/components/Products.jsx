@@ -81,7 +81,7 @@ export const Products = () => {
             />
           </div>
           <div className="flex flex-col w-full relative">
-            <Heading name="Filters" />
+            <Heading name="Filter by Price" />
             <div className="flex my-4">
               <FiltersPrice
                 minPrice={minPrice}
@@ -130,7 +130,7 @@ export const Products = () => {
                     </div>
                   </div>
                   <div className="p-5">
-                    <Link to={`/products/${product.id}`}>
+                    <Link to={`/products/${product.id}/${product.category.id}`}>
                       <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 truncate">
                         {product.name}
                       </h2>

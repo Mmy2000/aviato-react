@@ -35,7 +35,7 @@ let router = createBrowserRouter([
         element: <Products />,
       },
       {
-        path: "products/:id",
+        path: "products/:id/:category",
         element: <ProductDetails />,
       },
       {

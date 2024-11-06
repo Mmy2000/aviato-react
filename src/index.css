@@ -84,3 +84,17 @@ input[type="range"].slider-thumb:disabled::-moz-range-thumb {
   background: #bbb;
   box-shadow: none;
 }
+
+.row{
+    @apply flex flex-wrap py-8 items-center px-4
+}
+.slick-slide {
+  padding: 0 10px; /* Adjust padding for spacing */
+}
+.slick-list {
+  margin: 0 -10px; /* Counterbalance padding */
+  padding: 50px 0 !important;
+}
+/* .slick-track{
+  width: auto !important;
+} */
