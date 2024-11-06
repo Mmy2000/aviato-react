@@ -93,8 +93,12 @@ input[type="range"].slider-thumb:disabled::-moz-range-thumb {
 }
 .slick-list {
   margin: 0 -10px; /* Counterbalance padding */
-  padding: 50px 0 !important;
+  padding: 20px 0 !important;
 }
-/* .slick-track{
-  width: auto !important;
-} */
+
+body {
+ font-family: "Chakra Petch", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  
+}

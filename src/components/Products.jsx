@@ -9,12 +9,14 @@ import Rating from "@mui/material/Rating";
 import Heading from "../ui/Heading";
 import CategoriesAccordion from "../ui/CategoriesAccordion";
 import FiltersPrice from "../ui/FiltersPrice";
+import LatestProducts from "../ui/LatestProducts";
 
 export const Products = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
+  const [productCount, setProductCount] = useState(0);
 
   const fetchProducts = async () => {
     const url = new URL("http://127.0.0.1:8000/products/api/products");
@@ -28,6 +30,7 @@ export const Products = () => {
       url.searchParams.append("max_price", maxPrice);
     }
     const response = await axios.get(url.toString());
+    setProductCount(response?.data?.count)
     return response;
   };
 
@@ -67,7 +70,9 @@ export const Products = () => {
     return <div className="text-red-500">Error: {error.message}</div>;
   }
 
-  const products = data?.data?.results;
+  const products = data?.data?.results;  
+  const productCounts = products ? products.length : 0;
+  
 
   return (
     <div className="flex flex-col lg:flex-row ">
@@ -103,9 +108,18 @@ export const Products = () => {
               Reset Filter
             </button>
           )}
+          <div className="flex flex-col mt-6 w-full relative">
+            <Heading name="latest products" />
+            <div className="flex-flex-col my-4">
+              <LatestProducts/>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="lg:w-3/4 p-6">
+      <div className="lg:w-3/4 space-y-4 p-6">
+        <span className="text-gray-900 dark:text-gray-200 font-semibold">
+          Showing {productCounts} of {productCount} results
+        </span>
         {products && products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {products.map((product) => {

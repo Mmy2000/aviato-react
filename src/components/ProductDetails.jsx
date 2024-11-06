@@ -185,9 +185,6 @@ export const ProductDetails = () => {
     setRating(newValue);
   };
 
-  console.log(productDetails);
-  console.log(category);
-
   return (
     <>
       <button
