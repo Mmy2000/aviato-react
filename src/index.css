@@ -26,3 +26,61 @@ body {
   height: 2px;
   background-color:gray;
 }
+
+/* General slider track styling */
+input[type="range"].slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #4a90e2, #ddd);
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+/* Chrome and Edge thumb styling */
+input[type="range"].slider-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(to right, #6b8fc5, #4a90e2);
+  border-radius: 50%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+input[type="range"].slider-thumb:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+  background: linear-gradient(to right, #537ca8, #3a5c8f);
+}
+
+/* Firefox thumb styling */
+input[type="range"].slider-thumb::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(to right, #6b8fc5, #4a90e2);
+  border-radius: 50%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+input[type="range"].slider-thumb:active::-moz-range-thumb {
+  transform: scale(1.2);
+  background: linear-gradient(to right, #537ca8, #3a5c8f);
+}
+
+/* Disabled state styling for a more polished look */
+input[type="range"].slider-thumb:disabled {
+  cursor: not-allowed;
+  background: #ddd;
+}
+
+input[type="range"].slider-thumb:disabled::-webkit-slider-thumb,
+input[type="range"].slider-thumb:disabled::-moz-range-thumb {
+  background: #bbb;
+  box-shadow: none;
+}

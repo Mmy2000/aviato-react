@@ -21,7 +21,7 @@ const StyledAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
   backgroundColor:
     theme.palette.mode === "dark"
       ? theme.palette.grey[800]
-      : theme.palette.grey[200],
+      : theme.palette.grey[100],
   "& .MuiTypography-root": {
     fontWeight: 600,
     color: theme.palette.text.primary,

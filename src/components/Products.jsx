@@ -8,21 +8,37 @@ import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Heading from "../ui/Heading";
 import CategoriesAccordion from "../ui/CategoriesAccordion";
+import FiltersPrice from "../ui/FiltersPrice";
 
 export const Products = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(10000);
 
   const fetchProducts = async () => {
-    const url = selectedCategoryId
-      ? `http://127.0.0.1:8000/products/api/products?${selectedType}=${selectedCategoryId}`
-      : "http://127.0.0.1:8000/products/api/products";
-    const response = await axios.get(url);
+    const url = new URL("http://127.0.0.1:8000/products/api/products");
+    if (selectedCategoryId) {
+      url.searchParams.append(selectedType, selectedCategoryId);
+    }
+    if (minPrice !== null) {
+      url.searchParams.append("min_price", minPrice);
+    }
+    if (maxPrice !== null) {
+      url.searchParams.append("max_price", maxPrice);
+    }
+    const response = await axios.get(url.toString());
     return response;
   };
 
   const { isLoading, isError, error, data } = useQuery({
-    queryKey: ["products", selectedCategoryId, selectedType],
+    queryKey: [
+      "products",
+      selectedCategoryId,
+      selectedType,
+      minPrice,
+      maxPrice,
+    ],
     queryFn: fetchProducts,
   });
 
@@ -35,6 +51,8 @@ export const Products = () => {
   const resetFilters = () => {
     setSelectedCategoryId(null);
     setSelectedType(null);
+    setMinPrice(0);
+    setMaxPrice(10000);
   };
 
   if (isLoading) {
@@ -62,8 +80,22 @@ export const Products = () => {
               onCategorySelect={handleCategorySelect}
             />
           </div>
+          <div className="flex flex-col w-full relative">
+            <Heading name="Filters" />
+            <div className="flex my-4">
+              <FiltersPrice
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                loading={isLoading}
+                setMinPrice={setMinPrice}
+                setMaxPrice={setMaxPrice}
+              />
+            </div>
+          </div>
           {/* Conditionally render Reset Filter button */}
-          {selectedCategoryId !== null && (
+          {(selectedCategoryId !== null ||
+            minPrice !== 0 ||
+            maxPrice !== 10000) && (
             <button
               onClick={resetFilters}
               className="mt-4 px-4 bg-gray-600 text-white py-2 rounded-full hover:bg-slate-700 focus:outline-none transition-all duration-200"
@@ -75,7 +107,7 @@ export const Products = () => {
       </div>
       <div className="lg:w-3/4 p-6">
         {products && products.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {products.map((product) => {
               const price = parseFloat(product.price);
               return (
