@@ -9,7 +9,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 
 const CategoryDetails = () => {
-  const { category } = useParams();
+  const { category,subcategory } = useParams();
   const [loading, setLoading] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [error, setError] = useState("");
@@ -23,6 +23,9 @@ const CategoryDetails = () => {
       if (category) {
         url += `category=${category}`;
       }
+      if (subcategory) {
+        url += `&subcategory=${subcategory}`;
+      }
 
       const { data } = await axios.get(url);
       setRelatedProducts(data?.results);
@@ -33,6 +36,9 @@ const CategoryDetails = () => {
       setLoading(false);
     }
   };
+  console.log("category",category);
+  console.log("subcategory",subcategory);
+  
 
   useEffect(() => {
     getRelatedProducts();
@@ -101,8 +107,14 @@ const CategoryDetails = () => {
             })}
           </div>
         ) : (
-          <div className="flex items-center justify-center h-64 text-gray-500 dark:text-gray-400 text-lg">
-            No results found. Try adjusting your search or filters.
+          <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-200 text-lg space-y-4">
+            <p className="text-xl font-bold">
+              Oops, we couldn’t find any matches.
+            </p>
+            <p className="text-gray-600 dark:text-gray-200 font-medium text-center">
+              Try adjusting your filters, or explore our other categories to
+              find something you’ll love!
+            </p>
           </div>
         )}
       </div>

@@ -111,7 +111,7 @@ export const Products = () => {
           <div className="flex flex-col mt-6 w-full relative">
             <Heading name="latest products" />
             <div className="flex-flex-col my-4">
-              <LatestProducts/>
+              <LatestProducts />
             </div>
           </div>
         </div>
@@ -177,8 +177,12 @@ export const Products = () => {
             })}
           </div>
         ) : (
-          <div className="flex items-center justify-center h-64 text-gray-500 dark:text-gray-400 text-lg">
-            No results found. Try adjusting your search or filters.
+          <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-200 text-lg space-y-4">
+            <p className="text-2xl font-semibold">No Results Found</p>
+            <p className="text-gray-600 dark:text-gray-200 text-center">
+              We couldn't find any items matching your search. Please try
+              adjusting your filters or exploring other categories.
+            </p>
           </div>
         )}
       </div>

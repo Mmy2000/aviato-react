@@ -43,7 +43,7 @@ let router = createBrowserRouter([
         element: <Categories />,
       },
       {
-        path:"/categories/:category",
+        path:"/categories/:category?/:subcategory?",
         element: <CategoryDetails />,
       },
       {
