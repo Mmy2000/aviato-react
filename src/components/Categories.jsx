@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Spinner from "../ui/Spinner";
 import { Link } from "react-router-dom";
 import Masonry from "react-masonry-css";
+import { textSlicer } from "../utils/functions";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -75,8 +76,8 @@ const Categories = () => {
                       {category.name}
                     </Link>
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    {category.description}
+                  <p className="text-gray-600 dark:text-gray-200 font-medium mb-4">
+                    {textSlicer(category.description,100)}
                   </p>
                 </div>
               </div>
@@ -111,7 +112,7 @@ const Categories = () => {
                         </Link>
                       </h5>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {subcategory.description}
+                        {textSlicer(subcategory.description,100)}
                       </p>
                     </motion.div>
                   </Link>
