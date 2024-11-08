@@ -3,8 +3,9 @@ import { Transition } from "@headlessui/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { UserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+
 
 export default function Login() {
   let navigate = useNavigate()
@@ -112,7 +113,7 @@ export default function Login() {
     }
   }, [userLogin]);
 
-  if (userLogin !== "null") {
+  if (userLogin !== null) {
     return (
       <div className="p-4 max-w-md mx-auto bg-blue-50 border border-blue-200 rounded-lg shadow-md text-blue-900 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-100">
         <p className="text-lg font-semibold">Welcome back!</p>
@@ -253,6 +254,17 @@ export default function Login() {
               "Login"
             )}
           </motion.button>
+          <p className="pl-4 dark:text-gray-200">
+            didn't have account yet ?{" "}
+            <span className="font-semibold ">
+              <Link
+                className="text-blue-600 hover:text-blue-700"
+                to={"/register"}
+              >
+                Register now
+              </Link>
+            </span>{" "}
+          </p>
         </form>
       </motion.div>
     </motion.div>

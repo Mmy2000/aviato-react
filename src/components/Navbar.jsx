@@ -122,7 +122,7 @@ const Navbar = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Menu.Items className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-10 focus:outline-none">
-                  {userLogin !== "null" ? (
+                  {userLogin !== null ? (
                     <>
                       <Menu.Item>
                         {({ active }) => (
