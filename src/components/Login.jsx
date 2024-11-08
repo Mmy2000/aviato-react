@@ -112,6 +112,19 @@ export default function Login() {
     }
   }, [userLogin]);
 
+  if (userLogin !== "null") {
+    return (
+      <div className="p-4 max-w-md mx-auto bg-blue-50 border border-blue-200 rounded-lg shadow-md text-blue-900 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-100">
+        <p className="text-lg font-semibold">Welcome back!</p>
+        <p className="mt-1">
+          You are currently logged in. To access a different account, please log
+          out first.
+        </p>
+      </div>
+    );
+  }
+
+
   return (
     <motion.div
       className="flex items-center justify-center dark:from-gray-800 px-4"

@@ -143,6 +143,17 @@ export default function Register() {
       setIsLoading(false);
     }
   };
+  if (userLogin !== "null") {
+    return (
+      <div className="p-4 max-w-md mx-auto bg-blue-50 border border-blue-200 rounded-lg shadow-md text-blue-900 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-100">
+        <p className="text-lg font-semibold">Welcome back!</p>
+        <p className="mt-1">
+          You are currently logged in. To access a different account, please log
+          out first.
+        </p>
+      </div>
+    );
+  }
 
   return (
     // <div className=" flex items-center justify-center dark:from-gray-800 ">
@@ -376,9 +387,9 @@ export default function Register() {
         )}
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          {/* First Name Field */}
-          <div className="flex space-x-4">
-            <div className="relative w-1/2">
+          {/* First Name and Last Name Fields */}
+          <div className="flex flex-col sm:flex-row sm:space-x-4">
+            <div className="relative sm:w-1/2">
               <label
                 htmlFor="first_name"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -391,7 +402,9 @@ export default function Register() {
                 id="first_name"
                 onChange={handleChange}
                 value={formData.first_name}
-                className={`w-full mt-1 px-3 py-2 border ${formErrors.first_name ? "border-red-500" : "border-gray-300"} dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
+                className={`w-full mt-1 px-3 py-2 border ${
+                  formErrors.first_name ? "border-red-500" : "border-gray-300"
+                } dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
                 placeholder="Enter your first name"
                 required
               />
@@ -402,8 +415,7 @@ export default function Register() {
               )}
             </div>
 
-            {/* Last Name Field */}
-            <div className="relative w-1/2">
+            <div className="relative sm:w-1/2 mt-4 sm:mt-0">
               <label
                 htmlFor="last_name"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -416,7 +428,9 @@ export default function Register() {
                 id="last_name"
                 onChange={handleChange}
                 value={formData.last_name}
-                className={`w-full mt-1 px-3 py-2 border ${formErrors.last_name ? "border-red-500" : "border-gray-300"} dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
+                className={`w-full mt-1 px-3 py-2 border ${
+                  formErrors.last_name ? "border-red-500" : "border-gray-300"
+                } dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
                 placeholder="Enter your last name"
                 required
               />
@@ -442,7 +456,9 @@ export default function Register() {
               id="email"
               onChange={handleChange}
               value={formData.email}
-              className={`w-full mt-1 px-3 py-2 border ${formErrors.email ? "border-red-500" : "border-gray-300"} dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
+              className={`w-full mt-1 px-3 py-2 border ${
+                formErrors.email ? "border-red-500" : "border-gray-300"
+              } dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
               placeholder="Enter your email"
               required
             />
@@ -465,7 +481,9 @@ export default function Register() {
               id="phone_number"
               onChange={handleChange}
               value={formData.phone_number}
-              className={`w-full mt-1 px-3 py-2 border ${formErrors.phone_number ? "border-red-500" : "border-gray-300"} dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
+              className={`w-full mt-1 px-3 py-2 border ${
+                formErrors.phone_number ? "border-red-500" : "border-gray-300"
+              } dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
               placeholder="Enter your phone number"
               required
             />
@@ -476,9 +494,9 @@ export default function Register() {
             )}
           </div>
 
-          {/* Password Field */}
-          <div className="flex space-x-4">
-            <div className="relative w-1/2">
+          {/* Password and Confirm Password Fields */}
+          <div className="flex flex-col sm:flex-row sm:space-x-4">
+            <div className="relative sm:w-1/2">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -491,7 +509,9 @@ export default function Register() {
                 id="password"
                 onChange={handleChange}
                 value={formData.password}
-                className={`w-full mt-1 px-3 py-2 border ${formErrors.password ? "border-red-500" : "border-gray-300"} dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
+                className={`w-full mt-1 px-3 py-2 border ${
+                  formErrors.password ? "border-red-500" : "border-gray-300"
+                } dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
                 placeholder="Enter your password"
                 required
               />
@@ -502,8 +522,7 @@ export default function Register() {
               )}
             </div>
 
-            {/* Confirm Password Field */}
-            <div className="relative w-1/2">
+            <div className="relative sm:w-1/2 mt-4 sm:mt-0">
               <label
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -516,7 +535,11 @@ export default function Register() {
                 id="confirmPassword"
                 onChange={handleChange}
                 value={formData.confirmPassword}
-                className={`w-full mt-1 px-3 py-2 border ${formErrors.confirmPassword ? "border-red-500" : "border-gray-300"} dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
+                className={`w-full mt-1 px-3 py-2 border ${
+                  formErrors.confirmPassword
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-400 focus:border-transparent dark:bg-gray-700 dark:text-white transition duration-200`}
                 placeholder="Confirm your password"
                 required
               />
