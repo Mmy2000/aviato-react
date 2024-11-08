@@ -4,6 +4,9 @@
 
 body {
   @apply bg-gradient-to-br  dark:from-gray-900 dark:via-gray-800 dark:to-gray-700;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
 .professional-spinner {
@@ -96,12 +99,6 @@ input[type="range"].slider-thumb:disabled::-moz-range-thumb {
   padding: 20px 0 !important;
 }
 
-body {
- font-family: "Chakra Petch", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-  
-}
 
 /* Styles for masonry layout */
 .masonry-grid_column {

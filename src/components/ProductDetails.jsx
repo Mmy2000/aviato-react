@@ -184,6 +184,8 @@ export const ProductDetails = () => {
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
   };
+  console.log(productDetails);
+  
 
   return (
     <>
@@ -380,22 +382,30 @@ export const ProductDetails = () => {
             </div>
           )}
 
-          <div className="flex items-center space-x-2">
-            <span className="font-medium dark:text-white">Quantity:</span>
+          <div className="flex items-center space-x-3">
+            <span className="font-semibold text-gray-800 dark:text-gray-200">
+              Quantity:
+            </span>
+
             <button
               onClick={() => handleQuantityChange(-1)}
-              className="px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded dark:bg-gray-700 dark:hover:bg-gray-600"
+              className="w-8 h-8 text-xl font-bold bg-gray-200 hover:bg-gray-300 rounded-full shadow dark:bg-gray-600 dark:hover:bg-gray-700 dark:text-gray-300 transition-all duration-150 ease-in-out flex items-center justify-center"
             >
               -
             </button>
-            <span className="dark:text-white">{quantity}</span>
+
+            <span className="px-4 py-1 text-lg font-semibold bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-200">
+              {quantity}
+            </span>
+
             <button
               onClick={() => handleQuantityChange(1)}
-              className="px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded dark:bg-gray-700 dark:hover:bg-gray-600"
+              className="w-8 h-8 text-xl font-bold bg-gray-200 hover:bg-gray-300 rounded-full shadow dark:bg-gray-600 dark:hover:bg-gray-700 dark:text-gray-300 transition-all duration-150 ease-in-out flex items-center justify-center"
             >
               +
             </button>
           </div>
+
           <div className="flex items-center space-x-2">
             <span className="font-medium dark:text-white">Category:</span>
             <span className="bg-gray-200 px-2 py-1 rounded text-sm dark:bg-gray-700 dark:text-gray-200">
