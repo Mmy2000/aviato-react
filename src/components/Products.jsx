@@ -17,6 +17,7 @@ export const Products = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
   const [productCount, setProductCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchProducts = async () => {
     const url = new URL("http://127.0.0.1:8000/products/api/products");
@@ -29,8 +30,11 @@ export const Products = () => {
     if (maxPrice !== null) {
       url.searchParams.append("max_price", maxPrice);
     }
+    if (searchTerm) {
+      url.searchParams.append("search", searchTerm);
+    }
     const response = await axios.get(url.toString());
-    setProductCount(response?.data?.count)
+    setProductCount(response?.data?.count);
     return response;
   };
 
@@ -41,6 +45,7 @@ export const Products = () => {
       selectedType,
       minPrice,
       maxPrice,
+      searchTerm, // Include search term in query key
     ],
     queryFn: fetchProducts,
   });
@@ -56,15 +61,16 @@ export const Products = () => {
     setSelectedType(null);
     setMinPrice(0);
     setMaxPrice(10000);
+    setSearchTerm("");
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center w-full justify-center">
-        <Spinner />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex items-center w-full justify-center">
+  //       <Spinner />
+  //     </div>
+  //   );
+  // }
 
   if (isError) {
     return <div className="text-red-500">Error: {error.message}</div>;
@@ -117,10 +123,36 @@ export const Products = () => {
         </div>
       </div>
       <div className="lg:w-3/4 space-y-4 p-6">
-        <span className="text-gray-900 dark:text-gray-200 font-semibold">
-          Showing {productCounts} of {productCount} results
-        </span>
-        {products && products.length > 0 ? (
+        <div className="flex justify-between items-center">
+          <span className="text-gray-900 dark:text-gray-200 font-semibold">
+            Showing {productCounts} of {productCount} results
+          </span>
+          <div className="relative w-3/4">
+            <input
+              type="text"
+              placeholder="Search by name, description, category, subcategory, brand ..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input
+              className="w-full pl-12 pr-4 py-2 rounded-full border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            />
+            <svg
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 transition duration-150 ease-in-out"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M21 21l-4.35-4.35a8 8 0 1 0-1.41 1.41L21 21zm-10-16a6 6 0 1 1-6 6 6 6 0 0 1 6-6z" />
+            </svg>
+          </div>
+        </div>
+
+        {isLoading ? (
+          <div className="flex items-center w-full justify-center">
+            <Spinner />
+          </div>
+        ) : products && products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {products.map((product) => {
               const price = parseFloat(product.price);
