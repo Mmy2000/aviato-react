@@ -290,7 +290,12 @@ export const Products = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
-        title="Choose Variations"
+        title={
+          selectedProduct?.color_variations?.length > 0 ||
+          selectedProduct?.size_variations?.length > 0
+            ? "Choose Variations & Quantity"
+            : "Choose Quantity"
+        }
         onSubmit={handleAddToCart}
       >
         <div className="flex items-center space-x-3">
