@@ -76,8 +76,38 @@ export default function CartContextProvider(props) {
       .catch((error) => error);
   }
 
+  function updateCartItem(cartItemId, quantity) {
+    return axios
+      .put(
+        `http://127.0.0.1:8000/cart/api/cart-items/${cartItemId}/`,
+        {
+          quantity: quantity,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: headers.Authorization,
+          },
+        }
+      )
+      .then((response) => {
+        displayCart();
+        return response
+      })
+      .catch((error) => error);
+  }
+
   return (
-    <CartContext.Provider value={{ displayCart, addToCart, cartInfo,setcartInfo,deleteCartItem }}>
+    <CartContext.Provider
+      value={{
+        displayCart,
+        addToCart,
+        cartInfo,
+        setcartInfo,
+        deleteCartItem,
+        updateCartItem,
+      }}
+    >
       {props.children}
     </CartContext.Provider>
   );

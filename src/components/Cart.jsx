@@ -7,7 +7,7 @@ const Cart = () => {
   const [cartDetails, setCartDetails] = useState([]);
   const [isCloseloading, setIsCloseloading] = useState(false);
   const [currentId, setcurrentId] = useState("");
-  const { displayCart, deleteCartItem, cartInfo, setcartInfo } =
+  const { displayCart, deleteCartItem, cartInfo, setcartInfo, updateCartItem } =
     useContext(CartContext);
 
   async function getCart() {
@@ -24,6 +24,18 @@ const Cart = () => {
     setcartInfo(response.data.cart_items);
     toast.success("Cart Item deleted successfully");
     setIsCloseloading(false);
+  }
+  async function updateCartQuantity(cartItemId, quantity) {
+    setcurrentId(cartItemId);
+    if (quantity < 1) {
+      return;
+    }
+
+    let response = await updateCartItem(cartItemId, quantity);
+    
+    setCartDetails(response.data.cart_items);
+    setcartInfo(response.data.cart_items);
+    toast.success("Cart Item updated successfully");
   }
   console.log(cartDetails);
   
@@ -100,13 +112,23 @@ const Cart = () => {
 
                     {/* Quantity Controls */}
                     <div className="flex items-center gap-4">
-                      <button className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300">
+                      <button
+                        onClick={() =>
+                          updateCartQuantity(item.id, item.quantity - 1)
+                        }
+                        className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
+                      >
                         -
                       </button>
                       <span className="text-gray-700 dark:text-gray-200">
                         {item.quantity}
                       </span>
-                      <button className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300">
+                      <button
+                        onClick={() =>
+                          updateCartQuantity(item.id, item.quantity + 1)
+                        }
+                        className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
+                      >
                         +
                       </button>
                     </div>
