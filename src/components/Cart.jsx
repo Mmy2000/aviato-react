@@ -2,19 +2,25 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CartContext } from "../context/CartContext";
 import toast from "react-hot-toast";
+import Spinner from "../ui/Spinner";
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState([]);
   const [isCloseloading, setIsCloseloading] = useState(false);
+  const [loading, setLoading] = useState(true); // New loading state
   const [currentId, setcurrentId] = useState("");
   const { displayCart, deleteCartItem, cartInfo, setcartInfo, updateCartItem } =
     useContext(CartContext);
+  const [incrementLoading, setIncrementLoading] = useState(false);
+  const [decrementLoading, setDecrementLoading] = useState(false);
 
   async function getCart() {
+    setLoading(true); // Set loading to true before fetching data
     let response = await displayCart();
     if (response && response.results) {
       setCartDetails(response.results || []);
     }
+    setLoading(false); // Set loading to false after data is fetched
   }
   async function deleteItem(cartItemId) {
     setIsCloseloading(true);
@@ -25,20 +31,28 @@ const Cart = () => {
     toast.success("Cart Item deleted successfully");
     setIsCloseloading(false);
   }
-  async function updateCartQuantity(cartItemId, quantity) {
-    setcurrentId(cartItemId);
-    if (quantity < 1) {
-      return;
+  async function updateCartQuantity(cartItemId, quantity, isIncrement) {
+    if (quantity < 1) return;
+
+    if (isIncrement) {
+      setIncrementLoading(true);
+    } else {
+      setDecrementLoading(true);
     }
 
-    let response = await updateCartItem(cartItemId, quantity);
-    
-    setCartDetails(response.data.cart_items);
-    setcartInfo(response.data.cart_items);
-    toast.success("Cart Item updated successfully");
+    try {
+      let response = await updateCartItem(cartItemId, quantity);
+      setCartDetails(response.data.cart_items);
+      setcartInfo(response.data.cart_items);
+      toast.success("Cart Item updated successfully");
+    } catch (error) {
+      toast.error("Failed to update item");
+    } finally {
+      setIncrementLoading(false);
+      setDecrementLoading(false);
+    }
   }
   console.log(cartDetails);
-  
 
   useEffect(() => {
     getCart();
@@ -63,6 +77,11 @@ const Cart = () => {
       return totalTax + (item.tax_amount || 0);
     }, 0);
   };
+  if (loading) {
+    return(
+      <Spinner/>
+    )
+  }
 
   return (
     <div className="max-w-6xl mx-auto py-8">
@@ -114,22 +133,72 @@ const Cart = () => {
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() =>
-                          updateCartQuantity(item.id, item.quantity - 1)
+                          updateCartQuantity(item.id, item.quantity - 1, false)
                         }
                         className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
+                        disabled={decrementLoading || incrementLoading}
                       >
-                        -
+                        {decrementLoading ? (
+                          <svg
+                            className="w-4 h-4 animate-spin"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8v8H4z"
+                            ></path>
+                          </svg>
+                        ) : (
+                          "-"
+                        )}
                       </button>
+
                       <span className="text-gray-700 dark:text-gray-200">
                         {item.quantity}
                       </span>
+
                       <button
                         onClick={() =>
-                          updateCartQuantity(item.id, item.quantity + 1)
+                          updateCartQuantity(item.id, item.quantity + 1, true)
                         }
                         className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
+                        disabled={incrementLoading || decrementLoading}
                       >
-                        +
+                        {incrementLoading ? (
+                          <svg
+                            className="w-4 h-4 animate-spin"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8v8H4z"
+                            ></path>
+                          </svg>
+                        ) : (
+                          "+"
+                        )}
                       </button>
                     </div>
 
