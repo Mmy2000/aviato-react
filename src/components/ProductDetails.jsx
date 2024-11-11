@@ -1,5 +1,5 @@
 import axios, { all } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import {
@@ -31,7 +31,7 @@ import { CartContext } from "../context/CartContext";
 
 
 export const ProductDetails = () => {
-  const theme = useTheme();
+  let { addToCart } = useContext(CartContext);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const navigate = useNavigate();
@@ -58,6 +58,7 @@ export const ProductDetails = () => {
     5: "Excellent+",
   };
   const [relatedProducts, setRelatedProducts] = useState(null);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const handleSubmit = async () => {
     if (loadingSubmitBtn) return;
@@ -130,14 +131,62 @@ export const ProductDetails = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    if (!selectedSize && !selectedColor) {
+      // If no size or color is selected, handle accordingly
+      addToCart(productDetails.id, null, null, quantity)
+        .then(() => {
+          toast.success("Item added to cart successfully!");
+        })
+        .catch((error) => {
+          toast.error("Error adding item to cart:", error);
+        })
+        .finally(() => {
+          setLoadingBtn(false); // Set loading to false when done
+        });
+
+      setLoadingBtn(true); // Set loading to true when request starts
+      return;
+    }
+
+    // If size and color are selected
+    if (!selectedSize || !selectedColor) {
+      toast.info("Please select size and color options.");
+      return;
+    }
+
+    addToCart(
+      productDetails.id,
+      selectedSize.variation_value,
+      selectedColor.variation_value,
+      quantity
+    )
+      .then(() => {
+        toast.success("Item added to cart successfully!");
+      })
+      .catch((error) => {
+        toast.error("Error adding item to cart:", error);
+      })
+      .finally(() => {
+        setLoadingBtn(false); // Set loading to false when done
+      });
+
+    setLoadingBtn(true); // Set loading to true when request starts
+  };
+
+  const handleQuantityChange = (change) => {
+    setQuantity((prevQuantity) => Math.max(1, prevQuantity + change));
+  };
+
+
   useEffect(() => {
     getProductDetails(id);
     getRelatedProducts(category);
   }, [id]);
 
-  const handleQuantityChange = (amount) => {
-    setQuantity((prev) => Math.max(1, prev + amount));
-  };
+  // const handleQuantityChange = (amount) => {
+  //   setQuantity((prev) => Math.max(1, prev + amount));
+  // };
   if (loading) {
     return (
       <div className="flex items-center w-full justify-center">
@@ -420,8 +469,38 @@ export const ProductDetails = () => {
               {productDetails?.PRDBrand?.name}
             </span>
           </div>
-          <button className="mt-4 py-2 px-4 bg-black text-white rounded hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600">
-            ADD TO CART
+          <button
+            onClick={handleAddToCart}
+            disabled={loadingBtn} // Disable the button when loading
+            className="mt-4 py-2 px-4 bg-black flex items-center justify-center text-white rounded hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600"
+          >
+            {loadingBtn ? (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+                Adding to Cart...
+              </>
+            ) : (
+              "Add to Cart"
+            )}
           </button>
         </div>
       </div>
