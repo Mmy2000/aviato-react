@@ -60,8 +60,24 @@ export default function CartContextProvider(props) {
       });
   }
 
+  function deleteCartItem(cartItemId) {
+    return axios
+      .delete(`http://127.0.0.1:8000/cart/api/cart-items/${cartItemId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: headers.Authorization,
+        },
+      })
+      .then((response) => {
+        displayCart();
+        // setcartInfo(response.data);
+        return response;
+      })
+      .catch((error) => error);
+  }
+
   return (
-    <CartContext.Provider value={{ displayCart, addToCart, cartInfo }}>
+    <CartContext.Provider value={{ displayCart, addToCart, cartInfo,setcartInfo,deleteCartItem }}>
       {props.children}
     </CartContext.Provider>
   );

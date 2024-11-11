@@ -151,7 +151,7 @@ export const ProductDetails = () => {
 
     // If size and color are selected
     if (!selectedSize || !selectedColor) {
-      toast.info("Please select size and color options.");
+      toast.error("Please select size and color options.");
       return;
     }
 

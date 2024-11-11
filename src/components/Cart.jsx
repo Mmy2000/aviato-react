@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CartContext } from "../context/CartContext";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState([]);
-  const { displayCart } = useContext(CartContext);
+  const [isCloseloading, setIsCloseloading] = useState(false);
+  const [currentId, setcurrentId] = useState("");
+  const { displayCart, deleteCartItem, cartInfo, setcartInfo } =
+    useContext(CartContext);
 
   async function getCart() {
     let response = await displayCart();
@@ -12,6 +16,17 @@ const Cart = () => {
       setCartDetails(response.results || []);
     }
   }
+  async function deleteItem(cartItemId) {
+    setIsCloseloading(true);
+    setcurrentId(cartItemId);
+    let response = await deleteCartItem(cartItemId);
+    setCartDetails(response.data.cart_items);
+    setcartInfo(response.data.cart_items);
+    toast.success("Cart Item deleted successfully");
+    setIsCloseloading(false);
+  }
+  console.log(cartDetails);
+  
 
   useEffect(() => {
     getCart();
@@ -102,25 +117,53 @@ const Cart = () => {
                         ${(item.product_price * item.quantity).toFixed(2)}
                       </div>
                       <motion.button
+                        onClick={() => deleteItem(item.id)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-100 rounded-full shadow-sm hover:bg-red-200 dark:bg-red-800 dark:hover:bg-red-700 dark:text-gray-200 transition-all"
+                        disabled={isCloseloading && currentId === item.id}
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                        Remove
+                        {isCloseloading && currentId === item.id ? (
+                          <svg
+                            className="w-4 h-4 animate-spin"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8v8H4z"
+                            ></path>
+                          </svg>
+                        ) : (
+                          <>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className="w-4 h-4"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                            Remove
+                          </>
+                        )}
                       </motion.button>
                     </div>
                   </motion.div>
