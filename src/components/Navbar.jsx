@@ -11,6 +11,9 @@ import { UserContext } from "../context/UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ProfileContext } from "../context/ProfileContext";
 import axios from "axios";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { CartContext } from "../context/CartContext";
+
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -18,6 +21,8 @@ const Navbar = () => {
   let { profile } = useContext(ProfileContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  let { displayCart, cartInfo } =
+    useContext(CartContext);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -29,6 +34,7 @@ const Navbar = () => {
     setUserLogin(null);
     navigate("/login");
   }
+  
 
   const linkClass = (isActive) =>
     `relative font-medium transition-all duration-300 ease-in-out transform ${
@@ -75,6 +81,24 @@ const Navbar = () => {
 
           {/* Right side controls */}
           <div className="flex items-center space-x-6">
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                `relative flex items-center group px-3 py-1 rounded-lg transition-all duration-300 ease-in-out ${
+                  isActive
+                    ? "text-slate-800 dark:text-slate-700 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-blue-200 dark:to-blue-500 shadow-sm shadow-gray-400 dark:shadow-blue-900"
+                    : "text-gray-800 dark:text-gray-200 hover:text-blue-500"
+                }`
+              }
+            >
+              <ShoppingCartIcon className="h-5 w-5 mr-1 text-gray-500 dark:text-gray-300 group-hover:text-blue-500 transition-transform duration-300" />
+              <span className="font-medium">Cart</span>
+
+              {/* Badge for Item Count */}
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transform transition-transform duration-300 ease-in-out group-hover:scale-105">
+                {cartInfo?.count}
+              </span>
+            </NavLink>
             {/* Dark mode toggle */}
             <Switch
               checked={isDarkMode}
