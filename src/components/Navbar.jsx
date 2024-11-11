@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from "react";
+import React, { useState, Fragment, useContext, useEffect } from "react";
 import { Switch, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -21,7 +21,7 @@ const Navbar = () => {
   let { profile } = useContext(ProfileContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  let { displayCart, cartInfo } =
+  let { cartInfo } =
     useContext(CartContext);
 
   const toggleDarkMode = () => {
@@ -34,6 +34,10 @@ const Navbar = () => {
     setUserLogin(null);
     navigate("/login");
   }
+  
+  useEffect(() => {
+    cartInfo;
+  }, []);
   
 
   const linkClass = (isActive) =>
