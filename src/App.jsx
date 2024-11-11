@@ -22,6 +22,8 @@ import Categories from './components/Categories'
 import Brands from './components/Brands'
 import CategoryDetails from './components/CategoryDetails'
 import BrandDetails from './components/BrandDetails'
+import CartContextProvider from './context/CartContext'
+import Cart from './components/Cart'
 
 
 let router = createBrowserRouter([
@@ -73,6 +75,14 @@ let router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "cart",
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
@@ -83,6 +93,7 @@ function App() {
 
   return (
     <>
+      <CartContextProvider>
         <QueryClientProvider client={queryClient}>
           <UserContextProvider>
             <ProfileContextProvider>
@@ -121,6 +132,7 @@ function App() {
             </ProfileContextProvider>
           </UserContextProvider>
         </QueryClientProvider>
+      </CartContextProvider>
     </>
   );
 }

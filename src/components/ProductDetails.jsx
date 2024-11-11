@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
+import { CartContext } from "../context/CartContext";
 
 
 export const ProductDetails = () => {
