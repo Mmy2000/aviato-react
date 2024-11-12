@@ -69,7 +69,6 @@ export const ProductDetails = () => {
   };
   const closeModal = () => setIsModalOpen(false);
 
-  console.log(selectedProduct);
 
   const handleSubmit = async () => {
     if (loadingSubmitBtn) return;
@@ -772,7 +771,11 @@ export const ProductDetails = () => {
             ? "Choose Variations & Quantity"
             : "Choose Quantity"
         }
-        onSubmit={handleAddToCart}
+        onSubmit={()=>{
+          handleAddToCart()
+          closeModal()
+        }}
+        disabled={loadingBtn}
       >
         <div className="flex items-center space-x-3">
           <span className="font-semibold text-gray-800 dark:text-gray-200">
