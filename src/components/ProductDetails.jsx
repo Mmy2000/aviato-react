@@ -68,6 +68,8 @@ export const ProductDetails = () => {
     setIsModalOpen(true);
   };
   const closeModal = () => setIsModalOpen(false);
+  console.log(selectedProduct?.id);
+  
 
 
   const handleSubmit = async () => {
@@ -141,10 +143,14 @@ export const ProductDetails = () => {
     }
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (product) => {
+    if (!product) return; // Ensure product is not null
+
+    setLoadingBtn(true); // Set loading to true when request starts
+
     if (!selectedSize && !selectedColor) {
       // If no size or color is selected, handle accordingly
-      addToCart(productDetails.id, null, null, quantity)
+      addToCart(product.id, null, null, quantity)
         .then(() => {
           toast.success("Item added to cart successfully!");
         })
@@ -154,19 +160,18 @@ export const ProductDetails = () => {
         .finally(() => {
           setLoadingBtn(false); // Set loading to false when done
         });
-
-      setLoadingBtn(true); // Set loading to true when request starts
       return;
     }
 
-    // If size and color are selected
     if (!selectedSize || !selectedColor) {
       toast.error("Please select size and color options.");
+      setLoadingBtn(false); // Stop loading if options are incomplete
       return;
     }
 
+    // If both size and color are selected
     addToCart(
-      productDetails.id,
+      product.id,
       selectedSize.variation_value,
       selectedColor.variation_value,
       quantity
@@ -180,9 +185,8 @@ export const ProductDetails = () => {
       .finally(() => {
         setLoadingBtn(false); // Set loading to false when done
       });
-
-    setLoadingBtn(true); // Set loading to true when request starts
   };
+
 
   const handleQuantityChange = (change) => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + change));
@@ -480,7 +484,7 @@ export const ProductDetails = () => {
             </span>
           </div>
           <button
-            onClick={handleAddToCart}
+            onClick={() => handleAddToCart(productDetails)} // Pass productDetails to the function
             disabled={loadingBtn} // Disable the button when loading
             className="mt-4 py-2 px-4 bg-black flex items-center justify-center text-white rounded hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600"
           >
@@ -771,9 +775,9 @@ export const ProductDetails = () => {
             ? "Choose Variations & Quantity"
             : "Choose Quantity"
         }
-        onSubmit={()=>{
-          handleAddToCart()
-          closeModal()
+        onSubmit={() => {
+          handleAddToCart(selectedProduct); // Pass selected product to handleAddToCart
+          closeModal();
         }}
         disabled={loadingBtn}
       >
