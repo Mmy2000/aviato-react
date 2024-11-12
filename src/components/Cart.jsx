@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CartContext } from "../context/CartContext";
 import toast from "react-hot-toast";
 import Spinner from "../ui/Spinner";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState([]);
@@ -294,6 +295,7 @@ const Cart = () => {
             </div>
           </div>
           <div className="mt-6">
+            <Link to={'/checkout'}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -301,9 +303,12 @@ const Cart = () => {
             >
               Checkout
             </motion.button>
-            <button className="w-full transition-colors px-8 py-3 mt-4 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500">
-              Continue Shopping
-            </button>
+            </Link>
+            <Link to={"/products"}>
+              <button className="w-full transition-colors px-8 py-3 mt-4 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500">
+                Continue Shopping
+              </button>
+            </Link>
           </div>
         </div>
       </div>

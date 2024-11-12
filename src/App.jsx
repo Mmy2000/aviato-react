@@ -24,6 +24,7 @@ import CategoryDetails from './components/CategoryDetails'
 import BrandDetails from './components/BrandDetails'
 import CartContextProvider from './context/CartContext'
 import Cart from './components/Cart'
+import Checkout from './components/Checkout'
 
 
 let router = createBrowserRouter([
@@ -80,6 +81,14 @@ let router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Cart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "checkout",
+        element: (
+          <ProtectedRoute>
+            <Checkout />
           </ProtectedRoute>
         ),
       },

@@ -106,14 +106,16 @@ export default function Login() {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    // Log userLogin whenever it changes
-    if (userLogin) {
-      console.log("userLogin updated:", userLogin);
-    }
-  }, [userLogin]);
+  // useEffect(() => {
+  //   // Log userLogin whenever it changes
+  //   if (userLogin) {
+  //     console.log("userLogin updated:", userLogin);
+  //   }
+  // }, [userLogin]);
+  console.log(userLogin);
+  
 
-  if (userLogin !== "null") {
+  if (userLogin !== null) {
     return (
       <div className="p-4 max-w-md mx-auto bg-blue-50 border border-blue-200 rounded-lg shadow-md text-blue-900 dark:bg-blue-900 dark:border-blue-700 dark:text-blue-100">
         <p className="text-lg font-semibold">Welcome back!</p>
