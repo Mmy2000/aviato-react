@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Spinner from "../ui/Spinner";
 import { FaShoppingCart } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -24,6 +24,7 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
+import { CartContext } from "../context/CartContext";
 
 
 export const Products = () => {
@@ -36,17 +37,16 @@ export const Products = () => {
   const [maxPrice, setMaxPrice] = useState(10000);
   const [productCount, setProductCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
-
+  let { addToCart } = useContext(CartContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null); // New state
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   const openModal = (product) => {
     setSelectedProduct(product); // Set the clicked product
     setIsModalOpen(true);
   };
   const closeModal = () => setIsModalOpen(false);
-
-  console.log(selectedProduct);
   
 
   const fetchProducts = async () => {
@@ -109,40 +109,86 @@ export const Products = () => {
   const products = data?.data?.results;  
   const productCounts = products ? products.length : 0;
 
-  const handleAddToCart = () => {
-    if (!selectedProduct) return;
+  // const handleAddToCart = () => {
+  //   if (!selectedProduct) return;
 
-    // Check if product has variations for size or color
-    const hasSizeVariations = selectedProduct.size_variations?.length > 0;
-    const hasColorVariations = selectedProduct.color_variations?.length > 0;
+  //   // Check if product has variations for size or color
+  //   const hasSizeVariations = selectedProduct.size_variations?.length > 0;
+  //   const hasColorVariations = selectedProduct.color_variations?.length > 0;
 
-    // If variations are required but not selected, show an alert
-    if (
-      (hasSizeVariations && !selectedSize) ||
-      (hasColorVariations && !selectedColor)
-    ) {
-      toast.error("Please select variations before adding to cart.");
+  //   // If variations are required but not selected, show an alert
+  //   if (
+  //     (hasSizeVariations && !selectedSize) ||
+  //     (hasColorVariations && !selectedColor)
+  //   ) {
+  //     toast.error("Please select variations before adding to cart.");
+  //     return;
+  //   }
+
+  //   // Construct the product object with variations and quantity
+  //   const productToAdd = {
+  //     productId: selectedProduct.id,
+  //     size: selectedSize?.variation_value || null,
+  //     color: selectedColor?.variation_value || null,
+  //     quantity: quantity, // Add quantity to the cart item
+  //   };
+
+  //   console.log("Product added to cart:", productToAdd);
+
+  //   // Close the modal after adding the product to the cart
+  //   closeModal();
+  // };
+
+  const handleAddToCart = (product) => {
+    if (!product) return; // Ensure product is not null
+
+    setLoadingBtn(true); // Set loading to true when request starts
+
+    if (!selectedSize && !selectedColor) {
+      // If no size or color is selected, handle accordingly
+      addToCart(product.id, null, null, quantity)
+        .then(() => {
+          toast.success("Item added to cart successfully!");
+        })
+        .catch((error) => {
+          toast.error("Error adding item to cart:", error);
+        })
+        .finally(() => {
+          setLoadingBtn(false); // Set loading to false when done
+        });
       return;
     }
 
-    // Construct the product object with variations and quantity
-    const productToAdd = {
-      productId: selectedProduct.id,
-      size: selectedSize?.variation_value || null,
-      color: selectedColor?.variation_value || null,
-      quantity: quantity, // Add quantity to the cart item
-    };
+    if (!selectedSize || !selectedColor) {
+      toast.error("Please select size and color options.");
+      setLoadingBtn(false); // Stop loading if options are incomplete
+      return;
+    }
 
-    console.log("Product added to cart:", productToAdd);
-
-    // Close the modal after adding the product to the cart
-    closeModal();
+    // If both size and color are selected
+    addToCart(
+      product.id,
+      selectedSize.variation_value,
+      selectedColor.variation_value,
+      quantity
+    )
+      .then(() => {
+        toast.success("Item added to cart successfully!");
+      })
+      .catch((error) => {
+        toast.error("Error adding item to cart:", error);
+      })
+      .finally(() => {
+        setLoadingBtn(false); // Set loading to false when done
+      });
   };
 
-
-  const handleQuantityChange = (amount) => {
-    setQuantity((prev) => Math.max(1, prev + amount));
+  const handleQuantityChange = (change) => {
+    setQuantity((prevQuantity) => Math.max(1, prevQuantity + change));
   };
+  // const handleQuantityChange = (amount) => {
+  //   setQuantity((prev) => Math.max(1, prev + amount));
+  // };
 
   return (
     <>
@@ -296,7 +342,11 @@ export const Products = () => {
             ? "Choose Variations & Quantity"
             : "Choose Quantity"
         }
-        onSubmit={handleAddToCart}
+        onSubmit={() => {
+          handleAddToCart(selectedProduct); // Pass selected product to handleAddToCart
+          closeModal();
+        }}
+        disabled={loadingBtn}
       >
         <div className="flex items-center space-x-3">
           <span className="font-semibold text-gray-800 dark:text-gray-200">
