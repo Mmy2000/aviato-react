@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Checkout = () => {
   return (
-    <div className="container mx-auto px-4 py-12 font-sans transition-colors duration-500">
+    <div className="container mx-auto px-4 py-12  transition-colors duration-500">
       <h1 className="text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-10">
         Checkout
       </h1>
@@ -159,7 +159,7 @@ const Checkout = () => {
               name="payment_method"
               className="mr-3 focus:ring-blue-600"
             />
-            <span className="font-medium">Credit/Debit Card</span>
+            <span className="font-medium">Stripe</span>
           </label>
           <label className="flex items-center cursor-pointer text-gray-800 dark:text-gray-200">
             <input
