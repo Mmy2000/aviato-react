@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { CartContext } from "../context/CartContext";
 import Spinner from "../ui/Spinner";
 import axios from "axios";
+import { data } from "autoprefixer";
 
 const Checkout = () => {
   const [cartDetails, setCartDetails] = useState([]);
@@ -22,6 +23,7 @@ const Checkout = () => {
     orderNote: "",
     paymentMethod: "",
   });
+  const [orderPayment, setOrderPayment] = useState(null);
 
   async function getCart() {
     setLoading(true); // Set loading to true before fetching data
@@ -85,13 +87,12 @@ const Checkout = () => {
           headers
         }
       );
-      console.log(response);
-
+      setOrderPayment(response?.data?.order?.payment_method);
+      
     } catch (error) {
       console.error("Error placing order:", error);
     }
   };
-  console.log(headers);
   
 
   return (
