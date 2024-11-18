@@ -5,9 +5,11 @@ import Spinner from "../ui/Spinner";
 import axios from "axios";
 import { data } from "autoprefixer";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const [cartDetails, setCartDetails] = useState([]);
   const [loading, setLoading] = useState(false); // New loading state
   const [placeOrderBtnLoading, setPlaceOrderBtnLoading] = useState(false); // New loading state
@@ -79,7 +81,12 @@ const Checkout = () => {
         );
 
         // Handle the response as needed
-        toast.success(response?.data?.message);
+        toast.success(response?.data?.message);        
+        navigate("/order-success", {
+          state: {
+            orderDetails: response?.data,
+          },
+        });
       } catch (error) {
         // Handle error if the request fails
         setPlaceOrderBtnLoading(false);

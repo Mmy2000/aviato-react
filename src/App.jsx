@@ -25,6 +25,7 @@ import BrandDetails from './components/BrandDetails'
 import CartContextProvider from './context/CartContext'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
+import OrderSuccess from './components/OrderSuccess'
 
 
 let router = createBrowserRouter([
@@ -45,7 +46,7 @@ let router = createBrowserRouter([
         element: <Categories />,
       },
       {
-        path:"/categories/:category?/:subcategory?",
+        path: "/categories/:category?/:subcategory?",
         element: <CategoryDetails />,
       },
       {
@@ -89,6 +90,14 @@ let router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Checkout />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "order-success",
+        element: (
+          <ProtectedRoute>
+            <OrderSuccess />
           </ProtectedRoute>
         ),
       },
