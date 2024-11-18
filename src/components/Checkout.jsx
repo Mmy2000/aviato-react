@@ -4,10 +4,13 @@ import { CartContext } from "../context/CartContext";
 import Spinner from "../ui/Spinner";
 import axios from "axios";
 import { data } from "autoprefixer";
+import toast from "react-hot-toast";
+
 
 const Checkout = () => {
   const [cartDetails, setCartDetails] = useState([]);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(false); // New loading state
+  const [placeOrderBtnLoading, setPlaceOrderBtnLoading] = useState(false); // New loading state
   const { displayCart } = useContext(CartContext);
   // State for form fields
   const [formData, setFormData] = useState({
@@ -56,6 +59,34 @@ const Checkout = () => {
     Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
   };
 
+  const handleCashPayment = async () => {
+      try {
+        // Define your endpoint here
+
+          if (!headers) {
+            console.error("No authentication token found");            
+            return; // Exit the function if token is missing
+          }
+          
+
+        // Send request to cash payment endpoint
+        const response = await axios.post(
+          "http://127.0.0.1:8000/order/cash-order_api/",
+          {},
+          {
+            headers
+          }
+        );
+
+        // Handle the response as needed
+        toast.success(response?.data?.message);
+      } catch (error) {
+        // Handle error if the request fails
+        setPlaceOrderBtnLoading(false);
+        toast.error("Error processing cash payment:", error);
+      }
+  };  
+
 
   // Handle form input change
   const handleInputChange = (e) => {
@@ -65,6 +96,7 @@ const Checkout = () => {
 
   // Place order function
   const handlePlaceOrder = async () => {
+   
     const orderData = {
       first_name: formData.firstName,
       last_name: formData.lastName,
@@ -80,6 +112,7 @@ const Checkout = () => {
     };
 
     try {
+       setPlaceOrderBtnLoading(true);
       const response = await axios.post(
         "http://127.0.0.1:8000/order/place_order_api/",
         orderData,
@@ -88,11 +121,26 @@ const Checkout = () => {
         }
       );
       setOrderPayment(response?.data?.order?.payment_method);
+
+      toast.loading("redirct to success page");
+      setTimeout(() => {
+        if (response?.data?.order?.payment_method == "cash") {
+          handleCashPayment();
+          setPlaceOrderBtnLoading(false);
+        } else {
+          console.log("failed");
+        }
+      }, 3000);
       
     } catch (error) {
+       setPlaceOrderBtnLoading(false);
       console.error("Error placing order:", error);
+    }finally{
+       setPlaceOrderBtnLoading(true);
     }
   };
+
+  
   
 
   return (
@@ -293,9 +341,36 @@ const Checkout = () => {
         </div>
         <button
           onClick={handlePlaceOrder}
-          className="bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 transition text-white font-semibold w-full py-4 mt-8 rounded-md"
+          disabled={placeOrderBtnLoading}
+          className="bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 transition text-white font-semibold w-full py-4 mt-8 flex justify-center items-center rounded-md"
         >
-          Place Order
+          {placeOrderBtnLoading ? (
+            <>
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+              Place Order...
+            </>
+          ) : (
+            "Place Order"
+          )}
         </button>
         <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
           Secure Payment: All transactions are encrypted and protected.
