@@ -297,6 +297,7 @@ const Cart = () => {
           <div className="mt-6">
             <Link to={'/checkout'}>
             <motion.button
+            disabled={cartDetails.length == 0}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-full px-8 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-700 transition-colors"

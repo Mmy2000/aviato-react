@@ -137,7 +137,7 @@ const Checkout = () => {
         } else {
           console.log("failed");
         }
-      }, 3000);
+      }, 4000);
       
     } catch (error) {
        setPlaceOrderBtnLoading(false);

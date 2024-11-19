@@ -315,7 +315,7 @@ export const Products = () => {
                         onClick={() => openModal(product)}
                       >
                         <FaShoppingCart className="mr-2" />
-                        Add to Cart
+                        Quick Add
                       </motion.button>
                     </div>
                   </motion.div>
