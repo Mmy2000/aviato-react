@@ -752,7 +752,7 @@ export const ProductDetails = () => {
                   <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                     {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
                   </div>
-                  <div className="absolute opacity-0 wish-badge right-3  border-slate-700 text-gray-800 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
+                  <div className="absolute opacity-0 wish-badge right-3  border-slate-700 text-gray-800 dark:text-gray-200 dark:border-slate-200 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
                     {product.is_favorite ? (
                       <FaHeart size={24} />
                     ) : (
@@ -787,7 +787,7 @@ export const ProductDetails = () => {
                     onClick={() => openModal(product)}
                   >
                     <FaShoppingCart className="mr-2" />
-                    Add to Cart
+                    Quick Add
                   </motion.button>
                 </div>
               </motion.div>
