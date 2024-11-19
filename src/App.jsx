@@ -1,34 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-import Navbar from './components/Navbar'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Home } from './components/Home'
-import { Layout } from './components/Layout'
-import { Products } from './components/Products'
-import Register from './components/Register'
-import  { Toaster } from "react-hot-toast";
-import Login from './components/Login'
-import UserContextProvider from './context/UserContext'
-import { ProfileContextProvider } from './context/ProfileContext'
-import Profile from './components/Profile'
-import ProtectedRoute from './components/ProtectedRoute'
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import { ProductDetails } from './components/ProductDetails'
-import Categories from './components/Categories'
-import Brands from './components/Brands'
-import CategoryDetails from './components/CategoryDetails'
-import BrandDetails from './components/BrandDetails'
-import CartContextProvider from './context/CartContext'
-import Cart from './components/Cart'
-import Checkout from './components/Checkout'
-import OrderSuccess from './components/OrderSuccess'
-import WishlistContextProvider from './context/AddToFavoriteContext'
-import Favorite from './components/Favorite'
-
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Home } from "./components/Home";
+import { Layout } from "./components/Layout";
+import { Products } from "./components/Products";
+import Register from "./components/Register";
+import { Toaster } from "react-hot-toast";
+import Login from "./components/Login";
+import UserContextProvider from "./context/UserContext";
+import { ProfileContextProvider } from "./context/ProfileContext";
+import Profile from "./components/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ProductDetails } from "./components/ProductDetails";
+import Categories from "./components/Categories";
+import Brands from "./components/Brands";
+import CategoryDetails from "./components/CategoryDetails";
+import BrandDetails from "./components/BrandDetails";
+import CartContextProvider from "./context/CartContext";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
+import OrderSuccess from "./components/OrderSuccess";
+import WishlistContextProvider from "./context/AddToFavoriteContext";
+import Favorite from "./components/Favorite";
 
 let router = createBrowserRouter([
   {
@@ -117,13 +113,13 @@ let router = createBrowserRouter([
 
 const queryClient = new QueryClient();
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <WishlistContextProvider>
-        <CartContextProvider>
-          <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <WishlistContextProvider>
+          <CartContextProvider>
             <UserContextProvider>
               <ProfileContextProvider>
                 <RouterProvider router={router}></RouterProvider>
@@ -160,11 +156,11 @@ function App() {
                 />
               </ProfileContextProvider>
             </UserContextProvider>
-          </QueryClientProvider>
-        </CartContextProvider>
-      </WishlistContextProvider>
+          </CartContextProvider>
+        </WishlistContextProvider>
+      </QueryClientProvider>
     </>
   );
 }
 
-export default App
+export default App;

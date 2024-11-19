@@ -5,12 +5,16 @@ import Spinner from "../ui/Spinner";
 import { motion } from "framer-motion";
 import { Rating } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
 
 const BrandDetails = () => {
   const { brand } = useParams();
   const [loading, setLoading] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [error, setError] = useState("");
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
+  };
 
   const getRelatedProducts = async () => {
     setLoading(true);
@@ -22,8 +26,13 @@ const BrandDetails = () => {
         url += `brand=${brand}`;
       }
 
-      const { data } = await axios.get(url);
-      setRelatedProducts(data?.results);
+      const { data } = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: headers.Authorization,
+        },
+      });
+      setRelatedProducts(data?.data);
     } catch (error) {
       setError("Failed to fetch product details. Please try again later.");
       console.error("Error fetching related products:", error);
@@ -31,6 +40,8 @@ const BrandDetails = () => {
       setLoading(false);
     }
   };
+  console.log(relatedProducts);
+  
 
   useEffect(() => {
     getRelatedProducts();
@@ -64,6 +75,13 @@ const BrandDetails = () => {
                     <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                       {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
                     </div>
+                    <div className="absolute top-2 right-3  border-slate-700 text-gray-800 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
+                      {product.is_favorite ? (
+                        <FaHeart size={24} />
+                      ) : (
+                        <FaRegHeart size={24} />
+                      )}
+                    </div>
                   </div>
                   <div className="p-5">
                     <Link to={`/products/${product.id}/${product.category.id}`}>
@@ -91,7 +109,7 @@ const BrandDetails = () => {
                       whileTap={{ scale: 0.95 }}
                     >
                       <FaShoppingCart className="mr-2" />
-                      Add to Cart
+                      Quick Add
                     </motion.button>
                   </div>
                 </motion.div>

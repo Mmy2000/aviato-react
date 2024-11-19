@@ -29,7 +29,7 @@ import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 import { CartContext } from "../context/CartContext";
 import Modal from "../shared/Modal";
-
+import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
 
 export const ProductDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,14 +62,15 @@ export const ProductDetails = () => {
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [loadingBtn, setLoadingBtn] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null); // New state
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
+  };
 
   const openModal = (product) => {
     setSelectedProduct(product); // Set the clicked product
     setIsModalOpen(true);
   };
-  const closeModal = () => setIsModalOpen(false);
-  console.log(selectedProduct?.id);
-  
+  const closeModal = () => setIsModalOpen(false);  
 
 
   const handleSubmit = async () => {
@@ -129,9 +130,15 @@ export const ProductDetails = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://127.0.0.1:8000/products/api/products`
+        `http://127.0.0.1:8000/products/api/products`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: headers.Authorization,
+          },
+        }
       );
-      let allProducts = data?.results;
+      let allProducts = data?.data;
       let related = allProducts.filter(
         (product) => product.category.id == category
       );
@@ -729,6 +736,13 @@ export const ProductDetails = () => {
                   />
                   <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                     {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
+                  </div>
+                  <div className="absolute top-2 right-3  border-slate-700 text-gray-800 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
+                    {product.is_favorite ? (
+                      <FaHeart size={24} />
+                    ) : (
+                      <FaRegHeart size={24} />
+                    )}
                   </div>
                 </div>
                 <div className="p-5">

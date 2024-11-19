@@ -23,7 +23,6 @@ export default function WishlistContextProvider(props) {
         })
         .catch((error) => error);
     }
-    console.log(wishCount);
     
 
     return (
