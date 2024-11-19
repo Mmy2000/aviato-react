@@ -596,7 +596,7 @@ export const ProductDetails = () => {
                             className="w-10 h-10 lg:w-14 lg:h-14 object-cover rounded-full mr-4 shadow-lg border-2 border-gray-200 dark:border-gray-600"
                           />
                           <div className="flex-1">
-                            <div className="flex justify-between items-center mb-2">
+                            <div className="flex justify-between items-center mb-1">
                               <h4 className="font-semibold text-sm lg:text-lg dark:text-white text-gray-900">
                                 {review.user.full_name || review.user.username}
                               </h4>
@@ -613,7 +613,7 @@ export const ProductDetails = () => {
                                 )}
                               </p>
                             </div>
-                            <div className="flex items-center mt-1 mb-3">
+                            <div className="flex items-center  mb-1">
                               <Rating
                                 value={review.rating}
                                 precision={0.5}
@@ -626,7 +626,7 @@ export const ProductDetails = () => {
                                 }}
                               />
                             </div>
-                            <h5 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            <h5 className="font-semibold text-gray-700 dark:text-gray-300 mb-1">
                               {review.subject}
                             </h5>
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
