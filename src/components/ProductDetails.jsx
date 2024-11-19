@@ -30,8 +30,10 @@ import { FaShoppingCart } from "react-icons/fa";
 import { CartContext } from "../context/CartContext";
 import Modal from "../shared/Modal";
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
+import { UserContext } from "../context/UserContext";
 
 export const ProductDetails = () => {
+  let { setUserLogin, userLogin } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { addToCart } = useContext(CartContext);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -129,20 +131,33 @@ export const ProductDetails = () => {
   const getRelatedProducts = async (category) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `http://127.0.0.1:8000/products/api/products`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: headers.Authorization,
-          },
-        }
-      );
-      let allProducts = data?.data;
-      let related = allProducts.filter(
-        (product) => product.category.id == category
-      );
-      setRelatedProducts(related);
+      if (userLogin) {
+        const { data } = await axios.get(
+          `http://127.0.0.1:8000/products/api/products`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: headers.Authorization,
+            },
+          }
+        );
+        let allProducts = data?.data;
+        let related = allProducts.filter(
+          (product) => product.category.id == category
+        );
+        setRelatedProducts(related);
+      }else{
+        const { data } = await axios.get(
+          `http://127.0.0.1:8000/products/api/products`
+        );
+        let allProducts = data?.data;
+        let related = allProducts.filter(
+          (product) => product.category.id == category
+        );
+        setRelatedProducts(related);
+      }
+      
+      
     } catch (error) {
       setError("Failed to fetch product details. Please try again later.");
     } finally {

@@ -26,9 +26,11 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import { CartContext } from "../context/CartContext";
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
+import { UserContext } from "../context/UserContext";
 
 export const Products = () => {
   const [quantity, setQuantity] = useState(1);
+  let { setUserLogin, userLogin } = useContext(UserContext);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
@@ -47,6 +49,7 @@ export const Products = () => {
     setIsModalOpen(true);
   };
   const closeModal = () => setIsModalOpen(false);
+  
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
   };
@@ -65,16 +68,25 @@ export const Products = () => {
     if (searchTerm) {
       url.searchParams.append("search", searchTerm);
     }
-    const response = await axios.get(url.toString(), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: headers.Authorization,
-      },
-    });
-    setProductCount(response?.data?.count);
-    // console.log(response);
+    if (userLogin) {
+      const response = await axios.get(url.toString(), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: headers.Authorization,
+        },
+      });
+      setProductCount(response?.data?.count);
+      // console.log(response);
+
+      return response;
+    }else{
+      const response = await axios.get(url.toString());
+      setProductCount(response?.data?.count);
+      // console.log(response);
+
+      return response;
+    }    
     
-    return response;
   };  
 
   const { isLoading, isError, error, data } = useQuery({

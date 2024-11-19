@@ -42,6 +42,7 @@ const Navbar = () => {
     // console.log(response.data.data);
   }
   
+  
   useEffect(() => {
     cartInfo;
     getWishlist()
@@ -60,6 +61,7 @@ const Navbar = () => {
       isActive ? "scale-x-100" : "scale-x-0 hover:scale-x-100"
     } origin-left rounded-full`;
 
+  
   return (
     <nav className="bg-white dark:bg-gray-900 shadow fixed w-full z-30 top-0 left-0 transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -108,7 +110,7 @@ const Navbar = () => {
 
               {/* Badge for Item Count */}
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transform transition-transform duration-300 ease-in-out group-hover:scale-105">
-                {cartInfo?.count ? cartInfo?.count : 0}
+                {cartInfo?.count && userLogin ? cartInfo?.count : 0}
               </span>
             </NavLink>
             <NavLink
@@ -126,7 +128,7 @@ const Navbar = () => {
 
               {/* Badge for Item Count */}
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transform transition-transform duration-300 ease-in-out group-hover:scale-105">
-                {wishCount ? wishCount : 0}
+                {wishCount && userLogin ? wishCount : 0}
               </span>
             </NavLink>
             {/* Dark mode toggle */}

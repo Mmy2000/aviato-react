@@ -1,14 +1,16 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import { motion } from "framer-motion";
 import { Rating } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
+import { UserContext } from "../context/UserContext";
 
 const BrandDetails = () => {
   const { brand } = useParams();
+  let { setUserLogin, userLogin } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [error, setError] = useState("");
@@ -25,14 +27,19 @@ const BrandDetails = () => {
       if (brand) {
         url += `brand=${brand}`;
       }
-
-      const { data } = await axios.get(url, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: headers.Authorization,
-        },
-      });
-      setRelatedProducts(data?.data);
+      if (userLogin) {
+        const { data } = await axios.get(url, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: headers.Authorization,
+          },
+        });
+        setRelatedProducts(data?.data);
+      }else{
+        const { data } = await axios.get(url);
+        setRelatedProducts(data?.data);
+      }
+      
     } catch (error) {
       setError("Failed to fetch product details. Please try again later.");
       console.error("Error fetching related products:", error);
