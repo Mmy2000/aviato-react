@@ -20,6 +20,7 @@ const Cart = () => {
     let response = await displayCart();
     if (response && response.results) {
       setCartDetails(response.results || []);
+      setcartInfo(response || []);
     }
     setLoading(false); // Set loading to false after data is fetched
   }
@@ -28,7 +29,8 @@ const Cart = () => {
     setcurrentId(cartItemId);
     let response = await deleteCartItem(cartItemId);
     setCartDetails(response.data.cart_items);
-    setcartInfo(response.data.cart_items);
+    
+    setcartInfo(response?.data.cart_items);
     toast.success("Cart Item deleted successfully");
     setIsCloseloading(false);
   }
@@ -53,7 +55,6 @@ const Cart = () => {
       setDecrementLoading(false);
     }
   }
-  console.log(cartDetails);
 
   useEffect(() => {
     getCart();

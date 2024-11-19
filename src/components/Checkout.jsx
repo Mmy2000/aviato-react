@@ -13,7 +13,7 @@ const Checkout = () => {
   const [cartDetails, setCartDetails] = useState([]);
   const [loading, setLoading] = useState(false); // New loading state
   const [placeOrderBtnLoading, setPlaceOrderBtnLoading] = useState(false); // New loading state
-  const { displayCart } = useContext(CartContext);
+  const { displayCart, setcartInfo } = useContext(CartContext);
   // State for form fields
   const [formData, setFormData] = useState({
     firstName: "",
@@ -35,6 +35,7 @@ const Checkout = () => {
     let response = await displayCart();
     if (response && response.results) {
       setCartDetails(response.results || []);
+      setcartInfo(response || []);
     }
     setLoading(false); // Set loading to false after data is fetched
   }
@@ -81,7 +82,8 @@ const Checkout = () => {
         );
 
         // Handle the response as needed
-        toast.success(response?.data?.message);        
+        toast.success(response?.data?.message); 
+        setcartInfo([])       
         navigate("/order-success", {
           state: {
             orderDetails: response?.data,
@@ -134,6 +136,7 @@ const Checkout = () => {
         if (response?.data?.order?.payment_method == "cash") {
           handleCashPayment();
           setPlaceOrderBtnLoading(false);
+          getCart()
         } else {
           console.log("failed");
         }

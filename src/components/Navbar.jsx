@@ -35,7 +35,10 @@ const Navbar = () => {
   
   useEffect(() => {
     cartInfo;
-  }, []);
+  }, [cartInfo?.count]);
+
+  console.log(cartInfo);
+  
   
 
   const linkClass = (isActive) =>
@@ -98,7 +101,7 @@ const Navbar = () => {
 
               {/* Badge for Item Count */}
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transform transition-transform duration-300 ease-in-out group-hover:scale-105">
-                {cartInfo?.count}
+                {cartInfo?.count ? cartInfo?.count : 0}
               </span>
             </NavLink>
             {/* Dark mode toggle */}
