@@ -27,7 +27,6 @@ const LatestProducts = () => {
         getLatestProducts()
     
     }, []);
-    console.log(latestProducts);
     
   return (
     <>

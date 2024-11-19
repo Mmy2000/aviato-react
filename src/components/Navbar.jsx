@@ -10,7 +10,6 @@ import {
 import { UserContext } from "../context/UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ProfileContext } from "../context/ProfileContext";
-import axios from "axios";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { CartContext } from "../context/CartContext";
 
@@ -21,8 +20,7 @@ const Navbar = () => {
   let { profile } = useContext(ProfileContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  let { cartInfo } =
-    useContext(CartContext);
+  let { cartInfo } = useContext(CartContext);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
