@@ -67,7 +67,7 @@ const BrandDetails = () => {
               return (
                 <motion.div
                   key={product.id}
-                  className="bg-white max-h-fit dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
+                  className="bg-white max-h-fit main-card dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden"
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
@@ -82,7 +82,7 @@ const BrandDetails = () => {
                     <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                       {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
                     </div>
-                    <div className="absolute top-2 right-3  border-slate-700 text-gray-800 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
+                    <div className="absolute wish-badge opacity-0 right-3  border-slate-700 text-gray-800 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
                       {product.is_favorite ? (
                         <FaHeart size={24} />
                       ) : (

@@ -110,3 +110,12 @@ input[type="range"].slider-thumb:disabled::-moz-range-thumb {
   margin-bottom: 16px; /* Adjusts spacing between items */
 }
 
+.main-card:hover .wish-badge{
+  opacity: 1;
+  top: 8px;
+  transition: all 0.3s ;
+}
+.wish-badge{
+  top: -20px;
+  transition: all 0.3s;
+}
