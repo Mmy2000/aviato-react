@@ -12,6 +12,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ProfileContext } from "../context/ProfileContext";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { CartContext } from "../context/CartContext";
+import { wishlistContext } from "../context/AddToFavoriteContext";
+import { FaHeart } from "react-icons/fa";
 
 
 const Navbar = () => {
@@ -21,6 +23,7 @@ const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   let { cartInfo } = useContext(CartContext);
+  let { displayWishlist, wishCount } = useContext(wishlistContext);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -32,13 +35,17 @@ const Navbar = () => {
     setUserLogin(null);
     navigate("/login");
   }
+  async function getWishlist() {
+    let response = await displayWishlist();
+
+    console.log(response);
+    // console.log(response.data.data);
+  }
   
   useEffect(() => {
     cartInfo;
-  }, [cartInfo?.count]);
-
-  console.log(cartInfo);
-  
+    getWishlist()
+  }, [cartInfo?.count]);  
   
 
   const linkClass = (isActive) =>
@@ -92,16 +99,34 @@ const Navbar = () => {
                 `relative flex items-center group px-3 py-1 rounded-lg transition-all duration-300 ease-in-out ${
                   isActive
                     ? "text-slate-800 dark:text-slate-700 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-blue-200 dark:to-blue-500 shadow-sm shadow-gray-400 dark:shadow-blue-900"
-                    : "text-gray-800 dark:text-gray-200 hover:text-blue-500"
+                    : "text-gray-800 dark:text-gray-200 hover:text-gray-700"
                 }`
               }
             >
-              <ShoppingCartIcon className="h-5 w-5 mr-1 text-gray-500 dark:text-gray-300 group-hover:text-blue-500 transition-transform duration-300" />
+              <ShoppingCartIcon className="h-5 w-5 mr-1 text-gray-500 dark:text-gray-300 group-hover:text-gray-700 transition-transform duration-300" />
               <span className="font-medium">Cart</span>
 
               {/* Badge for Item Count */}
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transform transition-transform duration-300 ease-in-out group-hover:scale-105">
                 {cartInfo?.count ? cartInfo?.count : 0}
+              </span>
+            </NavLink>
+            <NavLink
+              to="/favorites"
+              className={({ isActive }) =>
+                `relative flex items-center group px-3 py-1 rounded-lg transition-all duration-300 ease-in-out ${
+                  isActive
+                    ? "text-slate-800 dark:text-slate-700 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-blue-200 dark:to-blue-500 shadow-sm shadow-gray-400 dark:shadow-blue-900"
+                    : "text-gray-800 dark:text-gray-200 hover:text-gray-700"
+                }`
+              }
+            >
+              <FaHeart className="h-5 w-5 mr-1 text-gray-500 dark:text-gray-300 group-hover:text-gray-700 transition-transform duration-300" />
+              <span className="font-medium"></span>
+
+              {/* Badge for Item Count */}
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transform transition-transform duration-300 ease-in-out group-hover:scale-105">
+                {wishCount ? wishCount : 0}
               </span>
             </NavLink>
             {/* Dark mode toggle */}

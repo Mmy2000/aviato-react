@@ -25,7 +25,7 @@ import {
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 import { CartContext } from "../context/CartContext";
-
+import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
 
 export const Products = () => {
   const [quantity, setQuantity] = useState(1);
@@ -47,7 +47,9 @@ export const Products = () => {
     setIsModalOpen(true);
   };
   const closeModal = () => setIsModalOpen(false);
-  
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
+  };
 
   const fetchProducts = async () => {
     const url = new URL("http://127.0.0.1:8000/products/api/products");
@@ -63,10 +65,17 @@ export const Products = () => {
     if (searchTerm) {
       url.searchParams.append("search", searchTerm);
     }
-    const response = await axios.get(url.toString());
+    const response = await axios.get(url.toString(), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: headers.Authorization,
+      },
+    });
     setProductCount(response?.data?.count);
+    // console.log(response);
+    
     return response;
-  };
+  };  
 
   const { isLoading, isError, error, data } = useQuery({
     queryKey: [
@@ -94,50 +103,14 @@ export const Products = () => {
     setSearchTerm("");
   };
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="flex items-center w-full justify-center">
-  //       <Spinner />
-  //     </div>
-  //   );
-  // }
 
   if (isError) {
     return <div className="text-red-500">Error: {error.message}</div>;
   }
 
-  const products = data?.data?.results;  
+  const products = data?.data?.data;  
   const productCounts = products ? products.length : 0;
 
-  // const handleAddToCart = () => {
-  //   if (!selectedProduct) return;
-
-  //   // Check if product has variations for size or color
-  //   const hasSizeVariations = selectedProduct.size_variations?.length > 0;
-  //   const hasColorVariations = selectedProduct.color_variations?.length > 0;
-
-  //   // If variations are required but not selected, show an alert
-  //   if (
-  //     (hasSizeVariations && !selectedSize) ||
-  //     (hasColorVariations && !selectedColor)
-  //   ) {
-  //     toast.error("Please select variations before adding to cart.");
-  //     return;
-  //   }
-
-  //   // Construct the product object with variations and quantity
-  //   const productToAdd = {
-  //     productId: selectedProduct.id,
-  //     size: selectedSize?.variation_value || null,
-  //     color: selectedColor?.variation_value || null,
-  //     quantity: quantity, // Add quantity to the cart item
-  //   };
-
-  //   console.log("Product added to cart:", productToAdd);
-
-  //   // Close the modal after adding the product to the cart
-  //   closeModal();
-  // };
 
   const handleAddToCart = (product) => {
     if (!product) return; // Ensure product is not null
@@ -186,9 +159,9 @@ export const Products = () => {
   const handleQuantityChange = (change) => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + change));
   };
-  // const handleQuantityChange = (amount) => {
-  //   setQuantity((prev) => Math.max(1, prev + amount));
-  // };
+
+    // console.log(products);
+
 
   return (
     <>
@@ -284,6 +257,13 @@ export const Products = () => {
                       />
                       <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                         {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
+                      </div>
+                      <div className="absolute top-2 right-3  border-slate-700 text-gray-800 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
+                        {product.is_favorite ? (
+                          <FaHeart size={24} />
+                        ) : (
+                          <FaRegHeart size={24} />
+                        )}
                       </div>
                     </div>
                     <div className="p-5">

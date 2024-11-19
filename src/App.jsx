@@ -26,6 +26,8 @@ import CartContextProvider from './context/CartContext'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
 import OrderSuccess from './components/OrderSuccess'
+import WishlistContextProvider from './context/AddToFavoriteContext'
+import Favorite from './components/Favorite'
 
 
 let router = createBrowserRouter([
@@ -86,6 +88,14 @@ let router = createBrowserRouter([
         ),
       },
       {
+        path: "favorites",
+        element: (
+          <ProtectedRoute>
+            <Favorite />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "checkout",
         element: (
           <ProtectedRoute>
@@ -111,46 +121,48 @@ function App() {
 
   return (
     <>
-      <CartContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <UserContextProvider>
-            <ProfileContextProvider>
-              <RouterProvider router={router}></RouterProvider>
-              <Toaster
-                toastOptions={{
-                  className: "",
-                  duration: 4000,
-                  style: {
-                    padding: "12px 16px",
-                    color: "#2d3748",
-                    backgroundColor: "#fff",
-                    borderRadius: "8px",
-                    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
-                  },
-                  success: {
-                    icon: "✅",
+      <WishlistContextProvider>
+        <CartContextProvider>
+          <QueryClientProvider client={queryClient}>
+            <UserContextProvider>
+              <ProfileContextProvider>
+                <RouterProvider router={router}></RouterProvider>
+                <Toaster
+                  toastOptions={{
+                    className: "",
+                    duration: 4000,
                     style: {
-                      color: "#2f855a",
+                      padding: "12px 16px",
+                      color: "#2d3748",
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
                     },
-                  },
-                  error: {
-                    icon: "❌",
-                    style: {
-                      color: "#c53030",
+                    success: {
+                      icon: "✅",
+                      style: {
+                        color: "#2f855a",
+                      },
                     },
-                  },
-                  info: {
-                    icon: "ℹ️",
-                    style: {
-                      color: "#2b6cb0",
+                    error: {
+                      icon: "❌",
+                      style: {
+                        color: "#c53030",
+                      },
                     },
-                  },
-                }}
-              />
-            </ProfileContextProvider>
-          </UserContextProvider>
-        </QueryClientProvider>
-      </CartContextProvider>
+                    info: {
+                      icon: "ℹ️",
+                      style: {
+                        color: "#2b6cb0",
+                      },
+                    },
+                  }}
+                />
+              </ProfileContextProvider>
+            </UserContextProvider>
+          </QueryClientProvider>
+        </CartContextProvider>
+      </WishlistContextProvider>
     </>
   );
 }
