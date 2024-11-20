@@ -264,13 +264,33 @@ const Cart = () => {
               </AnimatePresence>
             </div>
           ) : (
-            <motion.p
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center text-lg text-gray-500 dark:text-gray-400"
+              className="flex flex-col items-center text-center text-lg text-gray-500 dark:text-gray-400"
             >
-              Your cart is empty
-            </motion.p>
+              {/* Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-12 h-12 text-gray-400 mb-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 4.5l.75 13.5c.075 1.337 1.134 2.437 2.625 2.437h10.5c1.491 0 2.55-1.1 2.625-2.437L20.25 4.5m-16.5 0h16.5m-16.5 0a2.25 2.25 0 012.25-2.25h11.25a2.25 2.25 0 012.25 2.25m-16.5 0l1.5 13.5m4.5-7.5h6m-6 3h4"
+                />
+              </svg>
+
+              {/* Message */}
+              <p className="font-medium">
+                Your cart is currently empty. Browse our collection to find
+                products you love and make your shopping experience delightful!
+              </p>
+            </motion.div>
           )}
         </div>
 
@@ -296,15 +316,15 @@ const Cart = () => {
             </div>
           </div>
           <div className="mt-6">
-            <Link to={'/checkout'}>
-            <motion.button
-            disabled={cartDetails.length == 0}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full px-8 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-700 transition-colors"
-            >
-              Checkout
-            </motion.button>
+            <Link to={"/checkout"}>
+              <motion.button
+                disabled={cartDetails.length == 0}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full px-8 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-700 transition-colors"
+              >
+                Checkout
+              </motion.button>
             </Link>
             <Link to={"/products"}>
               <button className="w-full transition-colors px-8 py-3 mt-4 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500">

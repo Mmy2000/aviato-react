@@ -97,12 +97,9 @@ const Favorite = () => {
         ) : (
           <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-200 text-lg space-y-4">
             <p className="text-xl font-bold">
-              Oops, we couldn’t find any matches.
+              Oops, we couldn’t find any favorite products.
             </p>
-            <p className="text-gray-600 dark:text-gray-200 font-medium text-center">
-              Try adjusting your filters, or explore our other categories to
-              find something you’ll love!
-            </p>
+            
           </div>
         )}
       </div>
