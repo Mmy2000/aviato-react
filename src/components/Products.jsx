@@ -271,9 +271,33 @@ export const Products = () => {
                         {wishlistProducts.some(
                           (item) => item.id === product.id
                         ) ? (
-                          <FaHeart size={24} />
+                          <motion.div
+                            key="filled-heart"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 15,
+                            }}
+                          >
+                            <FaHeart size={24} />
+                          </motion.div>
                         ) : (
-                          <FaRegHeart size={24} />
+                          <motion.div
+                            key="empty-heart"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 15,
+                            }}
+                          >
+                            <FaRegHeart size={24} />
+                          </motion.div>
                         )}
                       </div>
                     </div>

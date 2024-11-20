@@ -768,9 +768,33 @@ export const ProductDetails = () => {
                     className="absolute wish-badge opacity-0 right-3 cursor-pointer border-slate-700 text-gray-800 dark:text-gray-200 dark:border-slate-200 text-sm font-semibold px-2 py-2 rounded-full shadow-lg"
                   >
                     {wishlistProducts.some((item) => item.id === product.id) ? (
-                      <FaHeart size={24} />
+                      <motion.div
+                        key="filled-heart"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 15,
+                        }}
+                      >
+                        <FaHeart size={24} />
+                      </motion.div>
                     ) : (
-                      <FaRegHeart size={24} />
+                      <motion.div
+                        key="empty-heart"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 15,
+                        }}
+                      >
+                        <FaRegHeart size={24} />
+                      </motion.div>
                     )}
                   </div>
                 </div>
