@@ -1,9 +1,17 @@
-// Modal.js
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa"; // Import the default icon
 
-const Modal = ({ isOpen, onClose, title, children, onSubmit,okTxt="Add to Cart",closeTxt="Cancel" }) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  onSubmit,
+  okTxt = "Add to Cart",
+  closeTxt = "Cancel",
+  icon = <FaShoppingCart className="mr-2" />, // Default icon set here
+}) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -64,7 +72,8 @@ const Modal = ({ isOpen, onClose, title, children, onSubmit,okTxt="Add to Cart",
                 onClick={onSubmit}
                 className="px-4 py-2 text-sm font-medium flex justify-center items-center transition-colors text-white bg-slate-600 rounded-md hover:bg-slate-700  dark:bg-gray-600 dark:hover:bg-gray-700"
               >
-                <FaShoppingCart className="mr-2" />
+                {/* Render the dynamic icon here */}
+                {icon}
                 {okTxt}
               </button>
             </div>

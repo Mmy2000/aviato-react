@@ -27,6 +27,7 @@ import WishlistContextProvider from "./context/AddToFavoriteContext";
 import Favorite from "./components/Favorite";
 import Orders from "./components/Orders";
 import OrderDetails from "./components/OrderDetails";
+import ChangePassword from "./components/ChangePassword";
 
 let router = createBrowserRouter([
   {
@@ -114,6 +115,14 @@ let router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Orders />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "profile/change-password",
+        element: (
+          <ProtectedRoute>
+            <ChangePassword />
           </ProtectedRoute>
         ),
       },
