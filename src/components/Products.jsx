@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
 import { FaShoppingCart } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -27,10 +27,14 @@ import toast from "react-hot-toast";
 import { CartContext } from "../context/CartContext";
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
 import { UserContext } from "../context/UserContext";
+import { wishlistContext } from "../context/AddToFavoriteContext";
+
 
 export const Products = () => {
   const [quantity, setQuantity] = useState(1);
   let { setUserLogin, userLogin } = useContext(UserContext);
+  const { toggleFavorite, wishlistProducts } =
+    useContext(wishlistContext);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
@@ -56,38 +60,25 @@ export const Products = () => {
 
   const fetchProducts = async () => {
     const url = new URL("http://127.0.0.1:8000/products/api/products");
-    if (selectedCategoryId) {
+    selectedCategoryId &&
       url.searchParams.append(selectedType, selectedCategoryId);
-    }
-    if (minPrice !== null) {
-      url.searchParams.append("min_price", minPrice);
-    }
-    if (maxPrice !== null) {
-      url.searchParams.append("max_price", maxPrice);
-    }
-    if (searchTerm) {
-      url.searchParams.append("search", searchTerm);
-    }
-    if (userLogin) {
-      const response = await axios.get(url.toString(), {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: headers.Authorization,
-        },
-      });
-      setProductCount(response?.data?.count);
-      // console.log(response);
+    url.searchParams.append("min_price", minPrice || 0);
+    url.searchParams.append("max_price", maxPrice || 10000);
+    searchTerm && url.searchParams.append("search", searchTerm);
 
-      return response;
-    }else{
-      const response = await axios.get(url.toString());
-      setProductCount(response?.data?.count);
-      // console.log(response);
+    const options = {
+      headers: userLogin
+        ? {
+            "Content-Type": "application/json",
+            Authorization: headers.Authorization,
+          }
+        : undefined,
+    };
 
-      return response;
-    }    
-    
-  };  
+    const response = await axios.get(url.toString(), options);
+    setProductCount(response.data.count);
+    return response;
+  };
 
   const { isLoading, isError, error, data } = useQuery({
     queryKey: [
@@ -171,10 +162,13 @@ export const Products = () => {
   const handleQuantityChange = (change) => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + change));
   };
+  
+  const handleToggle = (productId) => {
 
-    // console.log(products);
-
-
+    // Toggle the favorite status
+    toggleFavorite(productId); // Ensure this is updating the wishlist context properly
+  };
+ 
   return (
     <>
       <div className="flex flex-col lg:flex-row ">
@@ -270,8 +264,13 @@ export const Products = () => {
                       <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                         {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
                       </div>
-                      <div className="absolute wish-badge opacity-0 right-3  border-slate-700 text-gray-800 dark:text-gray-200 dark:border-slate-200 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
-                        {product.is_favorite ? (
+                      <div
+                        onClick={() => handleToggle(product.id)} // This will now toggle the favorite state
+                        className="absolute wish-badge opacity-0 right-3 cursor-pointer border-slate-700 text-gray-800 dark:text-gray-200 dark:border-slate-200 text-sm font-semibold px-2 py-2 rounded-full shadow-lg"
+                      >
+                        {wishlistProducts.some(
+                          (item) => item.id === product.id
+                        ) ? (
                           <FaHeart size={24} />
                         ) : (
                           <FaRegHeart size={24} />
