@@ -91,6 +91,7 @@ const CategoryDetails = () => {
       addToCart(product.id, null, null, quantity)
         .then(() => {
           toast.success("Item added to cart successfully!");
+          closeModal()
         })
         .catch((error) => {
           toast.error("Error adding item to cart:", error);
@@ -116,6 +117,7 @@ const CategoryDetails = () => {
     )
       .then(() => {
         toast.success("Item added to cart successfully!");
+        closeModal()
       })
       .catch((error) => {
         toast.error("Error adding item to cart:", error);
@@ -268,9 +270,8 @@ const CategoryDetails = () => {
         }
         onSubmit={() => {
           handleAddToCart(selectedProduct); // Pass selected product to handleAddToCart
-          closeModal();
         }}
-        disabled={loadingBtn}
+        loading={loadingBtn}
       >
         <div className="flex items-center space-x-3">
           <span className="font-semibold text-gray-800 dark:text-gray-200">

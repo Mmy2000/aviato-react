@@ -27,6 +27,7 @@ const Profile = () => {
   const [initialData, setInitialData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadingBtn, setLoadingBtn] = useState(false);
+  const [loadingChangeBtn, setLoadingChangeBtn] = useState(false);
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -51,7 +52,7 @@ const Profile = () => {
       return;
     }
 
-    setLoadingBtn(true);
+    setLoadingChangeBtn(true);
       let headers = {
         Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
       };   
@@ -83,7 +84,7 @@ const Profile = () => {
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
     } finally {
-      setLoadingBtn(false);
+      setLoadingChangeBtn(false);
     }
   };
 
@@ -142,7 +143,7 @@ const Profile = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/accounts/api/profile/",
+        `${import.meta.env.VITE_BASE_URL}/accounts/api/profile/`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${userToken}` },
@@ -444,6 +445,7 @@ const Profile = () => {
         disabled={loadingBtn}
         okTxt="Update Password"
         icon={<FaEdit className="mr-2" />}
+        loading={loadingChangeBtn}
       >
         <ChangePassword
           formData={passwordData}

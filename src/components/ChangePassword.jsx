@@ -20,7 +20,7 @@ const ChangePassword = ({ formData, onInputChange }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="space-y-8 p-6 "
+      className="space-y-5 p-6 "
     >
       {/* Current Password */}
       <motion.div

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaShoppingCart } from "react-icons/fa"; // Import the default icon
+import { FaShoppingCart } from "react-icons/fa";
 
 const Modal = ({
   isOpen,
@@ -8,9 +8,10 @@ const Modal = ({
   title,
   children,
   onSubmit,
+  loading, // Accept loading as a prop
   okTxt = "Add to Cart",
   closeTxt = "Cancel",
-  icon = <FaShoppingCart className="mr-2" />, // Default icon set here
+  icon = <FaShoppingCart className="mr-2" />,
 }) => {
   return (
     <AnimatePresence>
@@ -21,7 +22,7 @@ const Modal = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          onClick={onClose} // Closes modal when clicking outside the content
+          onClick={onClose}
         >
           <motion.div
             className="bg-white dark:bg-gray-900 rounded-lg shadow-lg max-w-md w-full mx-4 p-6 relative transform transition-all duration-300 ease-in-out"
@@ -29,7 +30,7 @@ const Modal = ({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 30 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            onClick={(e) => e.stopPropagation()} // Prevent click from closing modal
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center pb-4">
               {title && (
@@ -60,7 +61,6 @@ const Modal = ({
             <div className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed space-y-4">
               {children}
             </div>
-            {/* Footer with Close and Submit buttons */}
             <div className="flex justify-end gap-4 mt-6">
               <button
                 onClick={onClose}
@@ -70,10 +70,16 @@ const Modal = ({
               </button>
               <button
                 onClick={onSubmit}
-                className="px-4 py-2 text-sm font-medium flex justify-center items-center transition-colors text-white bg-slate-600 rounded-md hover:bg-slate-700  dark:bg-gray-600 dark:hover:bg-gray-700"
+                disabled={loading} // Disable button when loading
+                className={`px-4 py-2 text-sm font-medium flex justify-center items-center transition-colors text-white bg-slate-600 rounded-md hover:bg-slate-700 dark:bg-gray-600 dark:hover:bg-gray-700 ${
+                  loading ? "opacity-70 cursor-not-allowed" : ""
+                }`}
               >
-                {/* Render the dynamic icon here */}
-                {icon}
+                {loading ? (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                ) : (
+                  icon
+                )}
                 {okTxt}
               </button>
             </div>
