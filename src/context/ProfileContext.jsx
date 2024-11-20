@@ -22,7 +22,7 @@ export const ProfileContextProvider = (props) => {
     try {
       // Make an authenticated request to fetch the profile data
       const response = await axios.get(
-        "http://127.0.0.1:8000/accounts/api/profile/",
+        `${import.meta.env.VITE_BASE_URL}/accounts/api/profile/`,
         {
           headers: {
             "Content-Type": "application/json",

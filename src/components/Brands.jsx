@@ -14,7 +14,7 @@ const Brands = ({ onBrandSelect }) => {
         setLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:8000/products/api/brands/"
+          `${import.meta.env.VITE_BASE_URL}/products/api/brands/`
         );
         setBrands(response?.data?.results);
       } catch (error) {

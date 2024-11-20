@@ -49,7 +49,7 @@ const CategoryDetails = () => {
     setLoading(true);
     try {
       // Build the URL dynamically based on category and subcategory presence
-      let url = "http://127.0.0.1:8000/products/api/products?";
+      let url = `${import.meta.env.VITE_BASE_URL}/products/api/products?`;
 
       if (category) {
         url += `category=${category}`;

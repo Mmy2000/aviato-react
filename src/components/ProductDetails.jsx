@@ -120,7 +120,7 @@ export const ProductDetails = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://127.0.0.1:8000/products/api/product/${id}`
+        `${import.meta.env.VITE_BASE_URL}/products/api/product/${id}`
       );
       setProductDetails(data);
     } catch (error) {
@@ -135,7 +135,7 @@ export const ProductDetails = () => {
       setLoading(true);
       if (userLogin) {
         const { data } = await axios.get(
-          `http://127.0.0.1:8000/products/api/products`,
+          `${import.meta.env.VITE_BASE_URL}/products/api/products`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -150,7 +150,7 @@ export const ProductDetails = () => {
         setRelatedProducts(related);
       }else{
         const { data } = await axios.get(
-          `http://127.0.0.1:8000/products/api/products`
+          `${import.meta.env.VITE_BASE_URL}/products/api/products`
         );
         let allProducts = data?.data;
         let related = allProducts.filter(

@@ -12,7 +12,7 @@ export default function CartContextProvider(props) {
 
   function displayCart() {
     return axios
-      .get(`http://127.0.0.1:8000/cart/api/cart-items/`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/cart/api/cart-items/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: headers.Authorization,
@@ -36,7 +36,7 @@ export default function CartContextProvider(props) {
   function addToCart(productId, size, color, quantity) {
     return axios
       .post(
-        `http://127.0.0.1:8000/cart/api/cart-items/`,
+        `${import.meta.env.VITE_BASE_URL}/cart/api/cart-items/`,
         {
           productId,
           size,
@@ -62,7 +62,7 @@ export default function CartContextProvider(props) {
 
   function deleteCartItem(cartItemId) {
     return axios
-      .delete(`http://127.0.0.1:8000/cart/api/cart-items/${cartItemId}`, {
+      .delete(`${import.meta.env.VITE_BASE_URL}/cart/api/cart-items/${cartItemId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: headers.Authorization,
@@ -79,7 +79,7 @@ export default function CartContextProvider(props) {
   function updateCartItem(cartItemId, quantity) {
     return axios
       .put(
-        `http://127.0.0.1:8000/cart/api/cart-items/${cartItemId}/`,
+        `${import.meta.env.VITE_BASE_URL}/cart/api/cart-items/${cartItemId}/`,
         {
           quantity: quantity,
         },

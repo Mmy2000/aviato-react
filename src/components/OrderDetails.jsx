@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import Spinner from "../ui/Spinner";
 
 let headers = {
   Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
@@ -9,7 +10,7 @@ let headers = {
 
 const fetchOrderDetail = async (id) => {
   const response = await fetch(
-    `http://127.0.0.1:8000/accounts/api/orders/${id}/`,
+    `${import.meta.env.VITE_BASE_URL}/accounts/api/orders/${id}/`,
     {
       headers,
     }
@@ -37,9 +38,9 @@ const OrderDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-100 dark:bg-gray-900">
+      <div className="min-h-screen flex justify-center items-center">
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          Loading order details...
+          <Spinner />
         </p>
       </div>
     );
@@ -143,7 +144,7 @@ const OrderDetail = () => {
                   className="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-md"
                 >
                   <img
-                    src={`http://127.0.0.1:8000${product.product.image}`}
+                    src={`${import.meta.env.VITE_BASE_URL}${product.product.image}`}
                     alt={product.product.name}
                     className="w-16 h-16 rounded-md object-cover"
                   />

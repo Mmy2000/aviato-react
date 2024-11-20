@@ -74,10 +74,10 @@ const Checkout = () => {
 
         // Send request to cash payment endpoint
         const response = await axios.post(
-          "http://127.0.0.1:8000/order/cash-order_api/",
+          `${import.meta.env.VITE_BASE_URL}/order/cash-order_api/`,
           {},
           {
-            headers
+            headers,
           }
         );
 
@@ -123,10 +123,10 @@ const Checkout = () => {
     try {
        setPlaceOrderBtnLoading(true);
       const response = await axios.post(
-        "http://127.0.0.1:8000/order/place_order_api/",
+        `${import.meta.env.VITE_BASE_URL}/order/place_order_api/`,
         orderData,
         {
-          headers
+          headers,
         }
       );
       setOrderPayment(response?.data?.order?.payment_method);

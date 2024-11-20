@@ -106,7 +106,7 @@ export default function Register() {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/accounts/api/register/",
+        `${import.meta.env.VITE_BASE_URL}/accounts/api/register/`,
         {
           first_name: formData.first_name,
           last_name: formData.last_name,

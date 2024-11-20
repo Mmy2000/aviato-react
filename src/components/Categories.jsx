@@ -17,7 +17,7 @@ const Categories = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/categories/api/categories"
+          `${import.meta.env.VITE_BASE_URL}/categories/api/categories`
         );
         setCategories(response?.data?.results);
       } catch (error) {

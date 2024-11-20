@@ -52,7 +52,14 @@ export const Products = () => {
   };
 
   const fetchProducts = async () => {
-    const url = new URL("http://127.0.0.1:8000/products/api/products");
+    const baseUrl = import.meta.env.VITE_BASE_URL ;
+    if (!baseUrl) {
+      console.log(baseUrl);
+      
+      throw new Error("Base URL is not defined. Check your .env file.");
+    }
+
+    const url = new URL(`${baseUrl}/products/api/products`);
     selectedCategoryId &&
       url.searchParams.append(selectedType, selectedCategoryId);
     url.searchParams.append("min_price", minPrice || 0);

@@ -58,7 +58,7 @@ const Profile = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/accounts/api/change-password/",
+        `${import.meta.env.VITE_BASE_URL}/accounts/api/change-password/`,
         {
           method: "POST",
           headers: {

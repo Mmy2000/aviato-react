@@ -19,7 +19,9 @@ export default function WishlistContextProvider(props) {
 
   function displayWishlist() {
     return axios
-      .get(`http://127.0.0.1:8000/accounts/api/favorites/`, { headers })
+      .get(`${import.meta.env.VITE_BASE_URL}/accounts/api/favorites/`, {
+        headers,
+      })
       .then((response) => {
         setwishCount(response?.data?.length || 0);
         setWishlistProducts(response?.data || []);
@@ -53,7 +55,7 @@ export default function WishlistContextProvider(props) {
     // Send the API request
     return axios
       .post(
-        `http://127.0.0.1:8000/products/api/product/${productId}/favorite/`,
+        `${import.meta.env.VITE_BASE_URL}/products/api/product/${productId}/favorite/`,
         {},
         { headers }
       )

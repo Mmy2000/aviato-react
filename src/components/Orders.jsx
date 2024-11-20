@@ -10,9 +10,12 @@ let headers = {
 };
 
 const fetchOrders = async () => {
-  const response = await fetch("http://127.0.0.1:8000/accounts/api/orders/", {
-    headers
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/accounts/api/orders/`,
+    {
+      headers,
+    }
+  );
   
   return response.json();
 };

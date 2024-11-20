@@ -13,7 +13,7 @@ const LatestProducts = () => {
       try {
         setLoading(true);
         const { data } = await axios.get(
-          `http://127.0.0.1:8000/products/api/recent-products/`
+          `${import.meta.env.VITE_BASE_URL}/products/api/recent-products/`
         );
     
         setLatestProducts(data);

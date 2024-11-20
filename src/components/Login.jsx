@@ -73,7 +73,7 @@ export default function Login() {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/accounts/api/login/",
+        `${import.meta.env.VITE_BASE_URL}/accounts/api/login/`,
         {
           email: formData.email,
           password: formData.password,
