@@ -11,8 +11,8 @@ const Favorite = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [products, setProducts] = useState(null);
-  let { displayWishlist, wishCount } = useContext(wishlistContext);
-
+  let { displayWishlist, toggleFavorite, wishlistProducts } =
+    useContext(wishlistContext);
 
     async function getWishlist() {
         setLoading(true)
@@ -21,19 +21,24 @@ const Favorite = () => {
       setProducts(response?.data)
       setLoading(false)
     }
-    console.log(products);
     
+    const handleToggle = (productId) => {
+      // Toggle the favorite status
+      toggleFavorite(productId); // Ensure this is updating the wishlist context properly
+    };    
     useEffect(() => {
         getWishlist()
     }, []);
+    console.log(products);
+    console.log(wishlistProducts);
 
     if (loading) return <Spinner />;
   return (
     <div className="flex flex-col lg:flex-row ">
       <div className=" space-y-4 p-6">
-        {products && products.length > 0 ? (
+        {wishlistProducts && wishlistProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {products.map((product) => {
+            {wishlistProducts.map((product) => {
               const price = parseFloat(product.price);
               return (
                 <motion.div
@@ -53,8 +58,13 @@ const Favorite = () => {
                     <div className="absolute top-3 left-3 bg-gradient-to-r from-gray-600 to-gray-400 text-white text-sm font-semibold px-3 py-1 rounded-lg shadow-lg">
                       {isNaN(price) ? "N/A" : `$${price.toFixed(2)}`}
                     </div>
-                    <div className="absolute  right-3 wish-badge opacity-0  border-slate-700 text-gray-800 dark:text-gray-200 dark:border-slate-200 text-sm font-semibold px-2 py-2 rounded-full shadow-lg">
-                      {product.is_favorite ? (
+                    <div
+                      onClick={() => handleToggle(product.id)} // This will now toggle the favorite state
+                      className="absolute wish-badge opacity-0 right-3 cursor-pointer border-slate-700 text-gray-800 dark:text-gray-200 dark:border-slate-200 text-sm font-semibold px-2 py-2 rounded-full shadow-lg"
+                    >
+                      {wishlistProducts.some(
+                        (item) => item.id === product.id
+                      ) ? (
                         <FaHeart size={24} />
                       ) : (
                         <FaRegHeart size={24} />
