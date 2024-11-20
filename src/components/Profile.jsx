@@ -47,12 +47,11 @@ const Profile = () => {
         <Spinner />
       </div>
     );
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-  
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -75,7 +74,6 @@ const Profile = () => {
       setSaving(false);
       return;
     }
-    
 
     try {
       const response = await fetch(
@@ -86,12 +84,12 @@ const Profile = () => {
           body: formDataToSend,
         }
       );
-      const data = await response.json();      
+      const data = await response.json();
 
       if (response.ok) {
         setProfile(data?.data); // Update context
-        toast.success("Profile updated Successfully");    
-            
+        toast.success("Profile updated Successfully");
+
         setEditMode(false);
       } else {
         console.error("Failed to update profile:", data);
@@ -144,7 +142,7 @@ const Profile = () => {
           <div className="flex space-x-4">
             {/* Orders Button */}
             <Link to="/orders">
-              <button className="custom-button px-4 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all">
+              <button className="custom-button px-4 py-2 border dark:border-slate-500 border-slate-400 text-slate-500 hover:bg-slate-200 dark:text-gray-200 hover:text-gray-800 dark:hover:bg-slate-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
                 Orders
               </button>
             </Link>
@@ -155,8 +153,6 @@ const Profile = () => {
                 Change Password
               </button>
             </Link>
-
-           
           </div>
         </motion.div>
 

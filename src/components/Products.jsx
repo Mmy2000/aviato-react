@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
 import { FaShoppingCart } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Heading from "../ui/Heading";
 import CategoriesAccordion from "../ui/CategoriesAccordion";
@@ -13,14 +13,6 @@ import LatestProducts from "../ui/LatestProducts";
 import Modal from "../shared/Modal";
 import {
   Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
@@ -31,8 +23,9 @@ import { wishlistContext } from "../context/AddToFavoriteContext";
 
 
 export const Products = () => {
+  const navigate = useNavigate()
   const [quantity, setQuantity] = useState(1);
-  let { setUserLogin, userLogin } = useContext(UserContext);
+  let {  userLogin } = useContext(UserContext);
   const { toggleFavorite, wishlistProducts } =
     useContext(wishlistContext);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -116,6 +109,9 @@ export const Products = () => {
 
 
   const handleAddToCart = (product) => {
+    if (!userLogin) {
+      return toast.error("You Must Login Fisrt!")
+    }
     if (!product) return; // Ensure product is not null
 
     setLoadingBtn(true); // Set loading to true when request starts
@@ -164,7 +160,9 @@ export const Products = () => {
   };
   
   const handleToggle = (productId) => {
-
+    if (!userLogin) {
+      return toast.error("You Must Login First!")
+    }
     // Toggle the favorite status
     toggleFavorite(productId); // Ensure this is updating the wishlist context properly
   };

@@ -143,31 +143,32 @@ function App() {
                 <RouterProvider router={router}></RouterProvider>
                 <Toaster
                   toastOptions={{
-                    className: "",
                     duration: 4000,
                     style: {
                       padding: "12px 16px",
-                      color: "#2d3748",
-                      backgroundColor: "#fff",
-                      borderRadius: "8px",
-                      boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
+                      color: "#2D3748", // Neutral text color
+                      backgroundColor: "#FFFFFF", // Clean white background
+                      borderRadius: "8px", // Smooth corners
+                      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)", // Subtle shadow
+                      fontSize: "14px", // Consistent font size
+                      fontWeight: "500", // Slightly bold for better readability
                     },
                     success: {
                       icon: "✅",
                       style: {
-                        color: "#2f855a",
+                        color: "#2F855A", // Green for success
                       },
                     },
                     error: {
                       icon: "❌",
                       style: {
-                        color: "#c53030",
+                        color: "#E53E3E", // Updated to a more accessible red
                       },
                     },
                     info: {
                       icon: "ℹ️",
                       style: {
-                        color: "#2b6cb0",
+                        color: "#3182CE", // Softer blue for informational toasts
                       },
                     },
                   }}

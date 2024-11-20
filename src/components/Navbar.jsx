@@ -35,17 +35,10 @@ const Navbar = () => {
     setUserLogin(null);
     navigate("/login");
   }
-  async function getWishlist() {
-    let response = await displayWishlist();
-
-    console.log(response);
-    // console.log(response.data.data);
-  }
   
   
   useEffect(() => {
     cartInfo;
-    getWishlist()
   }, [cartInfo?.count]);  
   
 

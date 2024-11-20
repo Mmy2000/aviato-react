@@ -1,17 +1,21 @@
 
 
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { UserContext } from "./UserContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export let wishlistContext = createContext();
 
 export default function WishlistContextProvider(props) {
   const [wishCount, setwishCount] = useState(null);
   const [wishlistProducts, setWishlistProducts] = useState([]);
+  
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
   };
+
 
   function displayWishlist() {
     return axios
@@ -28,6 +32,7 @@ export default function WishlistContextProvider(props) {
   }
 
   function toggleFavorite(productId) {
+
     // Optimistically update the wishlist
     const isFavorite = wishlistProducts.some(
       (product) => product.id === productId

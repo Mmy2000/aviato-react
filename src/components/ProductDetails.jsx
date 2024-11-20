@@ -34,13 +34,13 @@ import { UserContext } from "../context/UserContext";
 import { wishlistContext } from "../context/AddToFavoriteContext";
 
 export const ProductDetails = () => {
+  const navigate = useNavigate();
   const { toggleFavorite, wishlistProducts } = useContext(wishlistContext);
   let { setUserLogin, userLogin } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { addToCart } = useContext(CartContext);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
-  const navigate = useNavigate();
   let { id, category } = useParams();
   const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -168,6 +168,9 @@ export const ProductDetails = () => {
   };
 
   const handleAddToCart = (product) => {
+    if (!userLogin) {
+      return toast.error("You Must Login Fisrt!");
+    }
     if (!product) return; // Ensure product is not null
 
     setLoadingBtn(true); // Set loading to true when request starts
@@ -216,14 +219,13 @@ export const ProductDetails = () => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + change));
   };
 
-  const handleToggle = (productId) => {
-    const isFavoriteProduct = wishlistProducts.some(
-      (product) => product.id === productId
-    );
-
-    // Toggle the favorite status
-    toggleFavorite(productId); // Ensure this is updating the wishlist context properly
-  };
+   const handleToggle = (productId) => {
+     if (!userLogin) {
+       return toast.error("You Must Login First!");
+     }
+     // Toggle the favorite status
+     toggleFavorite(productId); // Ensure this is updating the wishlist context properly
+   };
 
 
   useEffect(() => {
@@ -231,9 +233,6 @@ export const ProductDetails = () => {
     getRelatedProducts(category);
   }, [id]);
 
-  // const handleQuantityChange = (amount) => {
-  //   setQuantity((prev) => Math.max(1, prev + amount));
-  // };
   if (loading) {
     return (
       <div className="flex items-center w-full justify-center">
@@ -281,7 +280,6 @@ export const ProductDetails = () => {
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
   };
-  console.log(productDetails);
   
 
   return (
