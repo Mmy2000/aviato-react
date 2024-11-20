@@ -3,7 +3,9 @@ import { ProfileContext } from "../context/ProfileContext";
 import { motion } from "framer-motion";
 import Spinner from "../ui/Spinner";
 import toast from "react-hot-toast";
-
+import { FaClipboardList, FaKey } from "react-icons/fa";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { profile, loading, error, setProfile } = useContext(ProfileContext);
@@ -130,6 +132,33 @@ const Profile = () => {
             {profile?.headline}
           </p>
         </div>
+        <motion.div
+          className="mt-4 p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl shadow-md flex flex-col items-center space-y-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            Manage Your Account
+          </h2>
+          <div className="flex space-x-4">
+            {/* Orders Button */}
+            <Link to="/orders">
+              <button className="custom-button px-4 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all">
+                Orders
+              </button>
+            </Link>
+
+            {/* Change Password Button */}
+            <Link to="/change-password">
+              <button className="custom-button px-4 py-2 bg-gray-500 text-white hover:bg-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all">
+                Change Password
+              </button>
+            </Link>
+
+           
+          </div>
+        </motion.div>
 
         <motion.div
           className="mt-6 p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl shadow-md"

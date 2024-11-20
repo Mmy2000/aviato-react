@@ -25,6 +25,8 @@ import Checkout from "./components/Checkout";
 import OrderSuccess from "./components/OrderSuccess";
 import WishlistContextProvider from "./context/AddToFavoriteContext";
 import Favorite from "./components/Favorite";
+import Orders from "./components/Orders";
+import OrderDetails from "./components/OrderDetails";
 
 let router = createBrowserRouter([
   {
@@ -104,6 +106,22 @@ let router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <OrderSuccess />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "orders",
+        element: (
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "orders/:id",
+        element: (
+          <ProtectedRoute>
+            <OrderDetails />
           </ProtectedRoute>
         ),
       },
