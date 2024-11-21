@@ -28,6 +28,7 @@ import Favorite from "./components/Favorite";
 import Orders from "./components/Orders";
 import OrderDetails from "./components/OrderDetails";
 import ChangePassword from "./components/ChangePassword";
+import ResetPassword from "./components/ResetPassword";
 
 let router = createBrowserRouter([
   {
@@ -124,6 +125,12 @@ let router = createBrowserRouter([
           <ProtectedRoute>
             <ChangePassword />
           </ProtectedRoute>
+        ),
+      },
+      {
+        path: "reset-password",
+        element: (
+            <ResetPassword />
         ),
       },
       {

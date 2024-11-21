@@ -256,17 +256,34 @@ export default function Login() {
               "Login"
             )}
           </motion.button>
-          <p className="pl-4 dark:text-gray-200">
-            didn't have account yet ?{" "}
-            <span className="font-semibold ">
-              <Link
-                className="text-blue-600 hover:text-blue-700"
-                to={"/register"}
-              >
-                Register now
-              </Link>
-            </span>{" "}
-          </p>
+          <motion.div
+            className="relative "
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <p className="pl-4 dark:text-gray-200">
+              didn't have account yet ?{" "}
+              <span className="font-semibold ">
+                <Link
+                  className="text-blue-600 hover:text-blue-700"
+                  to={"/register"}
+                >
+                  Register now
+                </Link>
+              </span>{" "}
+            </p>
+            <p className="mt-1 ml-4 dark:text-gray-200">
+              <span className="font-semibold ">
+                <Link
+                  className="text-blue-600 hover:text-blue-700"
+                  to={"/reset-password"}
+                >
+                  Forgot Password
+                </Link>
+              </span>{" "}
+            </p>
+          </motion.div>
         </form>
       </motion.div>
     </motion.div>
