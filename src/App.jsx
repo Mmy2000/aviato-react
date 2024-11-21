@@ -3,7 +3,6 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home } from "./components/Home";
 import { Layout } from "./components/Layout";
 import { Products } from "./components/Products";
 import Register from "./components/Register";
@@ -29,6 +28,7 @@ import Orders from "./components/Orders";
 import OrderDetails from "./components/OrderDetails";
 import ChangePassword from "./components/ChangePassword";
 import ResetPassword from "./components/ResetPassword";
+import Home from "./components/Home";
 
 let router = createBrowserRouter([
   {
@@ -44,6 +44,7 @@ let router = createBrowserRouter([
         element: <Products />,
       },
       {
+        index: true,
         path: "categories",
         element: <Categories />,
       },
@@ -129,9 +130,7 @@ let router = createBrowserRouter([
       },
       {
         path: "reset-password",
-        element: (
-            <ResetPassword />
-        ),
+        element: <ResetPassword />,
       },
       {
         path: "orders/:id",

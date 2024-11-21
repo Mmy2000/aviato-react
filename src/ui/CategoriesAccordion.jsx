@@ -69,17 +69,20 @@ export default function CategoriesAccordion({ className, onCategorySelect }) {
           <StyledAccordion key={idx} TransitionProps={{ unmountOnExit: true }}>
             <StyledAccordionSummary
               expandIcon={<ExpandMoreIcon color="primary" />}
+              className="bg-white dark:bg-gray-800 dark:text-gray-200" // Background color for the summary
             >
               <Typography
                 variant="subtitle1"
                 component="span"
-                className="capitalize"
+                className="capitalize" // Text color for the title
                 onClick={() => onCategorySelect(category.id, "category")}
               >
                 {category.name}
               </Typography>
             </StyledAccordionSummary>
-            <StyledAccordionDetails>
+            <StyledAccordionDetails className="bg-white dark:bg-gray-800">
+              {" "}
+              {/* Background color for the details */}
               <div className="flex flex-col gap-2">
                 {category.subcategories.map((subcategory, idx2) => (
                   <SubcategoryLink
@@ -92,7 +95,7 @@ export default function CategoriesAccordion({ className, onCategorySelect }) {
                     <Typography
                       variant="body2"
                       component="span"
-                      className="capitalize"
+                      className="capitalize text-gray-700 dark:text-gray-200" // Text color for subcategory
                     >
                       {subcategory.name}
                     </Typography>
@@ -110,6 +113,7 @@ export default function CategoriesAccordion({ className, onCategorySelect }) {
               variant="rectangular"
               width="100%"
               height={40}
+              className="bg-gray-200 dark:bg-gray-700" // Skeleton background for dark mode
             />
           ))}
         </div>
