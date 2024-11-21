@@ -76,7 +76,8 @@ export const Products = () => {
     };
 
     const response = await axios.get(url.toString(), options);
-    setProductCount(response.data.count);
+    setProductCount(response.data.data.length);
+    
     return response;
   };
 
@@ -113,7 +114,8 @@ export const Products = () => {
 
   const products = data?.data?.data;  
   const productCounts = products ? products.length : 0;
-
+  
+  
 
   const handleAddToCart = (product) => {
     if (!userLogin) {
