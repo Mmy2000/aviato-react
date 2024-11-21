@@ -84,7 +84,7 @@ const ResetPassword = () => {
     if (step === 3) {
       const timer = setTimeout(() => {
         navigate("/login"); // Navigate to login page
-      }, 10000); // Delay of 3 seconds
+      }, 3000); // Delay of 3 seconds
 
       return () => clearTimeout(timer); // Cleanup the timer
     }
