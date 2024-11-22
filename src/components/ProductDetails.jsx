@@ -82,7 +82,7 @@ export const ProductDetails = () => {
     setLoadingSubmitBtn(true);
     try {
       const response = await axios.post(
-        "http://localhost:8000/products/api/reviews/", // adjust to your endpoint path
+        `${import.meta.env.VITE_BASE_URL}/products/api/reviews/`, // adjust to your endpoint path
         {
           product: id,
           subject,
