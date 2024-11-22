@@ -29,6 +29,7 @@ import OrderDetails from "./components/OrderDetails";
 import ChangePassword from "./components/ChangePassword";
 import ResetPassword from "./components/ResetPassword";
 import Home from "./components/Home";
+import Contact from "./components/Contact";
 
 let router = createBrowserRouter([
   {
@@ -131,6 +132,10 @@ let router = createBrowserRouter([
       {
         path: "reset-password",
         element: <ResetPassword />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
       {
         path: "orders/:id",

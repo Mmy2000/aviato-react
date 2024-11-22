@@ -140,9 +140,7 @@ export const ProductDetails = () => {
     } finally {
       setLoading(false);
     }
-  };
-  console.log(productDetails?.is_in_orders);
-  
+  };  
 
   const getRelatedProducts = async (category) => {
     try {

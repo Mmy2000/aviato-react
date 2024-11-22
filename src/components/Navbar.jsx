@@ -86,7 +86,7 @@ const Navbar = () => {
 
             {/* Main Menu */}
             <div className="hidden md:flex space-x-8">
-              {["Products", "Categories", "Brands", "Blog"].map((page) => (
+              {["Products", "Categories", "Brands", "Contact"].map((page) => (
                 <NavLink
                   key={page}
                   to={`/${page.toLowerCase()}`}
@@ -288,7 +288,7 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
           <div className="px-4 pt-4 pb-6 space-y-1">
-            {["Products", "Categories", "Brands", "Blog"].map((page) => (
+            {["Products", "Categories", "Brands", "Contact"].map((page) => (
               <NavLink
                 key={page}
                 to={`/${page.toLowerCase()}`}
