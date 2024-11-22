@@ -120,10 +120,19 @@ export const ProductDetails = () => {
   };
 
   const getProductDetails = async (id) => {
+    const options = {
+      headers: userLogin
+        ? {
+            "Content-Type": "application/json",
+            Authorization: headers.Authorization,
+          }
+        : undefined,
+    };
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/products/api/product/${id}`
+        `${import.meta.env.VITE_BASE_URL}/products/api/product/${id}`,
+        options
       );
       setProductDetails(data);
     } catch (error) {
@@ -132,6 +141,8 @@ export const ProductDetails = () => {
       setLoading(false);
     }
   };
+  console.log(productDetails?.is_in_orders);
+  
 
   const getRelatedProducts = async (category) => {
     try {
@@ -718,24 +729,47 @@ export const ProductDetails = () => {
                   />
                   {userLogin ? (
                     <>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        onClick={handleSubmit}
-                        disabled={loadingSubmitBtn}
-                        sx={{
-                          mt: 2,
-                          backgroundColor: "black",
-                          "&:hover": { backgroundColor: "gray" },
-                        }}
-                      >
-                        {loadingSubmitBtn ? (
-                          <CircularProgress size={24} sx={{ color: "white" }} />
-                        ) : (
-                          "Submit Review"
-                        )}
-                      </Button>
+                      {productDetails?.is_in_orders ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          fullWidth
+                          onClick={handleSubmit}
+                          disabled={loadingSubmitBtn}
+                          sx={{
+                            mt: 2,
+                            backgroundColor: "black",
+                            "&:hover": { backgroundColor: "gray" },
+                          }}
+                        >
+                          {loadingSubmitBtn ? (
+                            <CircularProgress
+                              size={24}
+                              sx={{ color: "white" }}
+                            />
+                          ) : (
+                            "Submit Review"
+                          )}
+                        </Button>
+                      ) : (
+                        <>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            onClick={handleSubmit}
+                            disabled={true}
+                            sx={{
+                              mt: 2,
+                              backgroundColor: "black",
+                              "&:hover": { backgroundColor: "gray" },
+                            }}
+                          >
+                            You must purchase this product to
+                            post a review.
+                          </Button>
+                        </>
+                      )}
                     </>
                   ) : (
                     <>
@@ -751,9 +785,8 @@ export const ProductDetails = () => {
                           "&:hover": { backgroundColor: "gray" },
                         }}
                       >
-                        Submit Review, You Must Login First!
+                         You Must Login First!
                       </Button>
-                      
                     </>
                   )}
                 </Box>
