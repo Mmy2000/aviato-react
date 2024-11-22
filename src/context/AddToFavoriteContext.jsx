@@ -85,6 +85,8 @@ export default function WishlistContextProvider(props) {
         wishCount,
         toggleFavorite,
         wishlistProducts,
+        setwishCount,
+        setWishlistProducts
       }}
     >
       {props.children}

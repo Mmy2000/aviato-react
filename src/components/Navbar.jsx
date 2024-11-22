@@ -22,13 +22,26 @@ const Navbar = () => {
   let { profile } = useContext(ProfileContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  let { cartInfo } = useContext(CartContext);
-  let { displayWishlist, wishCount } = useContext(wishlistContext);
+  let {setcartInfo, cartInfo, displayCart } = useContext(CartContext);
+  let { displayWishlist, wishCount, setwishCount } =
+    useContext(wishlistContext);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle("dark", !isDarkMode);
   };
+
+  async function getCart() {
+    let response = await displayCart();
+    if (response && response.results) {
+      setcartInfo(response || []);
+    }    
+  }
+
+  async function getWishlist() {
+    let response = await displayWishlist();
+    setwishCount(response?.data?.length);
+  }
 
   function LogOut() {
     localStorage.removeItem("userTaken");
@@ -39,6 +52,8 @@ const Navbar = () => {
   
   useEffect(() => {
     cartInfo;
+    getCart()
+    getWishlist()
   }, [cartInfo?.count]);  
   
 
