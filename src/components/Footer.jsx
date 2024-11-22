@@ -6,13 +6,14 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import NewsletterForm from "./Newsletters";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 py-16">
       <div className="container mx-auto px-6 lg:px-12">
         {/* Top Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
           {/* Company Info */}
           <div className="space-y-6">
             <h2 className="text-3xl font-semibold text-gray-800 dark:text-white">
@@ -43,82 +44,71 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-              Quick Links
-            </h2>
-            <ul className="space-y-3">
-              {["About Us", "Services", "Contact", "Privacy Policy"].map(
-                (link, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
-                      className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors duration-300"
-                      aria-label={`Navigate to ${link}`}
+          <div className=" flex gap-6 ">
+            <div className=" space-y-3">
+              <h2 className="text-xl  font-semibold text-gray-800 dark:text-white">
+                Quick Links
+              </h2>
+              <ul className="space-y-3">
+                {["About Us", "Services", "Contact", "Privacy Policy"].map(
+                  (link, index) => (
+                    <li key={index}>
+                      <a
+                        href="#"
+                        className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition-colors duration-300"
+                        aria-label={`Navigate to ${link}`}
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+            <div className="">
+              <div className="space-y-3">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                  Contact Us
+                </h2>
+                <ul className="space-y-3">
+                  {[
+                    {
+                      label: "Phone",
+                      icon: "fas fa-phone-alt",
+                      value: "+1 234 567 890",
+                    },
+                    {
+                      label: "Email",
+                      icon: "fas fa-envelope",
+                      value: "info@yourcompany.com",
+                    },
+                    {
+                      label: "Address",
+                      icon: "fas fa-map-marker-alt",
+                      value: "123 Main St, City, Country",
+                    },
+                  ].map((contact, index) => (
+                    <li
+                      key={index}
+                      className="text-gray-600 dark:text-gray-400 flex items-center space-x-2"
                     >
-                      {link}
-                    </a>
-                  </li>
-                )
-              )}
-            </ul>
+                      <i className={`${contact.icon} mr-2`}></i>
+                      <span>{contact.value}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-              Contact Us
-            </h2>
-            <ul className="space-y-3">
-              {[
-                {
-                  label: "Phone",
-                  icon: "fas fa-phone-alt",
-                  value: "+1 234 567 890",
-                },
-                {
-                  label: "Email",
-                  icon: "fas fa-envelope",
-                  value: "info@yourcompany.com",
-                },
-                {
-                  label: "Address",
-                  icon: "fas fa-map-marker-alt",
-                  value: "123 Main St, City, Country",
-                },
-              ].map((contact, index) => (
-                <li
-                  key={index}
-                  className="text-gray-600 dark:text-gray-400 flex items-center space-x-2"
-                >
-                  <i className={`${contact.icon} mr-2`}></i>
-                  <span>{contact.value}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
 
           {/* Newsletter */}
-          <div className="space-y-6">
+          <div className="space-y-4 ">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
               Subscribe
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Stay updated with the latest news and offers.
-            </p>
-            <form className="flex flex-col items-center space-y-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="submit"
-                className="px-6 w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-300"
-              >
-                Subscribe
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
 

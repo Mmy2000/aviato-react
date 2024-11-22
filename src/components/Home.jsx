@@ -9,6 +9,7 @@ import slide1 from "../assets/banner1.png";
 import slide2 from "../assets/black_friday.png";
 import slide3 from "../assets/Exclusive_Phone_3.png";
 import Payment from "./Payment";
+import NewsletterForm from "./Newsletters";
 
 const Home = () => {
   // Array of slide data
@@ -100,6 +101,7 @@ const Home = () => {
         </Slider>
       </header>
       <Payment/>
+      <NewsletterForm/>
     </div>
   );
 };
