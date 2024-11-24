@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Spinner from "../ui/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 
-
 let headers = {
   Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
 };
@@ -16,21 +15,24 @@ const fetchOrders = async () => {
       headers,
     }
   );
-  
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch orders");
+  }
+
   return response.json();
 };
 
 const Orders = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     data: orders,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["orders"], // Changed to use an object
+    queryKey: ["orders"],
     queryFn: fetchOrders,
   });
-  
 
   const rowVariants = {
     hidden: { opacity: 0, y: 10 },
@@ -41,7 +43,7 @@ const Orders = () => {
     return (
       <div className="min-h-screen flex justify-center items-center">
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          <Spinner/>
+          <Spinner />
         </p>
       </div>
     );
@@ -57,18 +59,48 @@ const Orders = () => {
     );
   }
 
+  if (!orders || orders.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-gray-600 dark:text-gray-300"
+        >
+          <h2 className="text-2xl font-bold mb-4 dark:text-gray-100">
+            No Orders Found
+          </h2>
+          <p className="text-lg mb-6">
+            You haven't placed any orders yet. Browse our products and place
+            your first order today!
+          </p>
+          <Link to="/products">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-3 bg-slate-600 text-white rounded-lg shadow-md hover:bg-slate-500 dark:bg-slate-500 dark:hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Go to Shop
+            </motion.button>
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col  mb-8">
+        <div className="flex flex-col mb-8">
           <h1 className="text-3xl text-center font-bold text-gray-800 dark:text-gray-100">
             Orders Page
           </h1>
           <div className="flex justify-between items-center">
             <button
-              onClick={() => navigate(-1)} // Navigate back to the previous page
+              onClick={() => navigate(-1)}
               className="flex items-center mb-4 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
-              aria-label="Go back to the previous page" // Accessibility label
+              aria-label="Go back to the previous page"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +119,7 @@ const Orders = () => {
               Go Back
             </button>
             <span className="text-lg font-medium dark:text-gray-200">
-              {orders?.length} Orders
+              {orders.length} Orders
             </span>
           </div>
         </div>

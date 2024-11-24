@@ -83,7 +83,7 @@ const ExecutePayment = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="relative">
           <div className="absolute inset-0 flex items-center justify-center">
             <div
