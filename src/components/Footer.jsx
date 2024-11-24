@@ -7,8 +7,28 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 import NewsletterForm from "./Newsletters";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 const Footer = () => {
+
+  const contacts = [
+    {
+      label: "Phone",
+      icon: <FaPhoneAlt />,
+      value: "+1 234 567 890",
+    },
+    {
+      label: "Email",
+      icon: <FaEnvelope />,
+      value: "info@yourcompany.com",
+    },
+    {
+      label: "Address",
+      icon: <FaMapMarkerAlt />,
+      value: "123 Main St, City, Country",
+    },
+  ];
+
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 py-16">
       <div className="container mx-auto px-6 lg:px-12">
@@ -44,7 +64,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className=" flex gap-6 ">
+          <div className=" flex gap-10 ">
             <div className=" space-y-3">
               <h2 className="text-xl  font-semibold text-gray-800 dark:text-white">
                 Quick Links
@@ -70,29 +90,13 @@ const Footer = () => {
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
                   Contact Us
                 </h2>
-                <ul className="space-y-3">
-                  {[
-                    {
-                      label: "Phone",
-                      icon: "fas fa-phone-alt",
-                      value: "+1 234 567 890",
-                    },
-                    {
-                      label: "Email",
-                      icon: "fas fa-envelope",
-                      value: "info@yourcompany.com",
-                    },
-                    {
-                      label: "Address",
-                      icon: "fas fa-map-marker-alt",
-                      value: "123 Main St, City, Country",
-                    },
-                  ].map((contact, index) => (
+                <ul className="space-y-3 ">
+                  {contacts.map((contact, index) => (
                     <li
                       key={index}
-                      className="text-gray-600 dark:text-gray-400 flex items-center space-x-2"
+                      className="text-gray-600 dark:text-gray-400 flex items-center"
                     >
-                      <i className={`${contact.icon} mr-2`}></i>
+                      <span className="mr-2 text-xl">{contact.icon}</span>
                       <span>{contact.value}</span>
                     </li>
                   ))}
