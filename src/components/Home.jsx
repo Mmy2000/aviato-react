@@ -117,7 +117,6 @@ const Home = () => {
       </MaxWidthWrapper>
       <Payment />
       <CustomerReviews/>
-      <NewsletterForm />
     </div>
   );
 };

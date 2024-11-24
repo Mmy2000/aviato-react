@@ -180,7 +180,7 @@ export const Products = () => {
  
   return (
     <>
-      <div className="flex flex-col lg:flex-row px-4 ">
+      <div className="flex flex-col lg:flex-row px-10 mb-4 ">
         <div className="lg:w-1/4 p-6 rounded-lg mt-6 h-fit dark:bg-gray-900 shadow-lg ">
           <div className="flex flex-col w-full relative">
             <Heading name="Browse Categories" />
