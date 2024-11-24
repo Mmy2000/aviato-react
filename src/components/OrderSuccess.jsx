@@ -103,7 +103,7 @@ const OrderSuccess = () => {
                 <span
                   className={`ml-2 px-3 py-1 rounded-full text-sm ${
                     orderDetails?.payment.status === "Completed"
-                      ? "text-green-700 bg-green-100 dark:text-gray-100 dark:bg-green-200 "
+                      ? "text-green-700 bg-green-100 dark:text-slate-600 dark:bg-green-200 "
                       : "text-blue-800 bg-blue-100 dark:text-gray-100 dark:bg-blue-900"
                   }`}
                 >
