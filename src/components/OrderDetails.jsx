@@ -120,7 +120,7 @@ const OrderDetail = () => {
               </li>
               <li>
                 <strong className="font-bold">Payment Method:</strong>{" "}
-                {order.payment_details.payment_method}
+                {order?.payment_details?.payment_method}
               </li>
               <li>
                 <strong className="font-bold">Shipping Address:</strong>{" "}

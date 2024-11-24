@@ -51,7 +51,7 @@ const ExecutePayment = () => {
 
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/order/execute-paypal-payment/",
+          `${import.meta.env.VITE_BASE_URL}/order/execute-paypal-payment/`,
           {
             payment_id: queryParams.paymentId,
             payer_id: queryParams.payerId,
