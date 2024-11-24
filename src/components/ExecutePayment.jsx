@@ -83,7 +83,7 @@ const ExecutePayment = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="flex flex-col items-center justify-center ">
         {/* Spinner */}
         <div
           className="w-16 h-16 border-4 border-t-transparent border-green-600 rounded-full animate-spin"
