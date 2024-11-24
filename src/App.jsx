@@ -185,12 +185,6 @@ function App() {
                         color: "#E53E3E", // Updated to a more accessible red
                       },
                     },
-                    info: {
-                      icon: "ℹ️",
-                      style: {
-                        color: "#3182CE", // Softer blue for informational toasts
-                      },
-                    },
                   }}
                 />
               </ProfileContextProvider>

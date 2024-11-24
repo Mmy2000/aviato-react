@@ -6,6 +6,7 @@ import axios from "axios";
 import { data } from "autoprefixer";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { showInfoToast } from "../ui/infoToast";
 
 
 const Checkout = () => {
@@ -105,7 +106,6 @@ const Checkout = () => {
 
   // Place order function
   const handlePlaceOrder = async () => {
-   
     const orderData = {
       first_name: formData.firstName,
       last_name: formData.lastName,
@@ -121,7 +121,7 @@ const Checkout = () => {
     };
 
     try {
-       setPlaceOrderBtnLoading(true);
+      setPlaceOrderBtnLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/order/place_order_api/`,
         orderData,
@@ -129,29 +129,35 @@ const Checkout = () => {
           headers,
         }
       );
-      setOrderPayment(response?.data?.order?.payment_method);
 
-      toast.loading("redirct to success page");
-      setTimeout(() => {
-        if (response?.data?.order?.payment_method == "cash") {
-          handleCashPayment();
-          setPlaceOrderBtnLoading(false);
-          getCart()
-        } else {
-          console.log("failed");
-        }
-      }, 4000);
-      
+      const paymentMethod = response?.data?.order?.payment_method;
+      setOrderPayment(paymentMethod);
+
+      if (paymentMethod === "cash") {
+        // Show a loading toast
+        const toastId = toast.loading("Processing your cash payment...");
+
+        // Simulate or handle the cash payment process
+        await handleCashPayment();
+
+        // Update the toast to success
+        // toast.success("Order placed successfully with Cash!", {
+        //   id: toastId,
+        // });
+
+        // Refresh the cart
+        await getCart();
+      } else {
+        showInfoToast("This payment method is not available yet.");
+      }
     } catch (error) {
-       setPlaceOrderBtnLoading(false);
       console.error("Error placing order:", error);
-    }finally{
-       setPlaceOrderBtnLoading(true);
+      toast.error("Failed to place order. Please try again.");
+    } finally {
+      setPlaceOrderBtnLoading(false);
     }
   };
 
-  
-  
 
   return (
     <div className="container mx-auto px-4 py-12  transition-colors duration-500">
