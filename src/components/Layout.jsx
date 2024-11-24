@@ -7,7 +7,7 @@ export const Layout = () => {
   return (
     <>
       <Navbar />
-      <div className="px-20 mx-auto my-20">
+      <div className=" mx-auto my-20">
         <Outlet />
       </div>
       <Footer />

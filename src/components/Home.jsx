@@ -4,12 +4,15 @@ import Slider from "react-slick"; // Import React Slick
 import "slick-carousel/slick/slick.css"; // Import Slick styles
 import "slick-carousel/slick/slick-theme.css"; // Import theme styles
 import { Link } from "react-router-dom";
-
+import { ArrowRight, Check, Star } from "lucide-react";
 import slide1 from "../assets/banner1.png";
 import slide2 from "../assets/black_friday.png";
 import slide3 from "../assets/Exclusive_Phone_3.png";
 import Payment from "./Payment";
 import NewsletterForm from "./Newsletters";
+import Reviews from "./Reviews";
+import MaxWidthWrapper from "./MaxWidthWrapper";
+import CustomerReviews from "./CustomerReviews";
 
 const Home = () => {
   // Array of slide data
@@ -50,58 +53,71 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen text-gray-800 dark:text-gray-200">
-      <header className="relative overflow-hidden">
-        {/* Image Slider */}
-        <Slider {...settings} className="h-screen">
-          {slides.map((slide, index) => (
-            <div key={index} className="relative h-screen">
-              {/* Slide Image */}
+    <div className=" text-gray-800 dark:text-gray-200">
+      <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-cols-3 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 ">
+        <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
+          <div className="relative mx-auto text-center lg:text-left flex flex-col items-center lg:items-start">
+            <div className="absolute w-28 left-0 -top-20 hidden lg:block">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t via-slate-50/50 from-slate-50   h-28" />
+              <img src="/home.png" className="w-full" />
+            </div>
+            <h1 className="relative w-fit dark:text-gray-200 tracking-tight text-balance mt-16 font-bold !leading-tight text-gray-900 text-4xl md:text-5xl ">
+              Discover{" "}
+              <span className="bg-gray-600 px-2 dark:text-gray-200 text-white">
+                Quality,
+              </span>{" "}
+              Style and Convenience in Every Product
+            </h1>
+            <p className="mt-8 font-medium text-lg lg:pr-10 max-w-prose text-center lg:text-left text-balance md:text-wrap">
+              Welcome to <span className="font-extrabold">Aviato</span> , your
+              one-stop destination for premium products at unbeatable prices.
+              Explore our wide selection of high-quality items
+            </p>
+            <ul className="mt-8 space-y-2 text-left font-medium flex flex-col items-center sm:items-start">
+              <div className="space-y-2">
+                <li className="flex gap-1.5 items-center text-left">
+                  <Check className="h-5 w-5 shrink-0 text-green-600" />
+                  High-quality, durable material
+                </li>
+                <li className="flex gap-1.5 items-center text-left">
+                  <Check className="h-5 w-5 shrink-0 text-green-600" />5 year
+                  print guarantee
+                </li>
+                <li className="flex gap-1.5 items-center text-left">
+                  <Check className="h-5 w-5 shrink-0 text-green-600" />
+                  Modern iPhone models supported
+                </li>
+              </div>
+            </ul>
+            <Reviews />
+          </div>
+        </div>
+        <div className="col-span-full lg:col-span-1 w-full flex justify-center px-8 sm:px-16 md:px-0 mt-32 lg:mx-0 lg:mt-20 h-fit">
+          <div className="relative md:max-w-xl flex justify-center items-center">
+            <div className="relative rounded-lg overflow-hidden shadow-2xl transition-transform duration-300 hover:scale-105 group">
               <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-screen object-cover"
+                src="/home2.png"
+                alt="Custom Phone Case"
+                className="w-[500px] h-[400px] object-cover rounded-lg"
               />
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent dark:from-gray-900/80 z-10" />
-              {/* Slide Content */}
-              <div className="absolute inset-0 z-20 flex flex-col justify-center items-center px-6 text-center text-white">
-                <motion.h1
-                  className="text-4xl md:text-6xl font-extrabold"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  {slide.title}
-                </motion.h1>
-                <motion.p
-                  className="mt-4 text-lg max-w-2xl mx-auto"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  {slide.description}
-                </motion.p>
-                <motion.div
-                  className="mt-8"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                  <Link
-                    to={slide.buttonLink}
-                    className="px-6 py-3 bg-gray-100 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 transition"
-                  >
-                    {slide.buttonLabel}
-                  </Link>
-                </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-6 left-6 text-white">
+                  <h3 className="text-2xl font-semibold">New Men Collection</h3>
+                  <p className="text-sm mt-2">
+                    tailored to meet your every need
+                  </p>
+                </div>
+              </div>
+              <div className="absolute -top-2 -right-2 bg-blue-600 w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:bg-blue-800 transition-all duration-300">
+                <span className="text-white text-lg font-semibold">NEW</span>
               </div>
             </div>
-          ))}
-        </Slider>
-      </header>
-      <Payment/>
-      <NewsletterForm/>
+          </div>
+        </div>
+      </MaxWidthWrapper>
+      <Payment />
+      <CustomerReviews/>
+      <NewsletterForm />
     </div>
   );
 };

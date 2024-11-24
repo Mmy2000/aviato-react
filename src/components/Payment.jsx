@@ -47,7 +47,7 @@ const Payment = () => {
   ];
 
   return (
-    <section className="bg-white dark:bg-gray-800 shadow-md rounded-lg py-8 px-4 mt-8">
+    <section className="bg-gray-100 dark:bg-gray-800  py-20 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 items-center gap-y-8 lg:gap-x-4">
         {benefits.map((benefit, index) => (
           <div
