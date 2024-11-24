@@ -102,9 +102,9 @@ const OrderSuccess = () => {
                 <strong>Status:</strong>{" "}
                 <span
                   className={`ml-2 px-3 py-1 rounded-full text-sm ${
-                    orderDetails?.payment.status === "Paid"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-700"
+                    orderDetails?.payment.status === "Completed"
+                      ? "text-green-700 bg-green-100 dark:text-gray-100 dark:bg-green-200 "
+                      : "text-blue-800 bg-blue-100 dark:text-gray-100 dark:bg-blue-900"
                   }`}
                 >
                   {orderDetails?.payment.status}
@@ -124,10 +124,8 @@ const OrderSuccess = () => {
 
         {/* Back to Home Button */}
         <div className="text-center mt-12">
-          <Link to={'/'}>
-            <button
-              className="bg-gray-600 text-white px-10 py-3 rounded-full shadow-lg hover:bg-gray-700 hover:shadow-xl transform transition-all hover:scale-105"
-            >
+          <Link to={"/"}>
+            <button className="bg-gray-600 text-white px-10 py-3 rounded-full shadow-lg hover:bg-gray-700 hover:shadow-xl transform transition-all hover:scale-105">
               Back to Home
             </button>
           </Link>
