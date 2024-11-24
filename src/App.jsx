@@ -30,6 +30,7 @@ import ChangePassword from "./components/ChangePassword";
 import ResetPassword from "./components/ResetPassword";
 import Home from "./components/Home";
 import Contact from "./components/Contact";
+import ExecutePayment from "./components/ExecutePayment";
 
 let router = createBrowserRouter([
   {
@@ -142,6 +143,14 @@ let router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <OrderDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "order/execute-payment",
+        element: (
+          <ProtectedRoute>
+            <ExecutePayment />
           </ProtectedRoute>
         ),
       },

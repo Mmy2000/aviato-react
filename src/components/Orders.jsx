@@ -137,7 +137,7 @@ const Orders = () => {
                     ${order.order_total.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
-                    {order.payment_details.payment_method}
+                    {order?.payment_details?.payment_method}
                   </td>
                   <td className="px-6 py-4">
                     <span

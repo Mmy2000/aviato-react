@@ -13,6 +13,8 @@ const Checkout = () => {
   const navigate = useNavigate();
   const [cartDetails, setCartDetails] = useState([]);
   const [loading, setLoading] = useState(false); // New loading state
+  const [paymentID, setPaymentID] = useState();
+  const [approval_url, setApprovalUrl] = useState();
   const [placeOrderBtnLoading, setPlaceOrderBtnLoading] = useState(false); // New loading state
   const { displayCart, setcartInfo } = useContext(CartContext);
   // State for form fields
@@ -105,6 +107,58 @@ const Checkout = () => {
   };
 
   // Place order function
+  // const handlePlaceOrder = async () => {
+  //   const orderData = {
+  //     first_name: formData.firstName,
+  //     last_name: formData.lastName,
+  //     email: formData.email,
+  //     phone: formData.phone,
+  //     address_line_1: formData.addressLine1,
+  //     address_line_2: formData.addressLine2,
+  //     state: formData.state,
+  //     city: formData.city,
+  //     country: formData.country,
+  //     order_note: formData.orderNote,
+  //     payment_method: formData.paymentMethod,
+  //   };
+
+  //   try {
+  //     setPlaceOrderBtnLoading(true);
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_BASE_URL}/order/place_order_api/`,
+  //       orderData,
+  //       {
+  //         headers,
+  //       }
+  //     );
+
+  //     const paymentMethod = response?.data?.order?.payment_method;
+  //     setOrderPayment(paymentMethod);
+
+  //     if (paymentMethod === "cash") {
+  //       // Show a loading toast
+  //       const toastId = toast.loading("Processing your cash payment...");
+
+  //       // Simulate or handle the cash payment process
+  //       await handleCashPayment();
+
+  //       // Update the toast to success
+  //       // toast.success("Order placed successfully with Cash!", {
+  //       //   id: toastId,
+  //       // });
+
+  //       // Refresh the cart
+  //       await getCart();
+  //     } else {
+  //       showInfoToast("This payment method is not available yet.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error placing order:", error);
+  //     toast.error("Failed to place order. Please try again.");
+  //   } finally {
+  //     setPlaceOrderBtnLoading(false);
+  //   }
+  // };
   const handlePlaceOrder = async () => {
     const orderData = {
       first_name: formData.firstName,
@@ -133,20 +187,27 @@ const Checkout = () => {
       const paymentMethod = response?.data?.order?.payment_method;
       setOrderPayment(paymentMethod);
 
-      if (paymentMethod === "cash") {
-        // Show a loading toast
-        const toastId = toast.loading("Processing your cash payment...");
+      if (paymentMethod === "paypal") {
+        // PayPal payment selected, initiate PayPal payment process
+        const totalAmount = calculateTotal() + calculateTotalTax(); // Calculate the total amount
 
-        // Simulate or handle the cash payment process
+        const paypalResponse = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/order/create-paypal-payment/`,
+          {
+            amount: totalAmount,
+            return_url: `${window.location.origin}/order/execute-payment`, // Dynamic return URL
+            cancel_url: `${window.location.origin}/checkout`, // Dynamic cancel URL
+          },
+          { headers }
+        );
+
+        const approvalUrl = paypalResponse?.data?.links?.[1]?.href;
+
+        // Redirect the user to PayPal for approval
+        window.location.href = approvalUrl;
+      } else if (paymentMethod === "cash") {
+        // Handle Cash Payment (as before)
         await handleCashPayment();
-
-        // Update the toast to success
-        // toast.success("Order placed successfully with Cash!", {
-        //   id: toastId,
-        // });
-
-        // Refresh the cart
-        await getCart();
       } else {
         showInfoToast("This payment method is not available yet.");
       }
@@ -157,6 +218,7 @@ const Checkout = () => {
       setPlaceOrderBtnLoading(false);
     }
   };
+
 
 
   return (

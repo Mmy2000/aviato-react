@@ -104,9 +104,6 @@ const Footer = () => {
               </div>
             </div>
           </div>
-
-          {/* Contact Info */}
-
           {/* Newsletter */}
           <div className="space-y-4 ">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
