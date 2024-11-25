@@ -370,7 +370,7 @@ export const ProductDetails = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            {productDetails.description}
+            {productDetails?.description}
           </motion.p>
           {(productDetails?.color_variations?.length > 0 ||
             productDetails?.size_variations?.length > 0) && (
