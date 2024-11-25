@@ -63,7 +63,7 @@ let router = createBrowserRouter([
         element: <BrandDetails />,
       },
       {
-        path: "products/:id/:category",
+        path: "products/:id/:category/:brand?",
         element: <ProductDetails />,
       },
       {

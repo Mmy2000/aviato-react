@@ -177,6 +177,7 @@ export const Products = () => {
     // Toggle the favorite status
     toggleFavorite(productId); // Ensure this is updating the wishlist context properly
   };
+  
  
   return (
     <>
@@ -312,7 +313,7 @@ export const Products = () => {
                     </div>
                     <div className="p-5">
                       <Link
-                        to={`/products/${product.id}/${product.category.id}`}
+                        to={`/products/${product.id}/${product.category.id}/${product?.PRDBrand?.id}`}
                       >
                         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 truncate">
                           {product.name}

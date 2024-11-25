@@ -41,7 +41,7 @@ export const ProductDetails = () => {
   let { addToCart } = useContext(CartContext);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
-  let { id, category } = useParams();
+  let { id, category,brand } = useParams();
   const [productDetails, setProductDetails] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -240,6 +240,9 @@ export const ProductDetails = () => {
      // Toggle the favorite status
      toggleFavorite(productId); // Ensure this is updating the wishlist context properly
    };
+   console.log(brand);
+   console.log(category);
+   
 
 
   useEffect(() => {
@@ -293,7 +296,7 @@ export const ProductDetails = () => {
 
   const handleRatingChange = (event, newValue) => {
     setRating(newValue);
-  };
+  };  
   
 
   return (
@@ -518,14 +521,25 @@ export const ProductDetails = () => {
           <div className="flex items-center space-x-2">
             <span className="font-medium dark:text-white">Category:</span>
             <span className="bg-gray-200 px-2 py-1 rounded text-sm dark:bg-gray-700 dark:text-gray-200">
-              {productDetails?.category?.category?.name} /{" "}
-              {productDetails?.category?.name}
+              <Link
+                to={`/categories/${productDetails?.category?.category?.id}`}
+              >
+                {productDetails?.category?.category?.name}
+              </Link>{" "}
+              /{" "}
+              <Link
+                to={`/categories/${productDetails?.category?.category?.id}/${productDetails.category.id}`}
+              >
+                {productDetails?.category?.name}
+              </Link>
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <span className="font-medium dark:text-white">Brand:</span>
             <span className="bg-gray-200 px-2 py-1 rounded text-sm dark:bg-gray-700 dark:text-gray-200">
-              {productDetails?.PRDBrand?.name}
+              <Link to={`/brands/${brand}`}>
+                {productDetails?.PRDBrand?.name}
+              </Link>
             </span>
           </div>
           <button
@@ -763,8 +777,7 @@ export const ProductDetails = () => {
                               "&:hover": { backgroundColor: "gray" },
                             }}
                           >
-                            You must purchase this product to
-                            post a review.
+                            You must purchase this product to post a review.
                           </Button>
                         </>
                       )}
@@ -783,7 +796,7 @@ export const ProductDetails = () => {
                           "&:hover": { backgroundColor: "gray" },
                         }}
                       >
-                         You Must Login First!
+                        You Must Login First!
                       </Button>
                     </>
                   )}
