@@ -585,7 +585,7 @@ export const ProductDetails = () => {
                 whileHover={{ scale: 1.03 }}
               >
                 <Link
-                  to={`/brands/${brand}`}
+                  to={`/brands/${productDetails?.PRDBrand?.id}`}
                   className="hover:text-blue-500 hover:underline"
                 >
                   {productDetails?.PRDBrand?.name}
