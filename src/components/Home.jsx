@@ -108,7 +108,7 @@ const Home = () => {
                     tailored to meet your every need
                   </p>
                   <Link to={'/products'}>
-                    <Button className="rounded mt-2 bg-slate-600 py-2 px-4 text-sm text-white data-[hover]:bg-slate-500 data-[active]:bg-slate-700">
+                    <Button className="rounded mt-2 bg-slate-600 py-2 px-4 text-sm text-white data-[hover]:bg-slate-500 data-[active]:bg-slate-700 transition-colors">
                       Shop Now
                     </Button>
                   </Link>
