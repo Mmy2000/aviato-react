@@ -135,6 +135,7 @@ const Checkout = () => {
       setOrderPayment(paymentMethod);
 
       if (paymentMethod === "paypal") {
+        toast.loading("Redirct to Paypal Page")
         // PayPal payment selected, initiate PayPal payment process
         const totalAmount = calculateTotal() + calculateTotalTax(); // Calculate the total amount
 

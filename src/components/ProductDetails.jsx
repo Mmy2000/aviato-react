@@ -240,10 +240,6 @@ export const ProductDetails = () => {
      // Toggle the favorite status
      toggleFavorite(productId); // Ensure this is updating the wishlist context properly
    };
-   console.log(brand);
-   console.log(category);
-   
-
 
   useEffect(() => {
     getProductDetails(id);
@@ -368,9 +364,14 @@ export const ProductDetails = () => {
               ({productDetails?.count_review} Reviews)
             </span>
           </div>
-          <p className="text-gray-700 dark:text-gray-300">
-            {productDetails?.description}
-          </p>
+          <motion.p
+            className="text-base leading-6 text-gray-700 dark:text-gray-300 md:text-lg md:leading-7  lg:leading-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            {productDetails.description}
+          </motion.p>
           {(productDetails?.color_variations?.length > 0 ||
             productDetails?.size_variations?.length > 0) && (
             <div className="flex space-x-20">
@@ -494,54 +495,104 @@ export const ProductDetails = () => {
             </div>
           )}
 
-          <div className="flex items-center space-x-3">
-            <span className="font-semibold text-gray-800 dark:text-gray-200">
+          <motion.div
+            className="flex items-center space-x-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Label */}
+            <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
               Quantity:
             </span>
 
-            <button
+            {/* Decrease Button */}
+            <motion.button
               onClick={() => handleQuantityChange(-1)}
-              className="w-8 h-8 text-xl font-bold bg-gray-200 hover:bg-gray-300 rounded-full shadow dark:bg-gray-600 dark:hover:bg-gray-700 dark:text-gray-300 transition-all duration-150 ease-in-out flex items-center justify-center"
+              className="w-10 h-10 text-2xl font-bold bg-gray-200 hover:bg-gray-300 rounded-full shadow-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300 flex items-center justify-center transition-all"
+              whileHover={{ scale: 1.15, rotate: -10 }}
+              whileTap={{ scale: 0.9, rotate: 0 }}
             >
               -
-            </button>
+            </motion.button>
 
-            <span className="px-4 py-1 text-lg font-semibold bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-200">
+            {/* Quantity Display */}
+            <motion.div
+              className="px-6 py-2 text-xl font-semibold bg-gray-100 rounded-lg shadow-inner dark:bg-gray-800 dark:text-gray-200"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              whileHover={{ scale: 1.05 }}
+            >
               {quantity}
-            </span>
+            </motion.div>
 
-            <button
+            {/* Increase Button */}
+            <motion.button
               onClick={() => handleQuantityChange(1)}
-              className="w-8 h-8 text-xl font-bold bg-gray-200 hover:bg-gray-300 rounded-full shadow dark:bg-gray-600 dark:hover:bg-gray-700 dark:text-gray-300 transition-all duration-150 ease-in-out flex items-center justify-center"
+              className="w-10 h-10 text-2xl font-bold bg-gray-200 hover:bg-gray-300 rounded-full shadow-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300 flex items-center justify-center transition-all"
+              whileHover={{ scale: 1.15, rotate: 10 }}
+              whileTap={{ scale: 0.9, rotate: 0 }}
             >
               +
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
-          <div className="flex items-center space-x-2">
-            <span className="font-medium dark:text-white">Category:</span>
-            <span className="bg-gray-200 px-2 py-1 rounded text-sm dark:bg-gray-700 dark:text-gray-200">
-              <Link
-                to={`/categories/${productDetails?.category?.category?.id}`}
+          <motion.div
+            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Category Section */}
+            <motion.div
+              className="flex items-center space-x-2"
+              whileHover={{ scale: 1.02 }}
+            >
+              <span className="font-semibold text-gray-700 dark:text-white">
+                Category:
+              </span>
+              <motion.div
+                className="flex items-center space-x-1 bg-gray-200 px-3 py-1 rounded-md text-sm text-gray-800 dark:bg-gray-800 dark:text-gray-300"
+                whileHover={{ scale: 1.03 }}
               >
-                {productDetails?.category?.category?.name}
-              </Link>{" "}
-              /{" "}
-              <Link
-                to={`/categories/${productDetails?.category?.category?.id}/${productDetails.category.id}`}
+                <Link
+                  to={`/categories/${productDetails?.category?.category?.id}`}
+                  className="hover:text-blue-500 hover:underline"
+                >
+                  {productDetails?.category?.category?.name}
+                </Link>
+                <span className="text-gray-500 dark:text-gray-400">/</span>
+                <Link
+                  to={`/categories/${productDetails?.category?.category?.id}/${productDetails?.category?.id}`}
+                  className="hover:text-blue-500 hover:underline"
+                >
+                  {productDetails?.category?.name}
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Brand Section */}
+            <motion.div
+              className="flex items-center space-x-2"
+              whileHover={{ scale: 1.02 }}
+            >
+              <span className="font-semibold text-gray-700 dark:text-white">
+                Brand:
+              </span>
+              <motion.div
+                className="bg-gray-200 px-3 py-1 rounded-md text-sm text-gray-800 dark:bg-gray-800 dark:text-gray-300"
+                whileHover={{ scale: 1.03 }}
               >
-                {productDetails?.category?.name}
-              </Link>
-            </span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="font-medium dark:text-white">Brand:</span>
-            <span className="bg-gray-200 px-2 py-1 rounded text-sm dark:bg-gray-700 dark:text-gray-200">
-              <Link to={`/brands/${brand}`}>
-                {productDetails?.PRDBrand?.name}
-              </Link>
-            </span>
-          </div>
+                <Link
+                  to={`/brands/${brand}`}
+                  className="hover:text-blue-500 hover:underline"
+                >
+                  {productDetails?.PRDBrand?.name}
+                </Link>
+              </motion.div>
+            </motion.div>
+          </motion.div>
           <button
             onClick={() => handleAddToCart(productDetails)} // Pass productDetails to the function
             disabled={loadingBtn} // Disable the button when loading

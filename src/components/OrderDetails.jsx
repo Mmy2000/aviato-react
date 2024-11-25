@@ -53,7 +53,7 @@ const OrderDetail = () => {
           Failed to load order details.
         </p>
         <button
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
+          className="px-6 py-3 bg-blue-500 text-white rounded-l-full shadow hover:bg-blue-600 transition"
           onClick={() => navigate(-1)}
         >
           Go Back
@@ -63,13 +63,13 @@ const OrderDetail = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-10">
+    <div className="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="flex gap-96 items-center">
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-8 w-full max-w-5xl">
         <button
-          onClick={() => navigate(-1)} // Navigate back to the previous page
-          className="flex items-center mb-4 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
-          aria-label="Go back to the previous page" // Accessibility label
+          onClick={() => navigate(-1)}
+          className="flex items-center px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+          aria-label="Go back to the previous page"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -87,11 +87,11 @@ const OrderDetail = () => {
           </svg>
           Go Back
         </button>
-        <div className="text-center mb-10">
-          <h1 className="text-4xl  font-bold text-gray-800 dark:text-white">
+        <div className="text-center w-full sm:w-auto">
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 dark:text-white">
             AVIATO
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mt-2">
+          <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-300 mt-2">
             Your Order Details
           </p>
         </div>
@@ -99,13 +99,13 @@ const OrderDetail = () => {
 
       {/* Content */}
       <div className="w-full max-w-5xl bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-200 dark:divide-gray-700">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-200 dark:divide-gray-700">
           {/* Order Summary */}
-          <div className="p-8">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">
+          <div className="p-6 sm:p-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-4 sm:mb-6">
               Order Summary
             </h2>
-            <ul className="space-y-4 text-gray-600 dark:text-gray-300">
+            <ul className="space-y-2 sm:space-y-4 text-gray-600 dark:text-gray-300 text-sm sm:text-base">
               <li>
                 <strong className="font-bold">Order Number:</strong>{" "}
                 {order.order_number}
@@ -130,25 +130,25 @@ const OrderDetail = () => {
           </div>
 
           {/* Products Section */}
-          <div className="p-8">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">
+          <div className="p-6 sm:p-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-4 sm:mb-6">
               Products in Your Order
             </h2>
-            <div className="space-y-6">
+            <div className="space-y-4">
               {order.order_products.map((product) => (
                 <motion.div
                   key={product.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="flex items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-md"
+                  className="flex flex-col sm:flex-row items-center bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-md"
                 >
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}${product.product.image}`}
                     alt={product.product.name}
-                    className="w-16 h-16 rounded-md object-cover"
+                    className="w-20 h-20 sm:w-16 sm:h-16 rounded-md object-cover"
                   />
-                  <div className="ml-4">
+                  <div className="mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
                     <h3 className="text-gray-800 dark:text-white font-semibold">
                       {product.product.name}
                     </h3>
@@ -170,9 +170,9 @@ const OrderDetail = () => {
         </div>
 
         {/* Footer Section */}
-        <div className=" text-white text-center py-6">
+        <div className="text-center py-6 bg-gray-100 dark:bg-gray-900">
           <button
-            className="w-full mx-6 px-6 py-3 bg-gray-900 font-semibold rounded-lg shadow-md hover:bg-gray-600 transition"
+            className="w-full sm:w-auto px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 transition"
             onClick={() => navigate("/products")}
           >
             Continue Shopping
@@ -180,7 +180,7 @@ const OrderDetail = () => {
         </div>
       </div>
 
-      <div className="text-center mt-6 text-gray-600 dark:text-gray-400">
+      <div className="text-center mt-6 text-gray-600 dark:text-gray-400 text-sm">
         If you have any questions about your order, please{" "}
         <Link to={"/contact"} className="text-blue-500 hover:underline">
           contact our support team
