@@ -98,7 +98,7 @@ const Cart = () => {
                 {cartDetails.map((item) => (
                   <motion.div
                     key={item.id}
-                    className="flex justify-between items-center bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md"
+                    className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 md:p-6 rounded-lg shadow-md space-y-4 md:space-y-0"
                     initial="hidden"
                     animate="visible"
                     exit="hidden"
@@ -106,14 +106,14 @@ const Cart = () => {
                     transition={{ duration: 0.3 }}
                   >
                     {/* Product Image and Details */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                       <img
                         src={item.product_image}
                         alt={item.product_name}
-                        className="w-24 h-24 object-cover rounded-lg"
+                        className="w-full md:w-24 h-24 object-cover rounded-lg"
                       />
                       <div>
-                        <div className="text-lg font-medium text-gray-700 dark:text-gray-300">
+                        <div className="text-base md:text-lg font-medium text-gray-700 dark:text-gray-300">
                           {item.product_name}
                         </div>
                         {item.variation_details.map((variation, index) => (
@@ -132,7 +132,7 @@ const Cart = () => {
                     </div>
 
                     {/* Quantity Controls */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 md:gap-4">
                       <button
                         onClick={() =>
                           updateCartQuantity(item.id, item.quantity - 1, false)
@@ -205,7 +205,7 @@ const Cart = () => {
                     </div>
 
                     {/* Total Price and Remove Button */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
                       <div className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                         ${(item.product_price * item.quantity).toFixed(2)}
                       </div>
