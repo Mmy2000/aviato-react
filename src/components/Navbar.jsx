@@ -13,8 +13,14 @@ import { ProfileContext } from "../context/ProfileContext";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { CartContext } from "../context/CartContext";
 import { wishlistContext } from "../context/AddToFavoriteContext";
-import { FaHeart } from "react-icons/fa";
-
+import {
+  FaUser,
+  FaHeart,
+  FaSignOutAlt,
+  FaUserPlus,
+  FaSignInAlt,
+  FaCogs,
+} from "react-icons/fa";
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -102,7 +108,7 @@ const Navbar = () => {
           </div>
 
           {/* Right side controls */}
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4 md:space-x-6 ">
             <NavLink
               to="/cart"
               className={({ isActive }) =>
@@ -124,7 +130,7 @@ const Navbar = () => {
             <NavLink
               to="/favorites"
               className={({ isActive }) =>
-                `relative flex items-center group px-3 py-1 rounded-lg transition-all duration-300 ease-in-out ${
+                `hidden relative md:flex items-center group px-3 py-1 rounded-lg transition-all duration-300 ease-in-out ${
                   isActive
                     ? "text-slate-800 dark:text-slate-700 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-blue-200 dark:to-blue-500 shadow-sm shadow-gray-400 dark:shadow-blue-900"
                     : "text-gray-800 dark:text-gray-200 hover:text-gray-700"
@@ -167,12 +173,12 @@ const Navbar = () => {
                 <Menu.Button className="flex items-center text-sm focus:outline-none">
                   {profile && profile.image && userLogin ? (
                     <img
-                      src={profile.image} // Use the appropriate image URL property
+                      src={profile.image}
                       alt="Profile"
                       className="w-8 h-8 rounded-full object-cover"
                     />
                   ) : (
-                    <UserCircleIcon className="w-8 h-8 text-gray-600 dark:text-gray-300" />
+                    <FaUser className="w-6 h-6  text-gray-600 dark:text-gray-300" />
                   )}
                 </Menu.Button>
               </div>
@@ -185,50 +191,68 @@ const Navbar = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-10 focus:outline-none">
+                <Menu.Items className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-10 focus:outline-none">
                   {userLogin !== null ? (
                     <>
                       <Menu.Item>
                         {({ active }) => (
                           <NavLink
                             to={"/profile"}
-                            className={`block px-4 py-2 text-sm ${
+                            className={`flex items-center px-4 py-2 text-sm space-x-3 ${
                               active
-                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-slate-600 dark:text-slate-800"
                                 : "text-gray-700 dark:text-gray-200"
                             } transition duration-200 ease-in-out rounded-md`}
                           >
-                            Profile
+                            <FaUser className="w-5 h-5" />
+                            <span>Profile</span>
                           </NavLink>
                         )}
                       </Menu.Item>
-                      {profile?.user?.is_superadmin ? (
+                      {profile?.user?.is_superadmin && (
                         <Menu.Item>
                           {({ active }) => (
                             <NavLink
                               to={"/dashboard"}
-                              className={`block px-4 py-2 text-sm ${
+                              className={`flex items-center px-4 py-2 text-sm space-x-3 ${
                                 active
-                                  ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                  ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-slate-600 dark:text-slate-800"
                                   : "text-gray-700 dark:text-gray-200"
-                              } transition duration-200 ease-in-out rounded-md cursor-pointer`}
+                              } transition duration-200 ease-in-out rounded-md`}
                             >
-                              Dashboard
+                              <FaCogs className="w-5 h-5" />
+                              <span>Dashboard</span>
                             </NavLink>
                           )}
                         </Menu.Item>
-                      ) : null}
+                      )}
+                      <Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            to={"/favorites"}
+                            className={`flex items-center px-4 py-2 text-sm space-x-3 ${
+                              active
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-slate-600 dark:text-slate-800"
+                                : "text-gray-700 dark:text-gray-200"
+                            } transition duration-200 ease-in-out rounded-md`}
+                          >
+                            <FaHeart className="w-5 h-5" />
+                            <span>Favorites</span>
+                          </NavLink>
+                        )}
+                      </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
                           <span
                             onClick={LogOut}
-                            className={`block px-4 py-2 text-sm ${
+                            className={`flex items-center px-4 py-2 text-sm space-x-3 ${
                               active
-                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-slate-600 dark:text-slate-800"
                                 : "text-gray-700 dark:text-gray-200"
                             } transition duration-200 ease-in-out rounded-md cursor-pointer`}
                           >
-                            Logout
+                            <FaSignOutAlt className="w-5 h-5" />
+                            <span>Logout</span>
                           </span>
                         )}
                       </Menu.Item>
@@ -239,13 +263,14 @@ const Navbar = () => {
                         {({ active }) => (
                           <NavLink
                             to={"/login"}
-                            className={`block px-4 py-2 text-sm ${
+                            className={`flex items-center px-4 py-2 text-sm space-x-3 ${
                               active
-                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-slate-600 dark:text-slate-800"
                                 : "text-gray-700 dark:text-gray-200"
                             } transition duration-200 ease-in-out rounded-md`}
                           >
-                            Login
+                            <FaSignInAlt className="w-5 h-5" />
+                            <span>Login</span>
                           </NavLink>
                         )}
                       </Menu.Item>
@@ -253,13 +278,14 @@ const Navbar = () => {
                         {({ active }) => (
                           <NavLink
                             to={"/register"}
-                            className={`block px-4 py-2 text-sm ${
+                            className={`flex items-center px-4 py-2 text-sm space-x-3 ${
                               active
-                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400"
+                                ? "bg-gradient-to-r from-blue-50 dark:bg-gray-700 text-slate-600 dark:text-slate-800"
                                 : "text-gray-700 dark:text-gray-200"
                             } transition duration-200 ease-in-out rounded-md`}
                           >
-                            Register
+                            <FaUserPlus className="w-5 h-5" />
+                            <span>Register</span>
                           </NavLink>
                         )}
                       </Menu.Item>
