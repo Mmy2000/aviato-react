@@ -143,8 +143,8 @@ const BrandDetails = () => {
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row px-10 ">
-        <div className=" space-y-4 p-6">
+      <div className="flex flex-col lg:flex-row md:px-10 ">
+        <div className=" space-y-4 py-6 px-2 bg-red-500">
           {relatedProducts && relatedProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {relatedProducts.map((product) => {

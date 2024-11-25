@@ -181,7 +181,7 @@ export const Products = () => {
  
   return (
     <>
-      <div className="flex flex-col lg:flex-row px-10 mb-4 ">
+      <div className="flex flex-col lg:flex-row md:px-10 px-4 mb-4 ">
         <div className="lg:w-1/4 p-6 rounded-lg mt-6 h-fit dark:bg-gray-900 shadow-lg ">
           <div className="flex flex-col w-full relative">
             <Heading name="Browse Categories" />
@@ -222,7 +222,7 @@ export const Products = () => {
             </div>
           </div>
         </div>
-        <div className="lg:w-3/4 space-y-4 p-6">
+        <div className="lg:w-3/4 space-y-4  py-6">
           <div className="flex justify-between items-center">
             <span className="text-gray-900 dark:text-gray-200 font-semibold">
               Showing {productCounts} of {productCount} results
