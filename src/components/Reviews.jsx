@@ -35,11 +35,11 @@ const Reviews = () => {
 
       <div className="flex flex-col justify-between items-center sm:items-start">
         <div className="flex gap-0.5">
-          <Star className="h-4 w-4 text-slate-600 fill-gray-600" />
-          <Star className="h-4 w-4 text-slate-600 fill-gray-600" />
-          <Star className="h-4 w-4 text-slate-600 fill-gray-600" />
-          <Star className="h-4 w-4 text-slate-600 fill-gray-600" />
-          <Star className="h-4 w-4 text-slate-600 fill-gray-600" />
+          <Star className="h-4 w-4 dark:text-slate-300 fill-slate-600 dark:fill-slate-300" />
+          <Star className="h-4 w-4 dark:text-slate-300 fill-slate-600 dark:fill-slate-300" />
+          <Star className="h-4 w-4 dark:text-slate-300 fill-slate-600 dark:fill-slate-300" />
+          <Star className="h-4 w-4 dark:text-slate-300 fill-slate-600 dark:fill-slate-300" />
+          <Star className="h-4 w-4 dark:text-slate-300 fill-slate-600 dark:fill-slate-300" />
         </div>
 
         <p>
