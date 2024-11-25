@@ -222,7 +222,7 @@ export const Products = () => {
             </div>
           </div>
         </div>
-        <div className="lg:w-3/4 space-y-4  py-6">
+        <div className="lg:w-3/4 space-y-4 lg:px-6  py-6">
           <div className="flex justify-between items-center">
             <span className="text-gray-900 dark:text-gray-200 font-semibold">
               Showing {productCounts} of {productCount} results
