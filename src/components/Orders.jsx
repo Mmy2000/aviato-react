@@ -128,7 +128,7 @@ const Orders = () => {
           initial="hidden"
           animate="visible"
           transition={{ staggerChildren: 0.1 }}
-          className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden"
+          className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-x-scroll lg:overflow-hidden"
         >
           <table className="min-w-full border-collapse">
             <thead className="bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm uppercase tracking-wide">
