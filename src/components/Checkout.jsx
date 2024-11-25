@@ -378,12 +378,12 @@ const Checkout = () => {
         <button
           onClick={handlePlaceOrder}
           disabled={placeOrderBtnLoading}
-          className="bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 transition text-white font-semibold w-full py-4 mt-8 flex justify-center items-center rounded-md"
+          className={`bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 transition text-white font-semibold w-full py-4 mt-8 flex justify-center items-center rounded-md ${placeOrderBtnLoading ? "opacity-70 cursor-not-allowed" : ""}`}
         >
           {placeOrderBtnLoading ? (
             <>
               <svg
-                className="animate-spin h-5 w-5 mr-2 text-white"
+                className={`animate-spin h-5 w-5 mr-2 text-white `}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

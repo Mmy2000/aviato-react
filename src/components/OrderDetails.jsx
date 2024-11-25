@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Spinner from "../ui/Spinner";
 
@@ -182,9 +182,9 @@ const OrderDetail = () => {
 
       <div className="text-center mt-6 text-gray-600 dark:text-gray-400">
         If you have any questions about your order, please{" "}
-        <a href="#" className="text-blue-500 hover:underline">
+        <Link to={"/contact"} className="text-blue-500 hover:underline">
           contact our support team
-        </a>
+        </Link>
         .
       </div>
     </div>

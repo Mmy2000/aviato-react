@@ -13,6 +13,7 @@ import NewsletterForm from "./Newsletters";
 import Reviews from "./Reviews";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import CustomerReviews from "./CustomerReviews";
+import { Button } from "@headlessui/react";
 
 const Home = () => {
   // Array of slide data
@@ -106,6 +107,11 @@ const Home = () => {
                   <p className="text-sm mt-2">
                     tailored to meet your every need
                   </p>
+                  <Link to={'/products'}>
+                    <Button className="rounded mt-2 bg-slate-600 py-2 px-4 text-sm text-white data-[hover]:bg-slate-500 data-[active]:bg-slate-700">
+                      Shop Now
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <div className="absolute -top-2 -right-2 bg-blue-600 w-12 h-12 flex items-center justify-center rounded-full shadow-lg group-hover:bg-blue-800 transition-all duration-300">
@@ -116,7 +122,7 @@ const Home = () => {
         </div>
       </MaxWidthWrapper>
       <Payment />
-      <CustomerReviews/>
+      <CustomerReviews />
     </div>
   );
 };

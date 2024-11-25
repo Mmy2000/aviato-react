@@ -157,3 +157,16 @@ input[type="range"].slider-thumb:disabled::-moz-range-thumb {
     }
 
 }
+
+@keyframes loading-bar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 1.5s infinite;
+}

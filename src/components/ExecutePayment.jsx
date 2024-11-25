@@ -83,20 +83,27 @@ const ExecutePayment = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center ">
+      <div className="flex flex-col items-center mb-10 justify-center">
         {/* Spinner */}
         <div
-          className="w-16 h-16 border-4 border-t-transparent border-green-600 rounded-full animate-spin"
+          className="w-16 h-16 border-4 border-t-transparent border-green-600 rounded-full animate-spin shadow-lg"
           role="status"
         ></div>
 
         {/* Text */}
-        <p className="mt-4 text-lg font-medium text-gray-800 dark:text-gray-200">
-          Redirecting to Success Page...
-        </p>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          Please wait while we process your payment.
-        </p>
+        <div className="text-center mt-6">
+          <p className="text-xl font-semibold text-gray-800 dark:text-gray-200 animate-pulse">
+            Redirecting...
+          </p>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Processing your payment. Hang tight!
+          </p>
+        </div>
+
+        {/* Optional Progress Indicator */}
+        <div className="mt-4 w-40 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-full bg-green-600 animate-loading-bar"></div>
+        </div>
       </div>
     );
   }
