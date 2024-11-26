@@ -28,7 +28,7 @@ const OrderSuccess = () => {
           config={{ elementCount: 200, spread: 90 }}
         />
       </div>
-      <div className="container mx-auto px-6 py-12">
+      <div className=" mx-auto lg:px-28 px-4 py-12">
         {/* Hero Section */}
         <div className="relative text-gray-900 dark:text-gray-200 p-8 mb-12">
           <HiOutlineCheckCircle className="w-16 h-16 mx-auto text-green-500 mb-4" />
