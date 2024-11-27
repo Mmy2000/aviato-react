@@ -15,6 +15,7 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 import CustomerReviews from "./CustomerReviews";
 import { Button } from "@headlessui/react";
 import { Helmet } from "react-helmet";
+import LatestProducts from "./LatestProducts";
 
 const Home = () => {
   // Array of slide data
@@ -129,6 +130,7 @@ const Home = () => {
           </div>
         </MaxWidthWrapper>
         <Payment />
+        <LatestProducts/>
         <CustomerReviews />
       </div>
     </>

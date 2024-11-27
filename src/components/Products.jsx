@@ -55,7 +55,6 @@ export const Products = () => {
   const fetchProducts = async () => {
     const baseUrl = import.meta.env.VITE_BASE_URL ;
     if (!baseUrl) {
-      console.log(baseUrl);
       
       throw new Error("Base URL is not defined. Check your .env file.");
     }
