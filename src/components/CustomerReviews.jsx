@@ -5,7 +5,7 @@ import { ArrowRight, Check, Star } from "lucide-react";
 
 const CustomerReviews = () => {
   return (
-    <section className=" dark:bg-gray-900 grainy-dark py-24">
+    <section className=" bg-gradient-to-br  dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 py-24">
       <MaxWidthWrapper className="flex flex-col items-center gap-16 sm:gap-32">
         <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-6">
           <h2 className="order-1 dark:text-gray-200 mt-2 tracking-tight text-center text-balance !leading-tight font-bold text-5xl md:text-6xl text-gray-900">

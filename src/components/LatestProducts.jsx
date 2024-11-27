@@ -15,6 +15,8 @@ import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import { CartContext } from '../context/CartContext';
 import toast from 'react-hot-toast';
+import Slider from "react-slick";
+
 
 const LatestProducts = () => {
 
@@ -132,9 +134,59 @@ const LatestProducts = () => {
     if (isError) {
       return <div className="text-red-500">Error: {error.message}</div>;
     }
+
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4, // Adjust this to show the number of slides you want
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1440, // Large screens and desktops
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+          },
+        },
+        {
+          breakpoint: 1024, // Medium screens and tablets in landscape mode
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: true,
+          },
+        },
+        {
+          breakpoint: 768, // Tablets and small laptops
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            arrows: false,
+          },
+        },
+        {
+          breakpoint: 576, // Large mobile devices
+          settings: {
+            slidesToShow: 1.5, // Partial next slide visible for visual effect
+            slidesToScroll: 1,
+            arrows: false,
+          },
+        },
+        {
+          breakpoint: 480, // Small mobile devices
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+          },
+        },
+      ],
+    };
   return (
     <>
-      <div className="md:px-16 px-4 py-10">
+      <div className="md:px-16 px-2 py-10">
         <h1 className="order-1 dark:text-gray-200 mt-2 mb-8 tracking-tight text-balance !leading-tight font-bold text-5xl md:text-6xl text-gray-900">
           Latest{" "}
           <span className="relative text-slate-700 dark:text-slate-300 px-2">
@@ -142,7 +194,7 @@ const LatestProducts = () => {
             <Icons.underline className="hidden sm:block pointer-events-none absolute inset-x-0 -bottom-6 text-slate-500" />
           </span>
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <Slider {...settings}>
           {data?.data?.results?.map((product) => {
             const price = parseFloat(product.price);
             return (
@@ -233,7 +285,7 @@ const LatestProducts = () => {
               </motion.div>
             );
           })}
-        </div>
+        </Slider>
       </div>
       <Modal
         isOpen={isModalOpen}
