@@ -12,6 +12,7 @@ import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import toast from 'react-hot-toast';
 import { UserContext } from '../context/UserContext';
+import { Helmet } from 'react-helmet';
 
 const Favorite = () => {
     const [loading, setLoading] = useState(false);
@@ -106,6 +107,9 @@ const Favorite = () => {
     if (loading) return <Spinner />;
   return (
     <>
+      <Helmet>
+        <title>Aviato | Favorite</title>
+      </Helmet>
       <div className="flex flex-col lg:flex-row md:px-10 ">
         <div className=" space-y-4 p-6">
           {wishlistProducts && wishlistProducts.length > 0 ? (

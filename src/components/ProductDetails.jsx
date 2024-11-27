@@ -32,6 +32,7 @@ import Modal from "../shared/Modal";
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
 import { UserContext } from "../context/UserContext";
 import { wishlistContext } from "../context/AddToFavoriteContext";
+import { Helmet } from "react-helmet";
 
 export const ProductDetails = () => {
   const navigate = useNavigate();
@@ -297,6 +298,9 @@ export const ProductDetails = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Aviato | {productDetails?.name}</title>
+      </Helmet>
       <button
         onClick={() => navigate(-1)} // Navigate back to the previous page
         className="flex items-center mb-4 ml-10 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"

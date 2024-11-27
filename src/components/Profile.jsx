@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Modal from "../shared/Modal";
 import { FaEdit } from "react-icons/fa";
 import ChangePassword from "./ChangePassword";
+import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const { profile, loading, error, setProfile } = useContext(ProfileContext);
@@ -169,6 +170,9 @@ const Profile = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Aviato | Profile</title>
+      </Helmet>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

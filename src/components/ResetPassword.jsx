@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
 import axios from "axios";
+import { Helmet } from "react-helmet";
+
 
 const ResetPassword = () => {
   const [step, setStep] = useState(1);
@@ -133,58 +135,166 @@ const ResetPassword = () => {
   );
 
   return (
-    <div className="max-w-lg mx-auto p-8 bg-white shadow-md rounded-lg dark:bg-gray-800 dark:text-gray-200">
-      <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
-        Reset Your Password
-      </h2>
+    <>
+      <Helmet>
+        <title>Aviato | Reset Password</title>
+      </Helmet>
+      <div className="max-w-lg mx-auto p-8 bg-white shadow-md rounded-lg dark:bg-gray-800 dark:text-gray-200">
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
+          Reset Your Password
+        </h2>
 
-      {/* Step Slider */}
-      <StepSlider />
+        {/* Step Slider */}
+        <StepSlider />
 
-      {/* Display Error or Success Messages */}
-      {error && (
-        <div className="text-red-600 dark:text-red-400 text-sm text-center mb-4">
-          {error}
-        </div>
-      )}
-      {successMessage && (
-        <div className="text-green-600 dark:text-green-400 text-xl font-medium text-center mb-4">
-          {successMessage}
-        </div>
-      )}
-
-      {/* Step 1: Enter Email */}
-      {step === 1 && (
-        <form onSubmit={handleRequestOtp}>
-          <div className="mb-6">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
-            >
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400 dark:text-gray-300"
-              placeholder="Enter your email"
-              required
-            />
+        {/* Display Error or Success Messages */}
+        {error && (
+          <div className="text-red-600 dark:text-red-400 text-sm text-center mb-4">
+            {error}
           </div>
-          <button
-            type="submit"
-            className={`w-full py-2 rounded-md font-semibold flex items-center justify-center gap-2 ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed dark:bg-gray-600"
-                : "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-            } transition`}
-            disabled={loading}
-          >
-            {loading && (
+        )}
+        {successMessage && (
+          <div className="text-green-600 dark:text-green-400 text-xl font-medium text-center mb-4">
+            {successMessage}
+          </div>
+        )}
+
+        {/* Step 1: Enter Email */}
+        {step === 1 && (
+          <form onSubmit={handleRequestOtp}>
+            <div className="mb-6">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400 dark:text-gray-300"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className={`w-full py-2 rounded-md font-semibold flex items-center justify-center gap-2 ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed dark:bg-gray-600"
+                  : "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              } transition`}
+              disabled={loading}
+            >
+              {loading && (
+                <svg
+                  className="w-5 h-5 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+              )}
+              {loading ? "Sending OTP..." : "Send OTP"}
+            </button>
+          </form>
+        )}
+
+        {/* Step 2: Verify OTP and Enter New Password */}
+        {step === 2 && (
+          <form onSubmit={handleResetPassword}>
+            <div className="mb-6">
+              <label
+                htmlFor="otp"
+                className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
+              >
+                OTP Code
+              </label>
+              <input
+                type="text"
+                id="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400 dark:text-gray-300"
+                placeholder="Enter the OTP"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="new-password"
+                className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
+              >
+                New Password
+              </label>
+              <input
+                type="password"
+                id="new-password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400 dark:text-gray-300"
+                placeholder="Enter your new password"
+                minLength="8"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className={`w-full py-2 rounded-md font-semibold flex items-center justify-center gap-2 ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed dark:bg-gray-600"
+                  : "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              } transition`}
+              disabled={loading}
+            >
+              {loading && (
+                <svg
+                  className="w-5 h-5 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+              )}
+              {loading ? "Resetting Password..." : "Reset Password"}
+            </button>
+          </form>
+        )}
+
+        {/* Step 3: Success */}
+        {step === 3 && (
+          <div className="text-center">
+            <div className="flex items-center justify-center">
               <svg
-                className="w-5 h-5 animate-spin"
+                className="w-6 h-6 animate-spin text-green-600 dark:text-green-400"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -203,117 +313,14 @@ const ResetPassword = () => {
                   d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                 ></path>
               </svg>
-            )}
-            {loading ? "Sending OTP..." : "Send OTP"}
-          </button>
-        </form>
-      )}
-
-      {/* Step 2: Verify OTP and Enter New Password */}
-      {step === 2 && (
-        <form onSubmit={handleResetPassword}>
-          <div className="mb-6">
-            <label
-              htmlFor="otp"
-              className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
-            >
-              OTP Code
-            </label>
-            <input
-              type="text"
-              id="otp"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400 dark:text-gray-300"
-              placeholder="Enter the OTP"
-              required
-            />
+            </div>
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
+              Redirecting to the login page...
+            </p>
           </div>
-          <div className="mb-6">
-            <label
-              htmlFor="new-password"
-              className="block text-gray-700 dark:text-gray-300 font-medium mb-2"
-            >
-              New Password
-            </label>
-            <input
-              type="password"
-              id="new-password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400 dark:text-gray-300"
-              placeholder="Enter your new password"
-              minLength="8"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className={`w-full py-2 rounded-md font-semibold flex items-center justify-center gap-2 ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed dark:bg-gray-600"
-                : "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-            } transition`}
-            disabled={loading}
-          >
-            {loading && (
-              <svg
-                className="w-5 h-5 animate-spin"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                ></path>
-              </svg>
-            )}
-            {loading ? "Resetting Password..." : "Reset Password"}
-          </button>
-        </form>
-      )}
-
-      {/* Step 3: Success */}
-      {step === 3 && (
-        <div className="text-center">
-          <div className="flex items-center justify-center">
-            <svg
-              className="w-6 h-6 animate-spin text-green-600 dark:text-green-400"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
-            </svg>
-          </div>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Redirecting to the login page...
-          </p>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

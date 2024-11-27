@@ -20,6 +20,7 @@ import { CartContext } from "../context/CartContext";
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import the heart icons
 import { UserContext } from "../context/UserContext";
 import { wishlistContext } from "../context/AddToFavoriteContext";
+import { Helmet } from "react-helmet";
 
 
 export const Products = () => {
@@ -181,6 +182,9 @@ export const Products = () => {
  
   return (
     <>
+      <Helmet>
+        <title>Aviato | Products</title>
+      </Helmet>
       <div className="flex flex-col lg:flex-row md:px-10 px-4 mb-4 ">
         <div className="lg:w-1/4 p-6 rounded-lg mt-6 h-fit dark:bg-gray-900 shadow-lg ">
           <div className="flex flex-col w-full relative">

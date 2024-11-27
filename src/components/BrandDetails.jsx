@@ -15,6 +15,7 @@ import {
   Listbox,
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
+import { Helmet } from "react-helmet";
 
 const BrandDetails = () => {
   const navigate = useNavigate();
@@ -143,6 +144,9 @@ const BrandDetails = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Aviato | {brand}</title>
+      </Helmet>
       <div className="flex flex-col lg:flex-row md:px-10 ">
         <div className=" space-y-4 p-6 ">
           {relatedProducts && relatedProducts.length > 0 ? (

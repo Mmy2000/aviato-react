@@ -4,6 +4,7 @@ import { CartContext } from "../context/CartContext";
 import toast from "react-hot-toast";
 import Spinner from "../ui/Spinner";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState([]);
@@ -86,255 +87,265 @@ const Cart = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto py-8">
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800 dark:text-gray-200">
-        Shopping Cart
-      </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="col-span-2">
-          {cartDetails && cartDetails.length > 0 ? (
-            <div className="space-y-6">
-              <AnimatePresence>
-                {cartDetails.map((item) => (
-                  <motion.div
-                    key={item.id}
-                    className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 md:p-6 rounded-lg shadow-md space-y-4 md:space-y-0"
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={itemVariants}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {/* Product Image and Details */}
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                      <img
-                        src={item.product_image}
-                        alt={item.product_name}
-                        className="w-full md:w-24 h-24 object-cover rounded-lg"
-                      />
-                      <div>
-                        <div className="text-base md:text-lg font-medium text-gray-700 dark:text-gray-300">
-                          {item.product_name}
-                        </div>
-                        {item.variation_details.map((variation, index) => (
-                          <div
-                            key={index}
-                            className="text-sm text-gray-500 dark:text-gray-400"
-                          >
-                            {variation.variation_category}:{" "}
-                            {variation.variation_value}
+    <>
+      <Helmet>
+        <title>Aviato | Cart</title>
+      </Helmet>
+      <div className="max-w-6xl mx-auto py-8">
+        <h1 className="text-4xl font-bold text-center mb-8 text-gray-800 dark:text-gray-200">
+          Shopping Cart
+        </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="col-span-2">
+            {cartDetails && cartDetails.length > 0 ? (
+              <div className="space-y-6">
+                <AnimatePresence>
+                  {cartDetails.map((item) => (
+                    <motion.div
+                      key={item.id}
+                      className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-gray-700 p-4 md:p-6 rounded-lg shadow-md space-y-4 md:space-y-0"
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                      variants={itemVariants}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {/* Product Image and Details */}
+                      <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                        <img
+                          src={item.product_image}
+                          alt={item.product_name}
+                          className="w-full md:w-24 h-24 object-cover rounded-lg"
+                        />
+                        <div>
+                          <div className="text-base md:text-lg font-medium text-gray-700 dark:text-gray-300">
+                            {item.product_name}
                           </div>
-                        ))}
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          Price: ${Number(item.product_price).toFixed(2)}
+                          {item.variation_details.map((variation, index) => (
+                            <div
+                              key={index}
+                              className="text-sm text-gray-500 dark:text-gray-400"
+                            >
+                              {variation.variation_category}:{" "}
+                              {variation.variation_value}
+                            </div>
+                          ))}
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            Price: ${Number(item.product_price).toFixed(2)}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Quantity Controls */}
-                    <div className="flex items-center gap-2 md:gap-4">
-                      <button
-                        onClick={() =>
-                          updateCartQuantity(item.id, item.quantity - 1, false)
-                        }
-                        className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
-                        disabled={decrementLoading || incrementLoading}
-                      >
-                        {decrementLoading ? (
-                          <svg
-                            className="w-4 h-4 animate-spin"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8v8H4z"
-                            ></path>
-                          </svg>
-                        ) : (
-                          "-"
-                        )}
-                      </button>
-
-                      <span className="text-gray-700 dark:text-gray-200">
-                        {item.quantity}
-                      </span>
-
-                      <button
-                        onClick={() =>
-                          updateCartQuantity(item.id, item.quantity + 1, true)
-                        }
-                        className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
-                        disabled={incrementLoading || decrementLoading}
-                      >
-                        {incrementLoading ? (
-                          <svg
-                            className="w-4 h-4 animate-spin"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8v8H4z"
-                            ></path>
-                          </svg>
-                        ) : (
-                          "+"
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Total Price and Remove Button */}
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
-                      <div className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                        ${(item.product_price * item.quantity).toFixed(2)}
-                      </div>
-                      <motion.button
-                        onClick={() => deleteItem(item.id)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-100 rounded-full shadow-sm hover:bg-red-200 dark:bg-red-800 dark:hover:bg-red-700 dark:text-gray-200 transition-all"
-                        disabled={isCloseloading && currentId === item.id}
-                      >
-                        {isCloseloading && currentId === item.id ? (
-                          <svg
-                            className="w-4 h-4 animate-spin"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8v8H4z"
-                            ></path>
-                          </svg>
-                        ) : (
-                          <>
+                      {/* Quantity Controls */}
+                      <div className="flex items-center gap-2 md:gap-4">
+                        <button
+                          onClick={() =>
+                            updateCartQuantity(
+                              item.id,
+                              item.quantity - 1,
+                              false
+                            )
+                          }
+                          className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
+                          disabled={decrementLoading || incrementLoading}
+                        >
+                          {decrementLoading ? (
                             <svg
+                              className="w-4 h-4 animate-spin"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v8H4z"
+                              ></path>
+                            </svg>
+                          ) : (
+                            "-"
+                          )}
+                        </button>
+
+                        <span className="text-gray-700 dark:text-gray-200">
+                          {item.quantity}
+                        </span>
+
+                        <button
+                          onClick={() =>
+                            updateCartQuantity(item.id, item.quantity + 1, true)
+                          }
+                          className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-gray-600 dark:text-gray-200 hover:bg-gray-300"
+                          disabled={incrementLoading || decrementLoading}
+                        >
+                          {incrementLoading ? (
+                            <svg
+                              className="w-4 h-4 animate-spin"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v8H4z"
+                              ></path>
+                            </svg>
+                          ) : (
+                            "+"
+                          )}
+                        </button>
+                      </div>
+
+                      {/* Total Price and Remove Button */}
+                      <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
+                        <div className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                          ${(item.product_price * item.quantity).toFixed(2)}
+                        </div>
+                        <motion.button
+                          onClick={() => deleteItem(item.id)}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-100 rounded-full shadow-sm hover:bg-red-200 dark:bg-red-800 dark:hover:bg-red-700 dark:text-gray-200 transition-all"
+                          disabled={isCloseloading && currentId === item.id}
+                        >
+                          {isCloseloading && currentId === item.id ? (
+                            <svg
+                              className="w-4 h-4 animate-spin"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
-                              className="w-4 h-4"
                             >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
                               <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M6 18L18 6M6 6l12 12"
-                              />
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v8H4z"
+                              ></path>
                             </svg>
-                            Remove
-                          </>
-                        )}
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col items-center text-center text-lg text-gray-500 dark:text-gray-400"
-            >
-              {/* Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-12 h-12 text-gray-400 mb-4"
+                          ) : (
+                            <>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                className="w-4 h-4"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                              Remove
+                            </>
+                          )}
+                        </motion.button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center text-center text-lg text-gray-500 dark:text-gray-400"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 4.5l.75 13.5c.075 1.337 1.134 2.437 2.625 2.437h10.5c1.491 0 2.55-1.1 2.625-2.437L20.25 4.5m-16.5 0h16.5m-16.5 0a2.25 2.25 0 012.25-2.25h11.25a2.25 2.25 0 012.25 2.25m-16.5 0l1.5 13.5m4.5-7.5h6m-6 3h4"
-                />
-              </svg>
+                {/* Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-12 h-12 text-gray-400 mb-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 4.5l.75 13.5c.075 1.337 1.134 2.437 2.625 2.437h10.5c1.491 0 2.55-1.1 2.625-2.437L20.25 4.5m-16.5 0h16.5m-16.5 0a2.25 2.25 0 012.25-2.25h11.25a2.25 2.25 0 012.25 2.25m-16.5 0l1.5 13.5m4.5-7.5h6m-6 3h4"
+                  />
+                </svg>
 
-              {/* Message */}
-              <p className="font-medium">
-                Your cart is currently empty. Browse our collection to find
-                products you love and make your shopping experience delightful!
-              </p>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Cart Summary */}
-        <div className="p-6 bg-white dark:bg-gray-700 rounded-lg h-fit shadow-md">
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
-            Cart Summary
-          </h2>
-          <div className="text-gray-600 dark:text-gray-400 space-y-2">
-            <div className="flex justify-between">
-              <span>Subtotal:</span>
-              <span>${calculateTotal().toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Tax:</span>
-              <span>${calculateTotalTax().toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between font-bold text-lg text-gray-800 dark:text-gray-200 mt-4">
-              <span>Total:</span>
-              <span>
-                ${(calculateTotal() + calculateTotalTax()).toFixed(2)}
-              </span>
-            </div>
+                {/* Message */}
+                <p className="font-medium">
+                  Your cart is currently empty. Browse our collection to find
+                  products you love and make your shopping experience
+                  delightful!
+                </p>
+              </motion.div>
+            )}
           </div>
-          <div className="mt-6">
-            <Link to={"/checkout"}>
-              <motion.button
-                disabled={cartDetails.length == 0}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-700 transition-colors"
-              >
-                Checkout
-              </motion.button>
-            </Link>
-            <Link to={"/products"}>
-              <button className="w-full transition-colors px-8 py-3 mt-4 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500">
-                Continue Shopping
-              </button>
-            </Link>
+
+          {/* Cart Summary */}
+          <div className="p-6 bg-white dark:bg-gray-700 rounded-lg h-fit shadow-md">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
+              Cart Summary
+            </h2>
+            <div className="text-gray-600 dark:text-gray-400 space-y-2">
+              <div className="flex justify-between">
+                <span>Subtotal:</span>
+                <span>${calculateTotal().toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Tax:</span>
+                <span>${calculateTotalTax().toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between font-bold text-lg text-gray-800 dark:text-gray-200 mt-4">
+                <span>Total:</span>
+                <span>
+                  ${(calculateTotal() + calculateTotalTax()).toFixed(2)}
+                </span>
+              </div>
+            </div>
+            <div className="mt-6">
+              <Link to={"/checkout"}>
+                <motion.button
+                  disabled={cartDetails.length == 0}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full px-8 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-700 transition-colors"
+                >
+                  Checkout
+                </motion.button>
+              </Link>
+              <Link to={"/products"}>
+                <button className="w-full transition-colors px-8 py-3 mt-4 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-md hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500">
+                  Continue Shopping
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
