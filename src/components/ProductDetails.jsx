@@ -303,7 +303,7 @@ export const ProductDetails = () => {
       </Helmet>
       <button
         onClick={() => navigate(-1)} // Navigate back to the previous page
-        className="flex items-center mb-4 ml-10 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+        className="flex items-center mb-4 ml-10 px-4 py-2 mt-6 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
         aria-label="Go back to the previous page" // Accessibility label
       >
         <svg
