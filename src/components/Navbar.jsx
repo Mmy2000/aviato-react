@@ -21,6 +21,7 @@ import {
   FaSignInAlt,
   FaCogs,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -60,6 +61,20 @@ const Navbar = () => {
     getCart();
     getWishlist();
   }, [cartInfo?.count]);
+
+  const menuContainerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  };
+
+  const menuItemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (i) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: i * 0.1 },
+    }),
+  };
 
   // Utility styles for consistency and reuse
   const styles = {
@@ -114,17 +129,20 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between py-3 items-center">
           {/* Logo */}
-          <div className="flex justify-center items-center space-x-20">
+          <div className="flex justify-center items-center space-x-2 lg:space-x-20 ">
             <div className="flex-shrink-0">
               <NavLink to={"/"} className="flex items-center">
                 <span className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
-                  Aviato <span className="text-green-600">Shopper</span>
+                  Aviato{" "}
+                  <span className="text-green-600 hidden lg:inline">
+                    Shopper
+                  </span>
                 </span>
               </NavLink>
             </div>
 
             {/* Main Menu */}
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex space-x-2">
               {["Products", "Categories", "Brands", "Contact"].map((page) => (
                 <NavLink
                   key={page}
@@ -345,20 +363,39 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-          <div className="px-4 pt-4 pb-6 space-y-1">
-            {["Products", "Categories", "Brands", "Contact"].map((page) => (
-              <NavLink
-                key={page}
-                to={`/${page.toLowerCase()}`}
-                className={({ isActive }) => linkClass(isActive)}
-              >
-                {page}
-                <span className={({ isActive }) => underlineClass(isActive)} />
-              </NavLink>
-            ))}
-          </div>
-        </div>
+        <motion.div
+          className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+          initial="hidden"
+          animate="visible"
+          variants={menuContainerVariants}
+        >
+          <nav className="px-4 pt-4 pb-6 space-y-1">
+            {["Products", "Categories", "Brands", "Contact"].map(
+              (page, index) => (
+                <motion.div
+                  key={page}
+                  custom={index}
+                  initial="hidden"
+                  animate="visible"
+                  variants={menuItemVariants}
+                >
+                  <NavLink
+                    to={`/${page.toLowerCase()}`}
+                    className={({ isActive }) =>
+                      `block py-2 px-3 rounded-md text-sm font-medium ${
+                        isActive
+                          ? "text-blue-600 dark:text-blue-400 bg-gray-100 dark:bg-gray-800"
+                          : "text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      }`
+                    }
+                  >
+                    {page}
+                  </NavLink>
+                </motion.div>
+              )
+            )}
+          </nav>
+        </motion.div>
       )}
     </nav>
   );
