@@ -197,9 +197,9 @@ const Profile = () => {
             <h1 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
               {profile?.full_name}
             </h1>
-            <p className="text-indigo-600 dark:text-indigo-400 italic">
+            {/* <p className="text-indigo-600 dark:text-indigo-400 italic">
               {profile?.headline}
-            </p>
+            </p> */}
           </div>
           <motion.div
             className="mt-4 p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl shadow-md flex flex-col items-center space-y-4"
