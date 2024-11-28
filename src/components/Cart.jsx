@@ -5,8 +5,12 @@ import toast from "react-hot-toast";
 import Spinner from "../ui/Spinner";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import Modal from "../shared/Modal";
 
 const Cart = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null); // New state
+  const [loadingBtn, setLoadingBtn] = useState(false);
   const [cartDetails, setCartDetails] = useState([]);
   const [isCloseloading, setIsCloseloading] = useState(false);
   const [loading, setLoading] = useState(true); // New loading state
@@ -15,6 +19,11 @@ const Cart = () => {
     useContext(CartContext);
   const [incrementLoading, setIncrementLoading] = useState(false);
   const [decrementLoading, setDecrementLoading] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => setIsModalOpen(false);
 
   async function getCart() {
     setLoading(true); // Set loading to true before fetching data
@@ -34,7 +43,18 @@ const Cart = () => {
     setcartInfo(response?.data.cart_items);
     toast.success("Cart Item deleted successfully");
     setIsCloseloading(false);
+    setIsModalOpen(false)
   }
+
+  const handleDeleteClick = (cartItemId) => {
+    setcurrentId(cartItemId); // Set the current item to delete
+    setIsModalOpen(true); // Open the confirmation modal
+  };
+
+  const handleModalSubmit = () => {
+    if (currentId) deleteItem(currentId); // Proceed with deletion
+  };
+
   async function updateCartQuantity(cartItemId, quantity, isIncrement) {
     if (quantity < 1) return;
 
@@ -219,35 +239,13 @@ const Cart = () => {
                           ${(item.product_price * item.quantity).toFixed(2)}
                         </div>
                         <motion.button
-                          onClick={() => deleteItem(item.id)}
+                          onClick={() => handleDeleteClick(item.id)}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-100 rounded-full shadow-sm hover:bg-red-200 dark:bg-red-800 dark:hover:bg-red-700 dark:text-gray-200 transition-all"
                           disabled={isCloseloading && currentId === item.id}
                         >
-                          {isCloseloading && currentId === item.id ? (
-                            <svg
-                              className="w-4 h-4 animate-spin"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8v8H4z"
-                              ></path>
-                            </svg>
-                          ) : (
+                          
                             <>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +263,6 @@ const Cart = () => {
                               </svg>
                               Remove
                             </>
-                          )}
                         </motion.button>
                       </div>
                     </motion.div>
@@ -345,6 +342,33 @@ const Cart = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // Close modal without action
+        title="Delete Cartitem"
+        onSubmit={handleModalSubmit}
+        loading={isCloseloading}
+        okTxt="Delete"
+        closeTxt="Cancel"
+        icon={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-5 h-5 text-red-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        }
+      >
+        Are you sure you want to delete this item from the cart?
+      </Modal>
     </>
   );
 };
