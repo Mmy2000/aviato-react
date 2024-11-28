@@ -77,7 +77,7 @@ const Navbar = () => {
 
   
   return (
-    <nav className=" dark:bg-gray-900  w-full sticky z-[100] top-0 left-0 border-b border-gray-200 dark:border-gray-900 bg-white/75 backdrop-blur-lg transition-all duration-300 ease-in-out">
+    <nav className=" dark:bg-gray-900 inset-x-0  w-full sticky z-[100] top-0 left-0 border-b border-gray-200 dark:border-gray-900 bg-white/75 backdrop-blur-lg transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between py-3 items-center">
           {/* Logo */}
