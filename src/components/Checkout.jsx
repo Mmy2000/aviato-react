@@ -186,7 +186,7 @@ const Checkout = () => {
       <Helmet>
         <title>Aviato | Checkout</title>
       </Helmet>
-      <div className="container mx-auto px-4 py-12  transition-colors duration-500">
+      <div className="container mx-auto px-4 lg:px-8 py-12  transition-colors duration-500">
         <h1 className="text-4xl font-bold text-center text-gray-800 dark:text-gray-100 mb-10">
           Checkout
         </h1>

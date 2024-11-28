@@ -32,6 +32,7 @@ import Home from "./components/Home";
 import Contact from "./components/Contact";
 import ExecutePayment from "./components/ExecutePayment";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Notfound from "./components/Notfound";
 
 let router = createBrowserRouter([
   {
@@ -155,6 +156,7 @@ let router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      { path: "*", element: <Notfound /> },
     ],
   },
 ]);
