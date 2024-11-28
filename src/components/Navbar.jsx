@@ -28,7 +28,7 @@ const Navbar = () => {
   let { profile } = useContext(ProfileContext);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  let {setcartInfo, cartInfo, displayCart } = useContext(CartContext);
+  let { setcartInfo, cartInfo, displayCart } = useContext(CartContext);
   let { displayWishlist, wishCount, setwishCount } =
     useContext(wishlistContext);
 
@@ -41,7 +41,7 @@ const Navbar = () => {
     let response = await displayCart();
     if (response && response.results) {
       setcartInfo(response || []);
-    }    
+    }
   }
 
   async function getWishlist() {
@@ -54,28 +54,61 @@ const Navbar = () => {
     setUserLogin(null);
     navigate("/login");
   }
-  
-  
+
   useEffect(() => {
     cartInfo;
-    getCart()
-    getWishlist()
-  }, [cartInfo?.count]);  
-  
+    getCart();
+    getWishlist();
+  }, [cartInfo?.count]);
 
-  const linkClass = (isActive) =>
-    `relative font-medium transition-all duration-300 ease-in-out transform ${
-      isActive
-        ? "text-slate-800 dark:text-slate-700 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-blue-200 dark:to-blue-500 px-2 py-1 rounded-lg shadow-sm shadow-gray-400 dark:shadow-blue-900"
-        : "text-gray-800 dark:text-gray-200 hover:text-blue-500"
-    } hover:bg-gradient-to-r from-gray-200 to-gray-400 dark:hover:from-blue-900 dark:hover:to-blue-800 px-2 py-1 rounded-lg transition-all`;
+  // Utility styles for consistency and reuse
+  const styles = {
+    shared: `
+    px-2 py-1 rounded-lg 
+    transition-all duration-300 ease-in-out 
+    transform
+  `,
+    hover: `
+    hover:bg-gradient-to-r 
+    from-gray-200 to-gray-400 
+    dark:hover:from-blue-900 dark:hover:to-blue-800
+  `,
+    active: `
+    text-slate-800 dark:text-slate-700 
+    bg-gradient-to-r from-gray-100 to-gray-200 
+    dark:from-blue-200 dark:to-blue-500 
+    shadow-sm shadow-gray-400 dark:shadow-blue-900
+  `,
+    inactive: `
+    text-gray-800 dark:text-gray-200 
+    hover:text-blue-500
+  `,
+    underlineBase: `
+    absolute -bottom-1 left-0 h-[2px] 
+    bg-gradient-to-r from-blue-500 to-purple-500 
+    origin-left rounded-full 
+    transition-transform duration-300
+  `,
+    underlineStates: {
+      active: "scale-x-100",
+      inactive: "scale-x-0 hover:scale-x-100",
+    },
+  };
 
-  const underlineClass = (isActive) =>
-    `absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 transition-transform duration-300 ${
-      isActive ? "scale-x-100" : "scale-x-0 hover:scale-x-100"
-    } origin-left rounded-full`;
+  // Generates the class for the link element
+  const linkClass = (isActive) => `
+  relative font-medium 
+  ${styles.shared} 
+  ${isActive ? styles.active : styles.inactive} 
+  ${styles.hover}
+`;
 
-  
+  // Generates the class for the underline element
+  const underlineClass = (isActive) => `
+  ${styles.underlineBase} 
+  ${isActive ? styles.underlineStates.active : styles.underlineStates.inactive}
+`;
+
   return (
     <nav className=" dark:bg-gray-900 inset-x-0  w-full sticky z-[100] top-0 left-0 border-b border-gray-200 dark:border-gray-900 bg-white/75 backdrop-blur-lg transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -85,7 +118,7 @@ const Navbar = () => {
             <div className="flex-shrink-0">
               <NavLink to={"/"} className="flex items-center">
                 <span className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
-                  Aviato{' '}<span className="text-green-600">Shopper</span>
+                  Aviato <span className="text-green-600">Shopper</span>
                 </span>
               </NavLink>
             </div>

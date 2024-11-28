@@ -65,9 +65,22 @@ const Home = () => {
           <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
             <div className="relative mx-auto text-center lg:text-left flex flex-col items-center lg:items-start">
               <div className="absolute w-28 left-0 -top-20 hidden lg:block">
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t via-slate-50/50 from-slate-50   h-28" />
-                <img src="/home.png" className="w-full" />
+                {/* Background Gradient with Dark Mode */}
+                <div
+                  className="absolute inset-x-0 bottom-0 
+               bg-gradient-to-t 
+               via-slate-50/50 from-slate-50 dark:via-slate-800/50 dark:from-slate-900 
+               h-28"
+                />
+
+                {/* Image */}
+                <img
+                  src="/home.png"
+                  alt="Decorative element"
+                  className="w-full"
+                />
               </div>
+
               <h1 className="relative w-fit dark:text-gray-200 tracking-tight text-balance mt-16 font-bold !leading-tight text-gray-900 text-4xl md:text-5xl ">
                 Discover{" "}
                 <span className="bg-gray-600 px-2 dark:text-gray-200 text-white">
@@ -130,7 +143,7 @@ const Home = () => {
           </div>
         </MaxWidthWrapper>
         <Payment />
-        <LatestProducts/>
+        <LatestProducts />
         <CustomerReviews />
       </div>
     </>
