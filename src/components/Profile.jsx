@@ -231,26 +231,45 @@ const Profile = () => {
           </motion.div>
 
           <motion.div
-            className="mt-6 p-6 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl shadow-md"
+            className="mt-6 p-6 bg-white/60 flex gap-x-4 justify-center dark:bg-gray-800/60 backdrop-blur-md rounded-xl shadow-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <p className="text-gray-800 dark:text-gray-300">
-              <strong>Full Name:</strong> {profile?.full_name}
-            </p>
-            <p className="text-gray-800 dark:text-gray-300">
-              <strong>Country:</strong> {profile?.country}
-            </p>
-            <p className="text-gray-800 dark:text-gray-300">
-              <strong>Email:</strong> {profile?.user?.email || "N/A"}
-            </p>
-            <p className="text-gray-800 dark:text-gray-300">
-              <strong>Phone:</strong> {profile?.user?.phone_number || "N/A"}
-            </p>
-            <p className="text-gray-800 dark:text-gray-300">
-              <strong>Address:</strong> {profile?.full_address}
-            </p>
+            <div>
+              <h1 className="text-slate-900 font-medium dark:text-slate-200">
+                Name:
+              </h1>
+              <h1 className="text-slate-900 font-medium dark:text-slate-200">
+                Country:
+              </h1>
+              <h1 className="text-slate-900 font-medium dark:text-slate-200">
+                Email:
+              </h1>
+              <h1 className="text-slate-900 font-medium dark:text-slate-200">
+                Phone:
+              </h1>
+              <h1 className="text-slate-900 font-medium dark:text-slate-200">
+                Address:
+              </h1>
+            </div>
+            <div>
+              <p className="text-slate-900 dark:text-slate-200">
+                {profile?.full_name}
+              </p>
+              <p className="text-slate-900 dark:text-slate-200">
+                 {profile?.country}
+              </p>
+              <p className="text-slate-900 dark:text-slate-200">
+                 {profile?.user?.email || "N/A"}
+              </p>
+              <p className="text-slate-900 dark:text-slate-200">
+                 {profile?.user?.phone_number || "N/A"}
+              </p>
+              <p className="text-slate-900 dark:text-slate-200">
+                 {profile?.full_address}
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
