@@ -322,7 +322,7 @@ export const ProductDetails = () => {
         </svg>
         Go Back
       </button>
-      <div className="flex flex-col justify-between md:flex-row p-8 gap-8">
+      <div className="flex flex-col justify-between md:flex-row py-8 px-8 lg:px-20  gap-8">
         <div className="w-full md:w-1/3">
           <Slider {...settings}>
             {/* Display the main image first */}

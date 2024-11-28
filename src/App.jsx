@@ -31,6 +31,7 @@ import ResetPassword from "./components/ResetPassword";
 import Home from "./components/Home";
 import Contact from "./components/Contact";
 import ExecutePayment from "./components/ExecutePayment";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 let router = createBrowserRouter([
   {

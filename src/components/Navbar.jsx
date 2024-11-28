@@ -85,7 +85,7 @@ const Navbar = () => {
             <div className="flex-shrink-0">
               <NavLink to={"/"} className="flex items-center">
                 <span className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
-                  Aviato
+                  Aviato{' '}<span className="text-green-600">Shopper</span>
                 </span>
               </NavLink>
             </div>
