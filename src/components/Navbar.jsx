@@ -364,12 +364,12 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <motion.div
-          className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+          className="md:hidden bg-white dark:bg-gray-900  dark:border-gray-700 "
           initial="hidden"
           animate="visible"
           variants={menuContainerVariants}
         >
-          <nav className="px-4 pt-4 pb-6 space-y-1">
+          <nav className="px-4 pt-4 pb-6 space-y-4">
             {["Products", "Categories", "Brands", "Contact"].map(
               (page, index) => (
                 <motion.div
@@ -380,16 +380,14 @@ const Navbar = () => {
                   variants={menuItemVariants}
                 >
                   <NavLink
+                    key={page}
                     to={`/${page.toLowerCase()}`}
-                    className={({ isActive }) =>
-                      `block py-2 px-3 rounded-md text-sm font-medium ${
-                        isActive
-                          ? "text-blue-600 dark:text-blue-400 bg-gray-100 dark:bg-gray-800"
-                          : "text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                      }`
-                    }
+                    className={({ isActive }) => linkClass(isActive)}
                   >
                     {page}
+                    <span
+                      className={({ isActive }) => underlineClass(isActive)}
+                    />
                   </NavLink>
                 </motion.div>
               )
