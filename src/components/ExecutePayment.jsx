@@ -83,26 +83,26 @@ const ExecutePayment = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center mb-10 justify-center">
+      <div className="flex flex-col items-center justify-center my-16 space-y-8">
         {/* Spinner */}
         <div
-          className="w-16 h-16 border-4 border-t-transparent border-green-600 rounded-full animate-spin shadow-lg"
+          className="w-20 h-20 border-4 border-t-transparent border-green-500 rounded-full animate-spin-glow shadow-md"
           role="status"
         ></div>
 
         {/* Text */}
-        <div className="text-center mt-6">
-          <p className="text-xl font-semibold text-gray-800 dark:text-gray-200 animate-pulse">
+        <div className="text-center">
+          <p className="text-2xl font-bold text-gray-900 dark:text-white animate-gradient-text">
             Redirecting...
           </p>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Processing your payment. Hang tight!
+            Processing your payment. This won’t take long!
           </p>
         </div>
 
-        {/* Optional Progress Indicator */}
-        <div className="mt-4 w-40 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-          <div className="h-full bg-green-600 animate-loading-bar"></div>
+        {/* Progress Bar */}
+        <div className="relative w-64 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden shadow-sm">
+          <div className="absolute h-full w-full animate-progress-bar bg-gradient-to-r from-green-400 via-green-500 to-green-600"></div>
         </div>
       </div>
     );
