@@ -319,9 +319,7 @@ const Checkout = () => {
                         {/* Replace with actual fields */}
                       </p>
                     </div>
-                    <button className="text-red-500 hover:text-red-600 dark:hover:text-red-400 transition">
-                      Remove
-                    </button>
+                    
                   </div>
                 ))
               )}
