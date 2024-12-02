@@ -139,7 +139,7 @@ const ResetPassword = () => {
       <Helmet>
         <title>Aviato | Reset Password</title>
       </Helmet>
-      <div className="max-w-lg mx-auto p-8 bg-white shadow-md rounded-lg dark:bg-gray-800 dark:text-gray-200">
+      <div className="max-w-lg mx-auto p-8 my-6 bg-white shadow-md rounded-lg dark:bg-gray-800 dark:text-gray-200">
         <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
           Reset Your Password
         </h2>

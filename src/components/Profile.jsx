@@ -21,7 +21,7 @@ const Profile = () => {
     city: "",
     phone_number: "",
     about: "",
-    addressLineOne: "",
+    address_line_1: "",
   });
   const [file, setFile] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -152,6 +152,8 @@ const Profile = () => {
         }
       );
       const data = await response.json();
+      console.log(data);
+      
 
       if (response.ok) {
         setProfile(data?.data); // Update context
@@ -371,8 +373,8 @@ const Profile = () => {
                 </label>
                 <motion.input
                   type="text"
-                  name="addressLineOne"
-                  value={formData.addressLineOne}
+                  name="address_line_1"
+                  value={formData.address_line_1}
                   onChange={handleInputChange}
                   className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                   whileHover={{ scale: 1.05 }}
