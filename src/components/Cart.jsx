@@ -245,24 +245,23 @@ const Cart = () => {
                           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-100 rounded-full shadow-sm hover:bg-red-200 dark:bg-red-800 dark:hover:bg-red-700 dark:text-gray-200 transition-all"
                           disabled={isCloseloading && currentId === item.id}
                         >
-                          
-                            <>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                className="w-4 h-4"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M6 18L18 6M6 6l12 12"
-                                />
-                              </svg>
-                              Remove
-                            </>
+                          <>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className="w-4 h-4"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                            Remove
+                          </>
                         </motion.button>
                       </div>
                     </motion.div>
@@ -273,36 +272,48 @@ const Cart = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex flex-col items-center text-center text-lg text-gray-500 dark:text-gray-400"
+                className="flex flex-col items-center text-center text-lg text-gray-500 dark:text-gray-400 py-10"
               >
                 {/* Icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-12 h-12 text-gray-400 mb-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 4.5l.75 13.5c.075 1.337 1.134 2.437 2.625 2.437h10.5c1.491 0 2.55-1.1 2.625-2.437L20.25 4.5m-16.5 0h16.5m-16.5 0a2.25 2.25 0 012.25-2.25h11.25a2.25 2.25 0 012.25 2.25m-16.5 0l1.5 13.5m4.5-7.5h6m-6 3h4"
-                  />
-                </svg>
+                <div className="flex justify-center items-center bg-gray-100 dark:bg-gray-800 rounded-full w-16 h-16 mb-6 shadow-md">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-10 h-10 text-gray-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3.75 4.5l.75 13.5c.075 1.337 1.134 2.437 2.625 2.437h10.5c1.491 0 2.55-1.1 2.625-2.437L20.25 4.5m-16.5 0h16.5m-16.5 0a2.25 2.25 0 012.25-2.25h11.25a2.25 2.25 0 012.25 2.25m-16.5 0l1.5 13.5m4.5-7.5h6m-6 3h4"
+                    />
+                  </svg>
+                </div>
 
                 {/* Message */}
-                <p className="font-medium">
-                  Your cart is currently empty. Browse our collection to find
-                  products you love and make your shopping experience
-                  delightful!
+                <p className="font-semibold text-xl text-gray-700 dark:text-gray-300 mb-4">
+                  Your cart is empty!
                 </p>
+                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
+                  Start shopping now to find products you’ll love and enjoy a
+                  delightful shopping experience.
+                </p>
+
+                {/* Action Button */}
+                <a
+                  href="/products"
+                  className="px-6 py-2 bg-slate-600 text-white text-sm font-medium rounded-lg shadow-lg hover:bg-slate-700 transition duration-300"
+                >
+                  Browse Products
+                </a>
               </motion.div>
             )}
           </div>
 
           {/* Cart Summary */}
-          <div className="p-6 bg-white dark:bg-gray-700 rounded-lg h-fit shadow-md">
+          <div className="p-6 bg-white mx-auto dark:bg-gray-700 rounded-lg h-fit shadow-md">
             <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
               Cart Summary
             </h2>
@@ -328,7 +339,7 @@ const Cart = () => {
                   disabled={cartDetails.length == 0}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full px-8 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-700 transition-colors"
+                  className="w-full px-8 py-3 bg-black text-white font-medium rounded-lg shadow-md hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-600 transition-colors"
                 >
                   Checkout
                 </motion.button>
