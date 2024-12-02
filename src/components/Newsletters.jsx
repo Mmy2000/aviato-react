@@ -75,7 +75,7 @@ const NewsletterForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold py-3 flex justify-center items-center rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 ${
+          className={`w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:bg-gradient-to-l text-white font-semibold py-3 flex justify-center items-center rounded-lg shadow-lg hover:shadow-xl transform transition-all duration-300 ${
             loading ? "opacity-75 cursor-not-allowed" : ""
           }`}
         >
