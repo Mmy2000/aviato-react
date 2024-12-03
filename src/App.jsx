@@ -33,6 +33,11 @@ import Contact from "./components/Contact";
 import ExecutePayment from "./components/ExecutePayment";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Notfound from "./components/Notfound";
+import DashboardCategoryTable from "./components/dashboard/DashboardCategoryTable";
+import DashboardProductsTable from "./components/dashboard/DashboardProductsTable";
+import AdminDashboard from "./components/dashboard/AdminDashboard";
+import LayoutDashboard from "./components/dashboard/LayoutDashboard";
+
 
 let router = createBrowserRouter([
   {
@@ -157,6 +162,33 @@ let router = createBrowserRouter([
         ),
       },
       { path: "*", element: <Notfound /> },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <LayoutDashboard />, // Dashboard Layout
+    children: [
+      {
+        element: <DashboardProductsTable />,
+        path: "products",
+      },
+      {
+        element: <DashboardCategoryTable />,
+        path: "categories",
+      },
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "*",
+        element: <Notfound />,
+      },
+      // Add other dashboard-related routes here if needed
     ],
   },
 ]);
