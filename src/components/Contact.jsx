@@ -144,9 +144,9 @@ const Contact = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -50 }}
         transition={{ duration: 0.5 }}
-        className="py-12 px-6"
+        className="py-6 px-6"
       >
-        <div className="max-w-5xl mx-auto bg-white dark:bg-gray-900 shadow-2xl rounded-xl p-10">
+        <div className="max-w-5xl mx-auto bg-white dark:bg-gray-900 shadow rounded-xl p-5 lg:p-10">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

@@ -48,7 +48,7 @@ const Categories = () => {
         <title>Aviato | Categories</title>
       </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <nav className="flex items-center mb-2 text-sm ">
+        <nav className="flex items-center mb-4 lg:mb-2 text-sm ">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center mr-2 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"

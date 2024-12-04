@@ -39,29 +39,29 @@ const Brands = ({ onBrandSelect }) => {
         <title>Aviato | Brands</title>
       </Helmet>
 
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <nav className="flex items-center mb-2 text-sm ">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center mr-2 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
-              aria-label="Go back to the previous page"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <nav className="flex items-center mb-4 lg:mb-2 text-sm ">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center mr-2 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+            aria-label="Go back to the previous page"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Go Back
-            </button>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Go Back
+          </button>
           <Link
             to={"/"}
             className="text-gray-500 dark:text-gray-100 font-medium hover:underline transition-colors"
@@ -69,9 +69,11 @@ const Brands = ({ onBrandSelect }) => {
             Home
           </Link>
           <span className="mx-3 text-gray-400">›</span>
-          <span className="text-gray-700 dark:text-gray-300 font-semibold">Brands</span>
+          <span className="text-gray-700 dark:text-gray-300 font-semibold">
+            Brands
+          </span>
         </nav>
-        <h2 className="text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-16 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-16 tracking-tight">
           Explore Our Brands
         </h2>
         <div className="grid gap-12 lg:grid-cols-2">
