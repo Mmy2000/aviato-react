@@ -1,6 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Spinner from "../ui/Spinner";
 
 const Dashboard = () => {
+  const [data, setData] = useState(null); // State to store API data
+  const [loading, setLoading] = useState(true); // State to handle loading
+
+  useEffect(() => {
+    // Fetch data from the API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/dashboard/`
+        ); // Replace with your actual endpoint
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+        <Spinner/>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-500 dark:text-gray-400">No data available</p>
+      </div>
+    );
+  }
+  console.log(data);
+  
+
+  const { metrics, recent_activity } = data;
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
       <div className="container mx-auto">
@@ -11,10 +54,10 @@ const Dashboard = () => {
               Total Users
             </h2>
             <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mt-2">
-              1,234
+              {metrics.total_users}
             </p>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              +15% since last month
+              {metrics.total_users_change} since last month
             </span>
           </div>
 
@@ -23,10 +66,10 @@ const Dashboard = () => {
               Revenue
             </h2>
             <p className="text-4xl font-bold text-green-600 dark:text-green-400 mt-2">
-              $12,345
+              ${metrics.total_revenue.toFixed(2)}
             </p>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              +8% since last month
+              {metrics.revenue_change} since last month
             </span>
           </div>
 
@@ -35,10 +78,10 @@ const Dashboard = () => {
               New Orders
             </h2>
             <p className="text-4xl font-bold text-red-600 dark:text-red-400 mt-2">
-              567
+              {metrics.new_orders}
             </p>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              +5% since last week
+              {metrics.new_orders_change} since last week
             </span>
           </div>
         </section>
@@ -50,45 +93,24 @@ const Dashboard = () => {
           </h2>
           <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-              <li className="py-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-700 dark:text-gray-200 font-medium">
-                    John Doe placed an order
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Order Total: $123.45
-                  </p>
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  2 hours ago
-                </span>
-              </li>
-              <li className="py-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-700 dark:text-gray-200 font-medium">
-                    Jane Smith signed up
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Account created
-                  </p>
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  4 hours ago
-                </span>
-              </li>
-              <li className="py-4 flex justify-between items-center">
-                <div>
-                  <p className="text-gray-700 dark:text-gray-200 font-medium">
-                    Alex Johnson updated profile
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Profile details updated
-                  </p>
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  6 hours ago
-                </span>
-              </li>
+              {recent_activity.map((activity, index) => (
+                <li
+                  key={index}
+                  className="py-4 flex justify-between items-center"
+                >
+                  <div>
+                    <p className="text-gray-700 dark:text-gray-200 font-medium">
+                      {activity.message}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {activity.details}
+                    </p>
+                  </div>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    {activity.timestamp}
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         </section>
