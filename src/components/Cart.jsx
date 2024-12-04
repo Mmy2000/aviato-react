@@ -302,12 +302,11 @@ const Cart = () => {
                 </p>
 
                 {/* Action Button */}
-                <a
-                  href="/products"
+                <Link to={"/products"}
                   className="px-6 py-2 bg-slate-600 text-white text-sm font-medium rounded-lg shadow-lg hover:bg-slate-700 transition duration-300"
                 >
                   Browse Products
-                </a>
+                </Link>
               </motion.div>
             )}
           </div>
