@@ -1,18 +1,45 @@
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import Spinner from "../ui/Spinner";
 
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend
+);
+
 const Dashboard = () => {
-  const [data, setData] = useState(null); // State to store API data
-  const [loading, setLoading] = useState(true); // State to handle loading
+  let headers = {
+    Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
+  };
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data from the API
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/dashboard/`
-        ); // Replace with your actual endpoint
+          `${import.meta.env.VITE_BASE_URL}/dashboard/`,
+          {
+            headers,
+          }
+        );
         setData(response.data);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -26,77 +53,137 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
-        <Spinner/>
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <Spinner />
       </div>
     );
   }
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
-        <p className="text-gray-500 dark:text-gray-400">No data available</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <p className="text-gray-500 dark:text-gray-400 text-lg">
+          No data available
+        </p>
       </div>
     );
   }
-  console.log(data);
-  
 
   const { metrics, recent_activity } = data;
 
+  const chartData = {
+    labels: ["8 days ago", "4 days ago", "Today"],
+    datasets: [
+      {
+        label: "Revenue",
+        data: [795.6, 3049.8, 6089.4],
+        borderColor: "#4CAF50",
+        backgroundColor: "rgba(76, 175, 80, 0.2)",
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
+  const stagger = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
+    <div className="min-h-screen p-6">
       <div className="container mx-auto">
+        {/* Header Section */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+            Dashboard
+          </h1>
+          <button
+            className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded shadow-lg transition duration-300"
+            onClick={() => window.location.reload()}
+          >
+            Refresh
+          </button>
+        </div>
+
         {/* Stats Section */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              Total Users
-            </h2>
-            <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 mt-2">
-              {metrics.total_users}
-            </p>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {metrics.total_users_change} since last month
-            </span>
-          </div>
+        <motion.section
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+        >
+          {[
+            {
+              title: "Total Users",
+              value: metrics.total_users,
+              change: metrics.total_users_change,
+              color: "blue",
+            },
+            {
+              title: "Revenue",
+              value: `$${metrics.total_revenue.toFixed(2)}`,
+              change: metrics.revenue_change,
+              color: "green",
+            },
+            {
+              title: "New Orders",
+              value: metrics.new_orders,
+              change: metrics.new_orders_change,
+              color: "red",
+            },
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              className={`bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl rounded-lg p-6 transition duration-300 border-l-4 border-${stat.color}-500`}
+              variants={fadeIn}
+            >
+              <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                {stat.title}
+              </h2>
+              <p
+                className={`text-4xl font-bold text-${stat.color}-600 dark:text-${stat.color}-400 mt-2`}
+              >
+                {stat.value}
+              </p>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                {stat.change} since last month
+              </span>
+            </motion.div>
+          ))}
+        </motion.section>
 
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              Revenue
-            </h2>
-            <p className="text-4xl font-bold text-green-600 dark:text-green-400 mt-2">
-              ${metrics.total_revenue.toFixed(2)}
-            </p>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {metrics.revenue_change} since last month
-            </span>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              New Orders
-            </h2>
-            <p className="text-4xl font-bold text-red-600 dark:text-red-400 mt-2">
-              {metrics.new_orders}
-            </p>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {metrics.new_orders_change} since last week
-            </span>
-          </div>
-        </section>
-
-        {/* Activity Section */}
+        {/* Recent Activity Section */}
         <section className="mt-10">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+          <motion.h2
+            className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
             Recent Activity
-          </h2>
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+          </motion.h2>
+          <motion.div
+            className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
               {recent_activity.map((activity, index) => (
-                <li
+                <motion.li
                   key={index}
                   className="py-4 flex justify-between items-center"
+                  variants={fadeIn}
                 >
                   <div>
                     <p className="text-gray-700 dark:text-gray-200 font-medium">
@@ -109,22 +196,30 @@ const Dashboard = () => {
                   <span className="text-sm text-gray-500 dark:text-gray-400">
                     {activity.timestamp}
                   </span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         </section>
 
-        {/* Chart Section */}
+        {/* Performance Chart Section */}
         <section className="mt-10">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+          <motion.h2
+            className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
             Performance Overview
-          </h2>
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 h-64 flex items-center justify-center">
-            <p className="text-gray-500 dark:text-gray-400">
-              [Insert Chart Here]
-            </p>
-          </div>
+          </motion.h2>
+          <motion.div
+            className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
+            <Line data={chartData} />
+          </motion.div>
         </section>
       </div>
     </div>
