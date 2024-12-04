@@ -24,6 +24,8 @@ ChartJS.register(
   Legend
 );
 
+
+
 const Dashboard = () => {
   let headers = {
     Authorization: `Bearer ${localStorage.getItem("userTaken")}`,
@@ -31,23 +33,24 @@ const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/dashboard/`,
-          {
-            headers,
-          }
-        );
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/dashboard/`,
+        {
+          headers,
+        }
+      );
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -83,6 +86,73 @@ const Dashboard = () => {
       },
     ],
   };
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+        labels: {
+          color: "#4CAF50",
+          font: {
+            size: 14,
+          },
+        },
+      },
+      tooltip: {
+        enabled: true,
+        backgroundColor: "#333",
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        footerColor: "#fff",
+        borderWidth: 1,
+        borderColor: "#4CAF50",
+        padding: 10,
+        callbacks: {
+          label: function (context) {
+            return ` $${context.raw.toFixed(2)}`;
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          color: "rgba(200, 200, 200, 0.2)",
+        },
+        ticks: {
+          color: "#666",
+          font: {
+            size: 12,
+          },
+        },
+      },
+      y: {
+        grid: {
+          color: "rgba(200, 200, 200, 0.2)",
+          drawBorder: false,
+        },
+        ticks: {
+          color: "#666",
+          font: {
+            size: 12,
+          },
+          callback: function (value) {
+            return `$${value}`;
+          },
+        },
+      },
+    },
+    elements: {
+      point: {
+        radius: 6,
+        backgroundColor: "#4CAF50",
+      },
+      line: {
+        borderWidth: 3,
+      },
+    },
+  };
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -109,7 +179,7 @@ const Dashboard = () => {
           </h1>
           <button
             className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded shadow-lg transition duration-300"
-            onClick={() => window.location.reload()}
+            onClick={fetchData} // Call fetchData directly
           >
             Refresh
           </button>
@@ -218,7 +288,7 @@ const Dashboard = () => {
             initial="hidden"
             animate="visible"
           >
-            <Line data={chartData} />
+            <Line data={chartData} options={chartOptions} />
           </motion.div>
         </section>
       </div>
