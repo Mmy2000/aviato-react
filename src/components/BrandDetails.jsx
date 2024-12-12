@@ -147,7 +147,7 @@ const BrandDetails = () => {
       <Helmet>
         <title>Aviato | {brand}</title>
       </Helmet>
-      <nav className="flex items-center mt-6 ml-10 text-sm">
+      <nav className="flex items-center mt-6 md:ml-10 text-sm">
         <button
           onClick={() => navigate(-1)}
           className="flex items-center mr-2 px-4 py-2 bg-gray-900 text-white rounded-l-full shadow-md hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:hover:bg-gray-600"
