@@ -39,11 +39,9 @@ const OrderDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        <p className="text-lg text-gray-600 dark:text-gray-300">
+
           <Spinner />
-        </p>
-      </div>
+
     );
   }
 
@@ -175,9 +173,9 @@ const OrderDetail = () => {
           </div>
 
           {/* Footer Section */}
-          <div className="text-center py-6 bg-gray-100 dark:bg-gray-900">
+          <div className="text-center  p-6 bg-gray-100 dark:bg-gray-900">
             <button
-              className="w-full sm:w-auto px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 transition"
+              className="w-full  px-6 py-3 bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 transition"
               onClick={() => navigate("/products")}
             >
               Continue Shopping
