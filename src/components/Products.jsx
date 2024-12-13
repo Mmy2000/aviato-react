@@ -64,7 +64,7 @@ export const Products = () => {
       url.searchParams.append(selectedType, selectedCategoryId);
     url.searchParams.append("min_price", minPrice || 0);
     url.searchParams.append("max_price", maxPrice || 10000);
-    searchTerm && url.searchParams.append("search", searchTerm);
+    searchTerm && url.searchParams.append("search", searchTerm);    
 
     const options = {
       headers: userLogin
@@ -114,7 +114,6 @@ export const Products = () => {
 
   const products = data?.data?.data;  
   const productCounts = products ? products.length : 0;
-  
   
 
   const handleAddToCart = (product) => {
@@ -225,7 +224,7 @@ export const Products = () => {
             </div>
           </div>
         </div>
-        <div className="lg:w-3/4 space-y-4 lg:px-6  py-6">
+        <div className="lg:w-3/4 space-y-6 lg:px-6  py-6">
           <div className="flex justify-between items-center">
             <span className="text-gray-900 dark:text-gray-200 font-semibold">
               Showing {productCounts} of {productCount} results
@@ -256,7 +255,7 @@ export const Products = () => {
               <Spinner />
             </div>
           ) : products && products.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {products.map((product) => {
                 const price = parseFloat(product.price);
                 return (
