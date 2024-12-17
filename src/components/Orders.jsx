@@ -133,97 +133,112 @@ const Orders = () => {
                   </button>
                 </div>
 
-                {/* Status Filter */}
-                <div className="w-56">
-                  <Listbox
-                    value={filters.status}
-                    onChange={(value) =>
-                      setFilters({ ...filters, status: value })
+                {/* Filters Section */}
+                <div className="flex flex-wrap gap-4 justify-center items-center">
+                  {/* Status Filter */}
+                  <div className="w-56">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Status
+                    </label>
+                    <Listbox
+                      value={filters.status}
+                      onChange={(value) =>
+                        setFilters({ ...filters, status: value })
+                      }
+                    >
+                      <div className="relative">
+                        <Listbox.Button className="w-full py-2 px-4 border rounded-md bg-white dark:bg-gray-700 text-left text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          {statusOptions.find(
+                            (option) => option.id === filters.status
+                          )?.name || "All Statuses"}
+                        </Listbox.Button>
+                        <Listbox.Options className="absolute z-10 w-full mt-2 max-h-60 overflow-auto bg-white dark:bg-gray-700 border rounded-md shadow-lg">
+                          {statusOptions.map((status) => (
+                            <Listbox.Option
+                              key={status.id}
+                              value={status.id}
+                              className={({ active }) =>
+                                `cursor-pointer select-none py-2 px-4 ${
+                                  active
+                                    ? "bg-blue-500 text-white"
+                                    : "text-gray-900 dark:text-gray-200"
+                                }`
+                              }
+                            >
+                              {status.name}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </div>
+                    </Listbox>
+                  </div>
+
+                  {/* Payment Method Filter */}
+                  <div className="w-56">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Payment Method
+                    </label>
+                    <Listbox
+                      value={filters.payment_method}
+                      onChange={(value) =>
+                        setFilters({ ...filters, payment_method: value })
+                      }
+                    >
+                      <div className="relative">
+                        <Listbox.Button className="w-full py-2 px-4 border rounded-md bg-white dark:bg-gray-700 text-left text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          {paymentOptions.find(
+                            (option) => option.id === filters.payment_method
+                          )?.name || "All Payment Methods"}
+                        </Listbox.Button>
+                        <Listbox.Options className="absolute z-10 w-full mt-2 max-h-60 overflow-auto bg-white dark:bg-gray-700 border rounded-md shadow-lg">
+                          {paymentOptions.map((payment) => (
+                            <Listbox.Option
+                              key={payment.id}
+                              value={payment.id}
+                              className={({ active }) =>
+                                `cursor-pointer select-none py-2 px-4 ${
+                                  active
+                                    ? "bg-blue-500 text-white"
+                                    : "text-gray-900 dark:text-gray-200"
+                                }`
+                              }
+                            >
+                              {payment.name}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </div>
+                    </Listbox>
+                  </div>
+
+                  {/* Date Filter */}
+                  <div className="w-56">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      value={filters.created_at}
+                      onChange={(e) =>
+                        setFilters({ ...filters, created_at: e.target.value })
+                      }
+                      className="w-full px-4 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  {/* Reset Button */}
+                  <button
+                    onClick={() =>
+                      setFilters({
+                        status: "",
+                        payment_method: "",
+                        created_at: "",
+                      })
                     }
+                    className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-500"
                   >
-                    <div className="relative">
-                      <Listbox.Button className="w-full py-2 px-4 border rounded-md bg-white dark:bg-gray-700">
-                        {statusOptions.find((s) => s.id === filters.status)
-                          ?.name || "All Statuses"}
-                      </Listbox.Button>
-                      <Listbox.Options className="absolute w-full mt-1 max-h-60 overflow-auto bg-white dark:bg-gray-700 border rounded-md shadow-lg">
-                        {statusOptions.map((status) => (
-                          <Listbox.Option
-                            key={status.id}
-                            value={status.id}
-                            className={({ active }) =>
-                              `cursor-pointer select-none py-2 px-4 ${
-                                active
-                                  ? "bg-blue-500 text-white"
-                                  : "text-gray-900 dark:text-gray-200"
-                              }`
-                            }
-                          >
-                            {status.name}
-                          </Listbox.Option>
-                        ))}
-                      </Listbox.Options>
-                    </div>
-                  </Listbox>
+                    Reset
+                  </button>
                 </div>
-
-                <div className="w-56">
-                  <Listbox
-                    value={filters.payment_method}
-                    onChange={(value) =>
-                      setFilters({ ...filters, payment_method: value })
-                    }
-                  >
-                    <div className="relative">
-                      <Listbox.Button className="w-full py-2 px-4 border rounded-md bg-white dark:bg-gray-700">
-                        {paymentOptions.find(
-                          (p) => p.id === filters.payment_method
-                        )?.name || "All Payment Methods"}
-                      </Listbox.Button>
-                      <Listbox.Options className="absolute w-full mt-1 max-h-60 overflow-auto bg-white dark:bg-gray-700 border rounded-md shadow-lg">
-                        {paymentOptions.map((payment) => (
-                          <Listbox.Option
-                            key={payment.id}
-                            value={payment.id}
-                            className={({ active }) =>
-                              `cursor-pointer select-none py-2 px-4 ${
-                                active
-                                  ? "bg-blue-500 text-white"
-                                  : "text-gray-900 dark:text-gray-200"
-                              }`
-                            }
-                          >
-                            {payment.name}
-                          </Listbox.Option>
-                        ))}
-                      </Listbox.Options>
-                    </div>
-                  </Listbox>
-                </div>
-
-                {/* Date Filter */}
-                <input
-                  type="date"
-                  value={filters.created_at}
-                  onChange={(e) =>
-                    setFilters({ ...filters, created_at: e.target.value })
-                  }
-                  className="px-4 py-2 border rounded-md"
-                />
-
-                {/* Reset Button */}
-                <button
-                  onClick={() =>
-                    setFilters({
-                      status: "",
-                      payment_method: "",
-                      created_at: "",
-                    })
-                  }
-                  className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-500"
-                >
-                  Reset
-                </button>
               </div>
 
               <span className="text-lg font-medium">
