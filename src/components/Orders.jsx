@@ -24,7 +24,7 @@ const statusOptions = [
 const paymentOptions = [
   { id: "", name: "All Payment Methods" },
   { id: "Stripe", name: "Stripe" },
-  { id: "Cash", name: "Cash" },
+  { id: "Cash", name: "cash" },
   { id: "PayPal", name: "PayPal" },
 ];
 
