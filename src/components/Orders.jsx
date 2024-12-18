@@ -329,8 +329,8 @@ const Orders = () => {
                         <span
                           className={`inline-block px-3 py-1 text-sm font-medium rounded-full ${
                             order.status === "On Delivery"
-                              ? "text-blue-800 bg-blue-100 dark:text-blue-200 dark:bg-blue-900"
-                              : "text-green-700 bg-green-100 dark:text-slate-600 dark:bg-green-200"
+                              ? "text-blue-800 border border-blue-900 dark:border-blue-500 bg-blue-100 dark:text-blue-200 dark:bg-blue-900"
+                              : "text-green-700 border border-green-800 bg-green-100 dark:border-green-400 dark:text-slate-600 dark:bg-green-200"
                           }`}
                         >
                           {order.status}
