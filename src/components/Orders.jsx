@@ -24,7 +24,7 @@ const statusOptions = [
 const paymentOptions = [
   { id: "", name: "All Payment Methods" },
   { id: "Stripe", name: "Stripe" },
-  { id: "Cash", name: "cash" },
+  { id: "cash", name: "cash" },
   { id: "PayPal", name: "PayPal" },
 ];
 
@@ -241,7 +241,7 @@ const Orders = () => {
                 </div>
               </div>
 
-              <span className="text-lg font-medium">
+              <span className="text-lg text-gray-900 dark:text-gray-200 font-medium">
                 {orders?.length || 0} Orders
               </span>
             </div>
