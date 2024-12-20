@@ -34,6 +34,9 @@ const Profile = () => {
     newPassword: "",
     confirmPassword: "",
   });
+  console.log("form data",formData);
+  console.log("profile",profile);
+  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -260,16 +263,16 @@ const Profile = () => {
                 {profile?.full_name}
               </p>
               <p className="text-slate-900 dark:text-slate-200">
-                 {profile?.country}
+                {profile?.country}
               </p>
               <p className="text-slate-900 dark:text-slate-200">
-                 {profile?.user?.email || "N/A"}
+                {profile?.user?.email || "N/A"}
               </p>
               <p className="text-slate-900 dark:text-slate-200">
-                 {profile?.user?.phone_number || "N/A"}
+                {profile?.user?.phone_number || "N/A"}
               </p>
               <p className="text-slate-900 dark:text-slate-200">
-                 {profile?.full_address}
+                {profile?.full_address}
               </p>
             </div>
           </motion.div>
@@ -374,7 +377,7 @@ const Profile = () => {
                 <motion.input
                   type="text"
                   name="address_line_1"
-                  value={formData.address_line_1}
+                  value={formData.addressLineOne}
                   onChange={handleInputChange}
                   className="w-full p-3 mt-2 border rounded-xl shadow-sm text-gray-800 dark:text-gray-200 dark:bg-gray-900 border-gray-300 dark:border-gray-700 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-600"
                   whileHover={{ scale: 1.05 }}
@@ -433,27 +436,12 @@ const Profile = () => {
             >
               {saving ? (
                 <>
-                  <svg
-                    className="animate-spin h-5 w-5 mr-2 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v8H4z"
-                    ></path>
-                  </svg>
-                  <span>Saving...</span>
+                  Saving
+                  <span className="ml-1.5 flex items-center gap-1">
+                    <span className="animate-flashing w-1 h-1 bg-white rounded-full inline-block" />
+                    <span className="animate-flashing delay-100 w-1 h-1 bg-white rounded-full inline-block" />
+                    <span className="animate-flashing delay-200 w-1 h-1 bg-white rounded-full inline-block" />
+                  </span>
                 </>
               ) : (
                 "Save Changes"
