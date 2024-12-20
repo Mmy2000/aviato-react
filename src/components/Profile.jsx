@@ -430,10 +430,8 @@ const Profile = () => {
             {/* Save Button */}
             <motion.button
               type="submit"
-              disabled={saving || (!hasChanges && !file)}
-              className={`w-full bg-gray-800 transition-colors hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 dark:bg-slate-600 dark:hover:bg-slate-500 flex items-center justify-center${
-                saving ? " cursor-not-allowed" : ""
-              }`}
+              disabled={saving || loading || (!hasChanges && !file)}
+              className={`w-full bg-gray-800 transition-colors hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 dark:bg-slate-600 dark:hover:bg-slate-500 flex items-center justify-center ${saving ? "cursor-not-allowed" : ""}`}
               whileTap={{ scale: 0.95 }}
             >
               {saving ? (
@@ -472,3 +470,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
